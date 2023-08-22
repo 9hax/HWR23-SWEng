@@ -31,7 +31,7 @@ sudo chmod 777 /opt
 echo ${green}Clone GitHub Repository${reset}
 
 # Clone the GitHub Repo to /opt/simpleticket
-sudo -u simpleticket git clone https://github.com/9hax/simpleticket /opt/simpleticket
+sudo -u simpleticket git clone https://github.com/9hax/HWR23-SWEng /opt/simpleticket
 
 # make simpleticket directory accessible
 sudo chown simpleticket:simpleticket /opt/simpleticket* -R
