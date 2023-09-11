@@ -75,5 +75,9 @@
     "Mann":"Men", 
     "Frau":"Female", 
     "Divers": "Divers", 
-    "workingPlace":"Workingplace"
+    "workingPlace":"Workingplace", 
+    "openingTime": "Opened from", 
+    "closingTime": "Closed from", 
+    "adressOffice": "Adress", 
+    "officeName": "Name of Office"
 }
