@@ -235,18 +235,31 @@ def addAdmin():
     else:
         abort(403)
 
-@app.route('/add-user', methods=['GET', 'POST'])
-def addUser():
+@app.route('/add-office', methods=['GET', 'POST'])
+def addOffice():
     if "login" in session.keys() and session['login'] and g.current_user.highPermissionLevel:
         if request.method == 'POST':
             try:
-                user.create_user(str.lower(request.form["username"]), request.form["fullname"], request.form["email"], user.hashPassword(request.form["password"]), highPermissionLevel=False)
+                user.create_user(str.lower(request.form["username"]), request.form["fullname"], request.form["email"], user.hashPassword(request.form["password"]), 
+                                 highPermissionLevel=False, isOffice = True)
             except sqlalchemy.exc.IntegrityError:
                 return render_template('user-signup.html', perms = lang["low-perms"], message = lang["user-create-error"])
             return redirect(url_for('login'))
         return render_template('user-signup.html', perms = lang["low-perms"])
     else:
         abort(403)
+        
+@app.route('/add-user', methods=['GET', 'POST'])      
+def addUser():
+    if request.method == 'POST':
+        try:
+            user.create_user(str.lower(request.form["username"]), request.form["fullname"], request.form["email"], user.hashPassword(request.form["password"]), highPermissionLevel=False)
+        except sqlalchemy.exc.IntegrityError:
+            return render_template('user-signup.html', perms = lang["low-perms"], message = lang["user-create-error"])
+        return redirect(url_for('login'))
+    return render_template('user-signup.html', perms = lang["low-perms"])
+    
+
 
 @app.route('/account-settings', methods=['GET', 'POST'])
 def changeSettings():
