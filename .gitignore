@@ -1,7 +1,6 @@
 *.pyc
 simpleticket.db
-migrations/versions/*
-!migrations/versions/.exists
+migrations/*
 .vscode
 smtpconfig.py
 userconfig.py
