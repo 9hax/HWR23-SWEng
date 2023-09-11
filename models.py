@@ -5,7 +5,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(400), unique=True, nullable=False)
     fullname = db.Column(db.Text, unique=False, nullable=True)
-    email = db.Column(db.String(400), unique=True, nullable=True)
+    email = db.Column(db.String(400), nullable=True)
     password = db.Column(db.String(1000), unique=False, nullable=True)
     passwordToken = db.Column(db.Text, unique=False, nullable=True)
     passwordResetTimer = db.Column(db.Integer, unique=False, nullable=True, default=-1)

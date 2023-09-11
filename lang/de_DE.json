@@ -67,5 +67,13 @@
     "reply-text-placeholder": "Antwort verfassen...",
     "write-reply": "Antwort erstellen",
     "save": "Speichern",
-    "save-as-note": "Als Notiz speichern"
+    "save-as-note": "Als Notiz speichern", 
+    "user-data-update": "Benutzerdaten aktualisieren", 
+    "age":"Alter", 
+    "adress":"Adresse", 
+    "taxClass":"Steuerklasse", 
+    "Mann":"Männlich", 
+    "Frau":"Weiblich", 
+    "Divers": "Divers", 
+    "workingPlace":"Arbeitsplatz"
 }

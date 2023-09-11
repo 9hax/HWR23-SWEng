@@ -67,5 +67,13 @@
     "reply-text-placeholder": "Enter your reply text here.",
     "write-reply": "Create a new reply",
     "save": "Save",
-    "save-as-note": "Save as Note"
+    "save-as-note": "Save as Note", 
+    "user-data-update": "Update User Data", 
+    "age":"Age", 
+    "adress":"Adress", 
+    "taxClass":"Tax Class", 
+    "Mann":"Men", 
+    "Frau":"Female", 
+    "Divers": "Divers", 
+    "workingPlace":"Workingplace"
 }
