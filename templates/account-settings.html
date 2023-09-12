@@ -1,10 +1,9 @@
 {% set title = lang["account-settings"]%} {% extends "master.html" %} {% block body %}
-{% if current_user.isOffice %}
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
         <p>
             <form action="/account-settings-data" method="POST">
-                {{lang["user-data-update"]}}
-                <div>
+                {% if current_user.isOffice %}
+                    {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="officeName" name="officeName" 
                         value="{{"Behörde Elend Sachsen"}}">
@@ -23,20 +22,7 @@
                         <input class="mdl-textfield__input" type="time" id="closingTime" name="closingTime">
                         <label class="mdl-textfield__label" for="closingTime">{{lang["closingTime"]}}</label>
                     </div>
-
-
-                <button type="submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                    {{lang["save"]}}
-                </button>
-            </form>
-        </p>
-    </div>
-    {% else %}
-    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
-        <p>
-            <form action="/account-settings-data" method="POST">
-                {{lang["user-data-update"]}}
-                <div>
+                {% else %}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="firstName" name="firstName" 
                         value="{{current_user.fullname}}">
@@ -44,7 +30,7 @@
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="age" name="age" 
-                        value="{{78}}">
+                        value="{{78}}" readonly>
                         <label class="mdl-textfield__label" for="age">{{lang["age"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -80,15 +66,41 @@
                         value="{{'Schlachterei “FLEEEISCH”'}}">
                         <label class="mdl-textfield__label" for="workingPlace">{{lang["workingPlace"]}}</label>
                     </div>
-                
+                {% endif %}
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" onkeyup="success()" type="password" id="passwordValidation" name="passwordValidation" >
+                    <label class="mdl-textfield__label" for="passwordValidation">{{lang["password"]}}</label>
                 </div>
-
+                <button type="submit" id="update-account-submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" disabled>
+                    {{lang["save"]}}
+                </button>
+                <script>
+                    function success() {
+                        if(document.getElementById("passwordValidation").value==="") { 
+                            document.getElementById('update-account-submit').disabled = true; 
+                        } else { 
+                            document.getElementById('update-account-submit').disabled = false;
+                        }
+                    }
+                </script>
+            </form>
+        </p>
+    </div>
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
+        <p>
+            <form action="" method="POST">
+                {{lang["password-update"]}}
+                <div id="name">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="password" id="first" name="password">
+                        <label class="mdl-textfield__label" for="first">{{lang["password"]}}</label>
+                    </div>
+                </div>
+    
                 <button type="submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
                     {{lang["save"]}}
                 </button>
             </form>
-
         </p>
     </div>
-    {% endif %}
 {% endblock %}
