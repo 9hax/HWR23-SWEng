@@ -11,6 +11,7 @@ class User(db.Model):
     passwordResetTimer = db.Column(db.Integer, unique=False, nullable=True, default=-1)
     highPermissionLevel = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     isOffice = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    userData = db.Column(db.Text, unique=False, nullable=True)
     def __repr__(self):
         return '<User %r>' % self.username
 

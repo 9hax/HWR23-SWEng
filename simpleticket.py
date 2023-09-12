@@ -268,9 +268,34 @@ def changeSettings():
             try:
                 user.modify_user_password(g.current_user.id, user.hashPassword(request.form["password"]))
             except sqlalchemy.exc.IntegrityError:
-                return render_template('account-settings.html', message = lang["user-modify-error"])
+                return render_template('account-settings.html', message = lang["user-modify-error"], userData = user.get_user_data(g.current_user.id))
             return redirect(url_for('home'))
-        return render_template('account-settings.html')
+        return render_template('account-settings.html', userData = user.get_user_data(g.current_user.id))
+    else:
+        abort(403)
+
+@app.route('/account-settings-data', methods=['POST'])
+def updateUserData():
+    if "login" in session.keys() and session['login']:
+        if user.verify_password(g.current_user.id, request.form["passwordValidation"]):
+            try:
+                user.set_user_data(
+                    g.current_user.id, 
+                    request.form["firstName"],
+                    request.form["age"],
+                    request.form["address"],
+                    request.form["sv"],
+                    request.form["taxClass"],
+                    request.form["gender"],
+                    request.form["workingPlace"],
+                    )
+            except sqlalchemy.exc.IntegrityError:
+                return render_template('account-settings.html', message = lang["user-modify-error"])
+            except KeyError as e:
+                print (e)
+            return redirect(url_for('home'))
+        else:
+            abort(403)
     else:
         abort(403)
 

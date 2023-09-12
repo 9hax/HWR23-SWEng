@@ -32,6 +32,14 @@ def verify_login(u, p):
 
     return False
 
+def verify_password(uid, p):
+    potential_user = get_user(uid)
+    if potential_user:
+        if bcrypt.checkpw(p.encode('utf-8'), potential_user.password.encode('utf-8')):
+            return True
+
+    return False
+
 def hashPassword(password):
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt(12)).decode()
 
@@ -40,6 +48,22 @@ def get_userid(username):
 
 def get_user(userid):
     return m.User.query.get(userid)
+
+def get_user_data(userid):
+    return json.loads(m.User.query.get(userid).userData)
+
+def set_user_data(userid, fullname, age, address, taxnumber, taxclass, gender, employer):
+    newUserData={}
+    newUserData["fullname"] = fullname
+    newUserData["age"] = age
+    newUserData["address"] = address
+    newUserData["taxnumber"] = taxnumber
+    newUserData["taxclass"] = taxclass
+    newUserData["gender"] = gender
+    newUserData["employer"] = employer
+    modified_user = get_user(userid)
+    modified_user.userData = json.dumps(newUserData)
+    m.db.session.commit()
 
 def create_ticket(title, text, media, created_by, assigned_to):
     new_ticket = m.Ticket()
