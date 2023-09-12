@@ -243,9 +243,9 @@ def addOffice():
                 user.create_user(str.lower(request.form["username"]), request.form["fullname"], request.form["email"], user.hashPassword(request.form["password"]), 
                                  highPermissionLevel=False, isOffice = True)
             except sqlalchemy.exc.IntegrityError:
-                return render_template('user-signup.html', perms = lang["low-perms"], message = lang["user-create-error"])
+                return render_template('user-signup.html', perms = "Office", message = lang["user-create-error"])
             return redirect(url_for('login'))
-        return render_template('user-signup.html', perms = lang["low-perms"])
+        return render_template('user-signup.html', perms = "Office")
     else:
         abort(403)
         
@@ -281,13 +281,13 @@ def updateUserData():
             try:
                 user.set_user_data(
                     g.current_user.id, 
-                    request.form["firstName"],
+                    request.form["fullname"],
                     request.form["age"],
                     request.form["address"],
-                    request.form["sv"],
-                    request.form["taxClass"],
+                    request.form["taxnumber"],
+                    request.form["taxclass"],
                     request.form["gender"],
-                    request.form["workingPlace"],
+                    request.form["employer"],
                     )
             except sqlalchemy.exc.IntegrityError:
                 return render_template('account-settings.html', message = lang["user-modify-error"])
@@ -295,7 +295,7 @@ def updateUserData():
                 print (e)
             return redirect(url_for('home'))
         else:
-            abort(403)
+            return render_template('account-settings.html', message = lang["user-modify-error"], userData = request.form)
     else:
         abort(403)
 

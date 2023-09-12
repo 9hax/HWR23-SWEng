@@ -14,19 +14,20 @@
                         value="{{"Elend, Weinstrasse 15"}}">
                         <label class="mdl-textfield__label" for="adressOffice">{{lang["adressOffice"]}}</label>
                     </div>
+                    <p style="color:#33e8ff">{{lang["openingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" id="openingTime" name="openingTime" >
-                        <label class="mdl-textfield__label" for="openingTime">{{lang["openingTime"]}}</label>
+                        <input class="mdl-textfield__input" type="time" name="openingTime">
                     </div>
+                    <p style="color:#33e8ff">{{lang["closingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" id="closingTime" name="closingTime">
-                        <label class="mdl-textfield__label" for="closingTime">{{lang["closingTime"]}}</label>
+                        <input class="mdl-textfield__input" type="time" name="closingTime">
                     </div>
                 {% else %}
+                <div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="firstName" name="firstName" 
+                        <input class="mdl-textfield__input" type="text" id="fullname" name="fullname" 
                         value="{{userData['fullname']}}">
-                        <label class="mdl-textfield__label" for="firstName">{{lang["fullname"]}}</label>
+                        <label class="mdl-textfield__label" for="fullname">{{lang["fullname"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="age" name="age" 
@@ -39,19 +40,19 @@
                         <label class="mdl-textfield__label" for="address">{{lang["address"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="sv" name="sv" 
+                        <input class="mdl-textfield__input" type="text" id="taxnumber" name="taxnumber" 
                         value="{{userData['taxnumber']}}">
-                        <label class="mdl-textfield__label" for="sv">{{lang["sv"]}}</label>
+                        <label class="mdl-textfield__label" for="taxnumber">{{lang["sv"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <select class="mdl-textfield__input" id="taxClass" name="taxClass">
+                        <select class="mdl-textfield__input" id="taxclass" name="taxclass">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
                             <option>5</option>
                         </select>
-                        <label class="mdl-textfield__label" for="taxClass">{{lang["taxClass"]}}</label>
+                        <label class="mdl-textfield__label" for="taxclass">{{lang["taxClass"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <select class="mdl-textfield__input" id="gender" name="gender">
@@ -62,10 +63,11 @@
                         <label class="mdl-textfield__label" for="gender">{{lang["gender"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="workingPlace" name="workingPlace" 
+                        <input class="mdl-textfield__input" type="text" id="employer" name="employer" 
                         value="{{userData['employer']}}">
-                        <label class="mdl-textfield__label" for="workingPlace">{{lang["workingPlace"]}}</label>
+                        <label class="mdl-textfield__label" for="employer">{{lang["workingPlace"]}}</label>
                     </div>
+                </div>
                 {% endif %}
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input class="mdl-textfield__input" onkeyup="success()" type="password" id="passwordValidation" name="passwordValidation" >

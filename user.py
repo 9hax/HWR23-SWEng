@@ -29,7 +29,6 @@ def verify_login(u, p):
     if potential_user:
         if bcrypt.checkpw(p.encode('utf-8'), potential_user.password.encode('utf-8')):
             return potential_user
-
     return False
 
 def verify_password(uid, p):
@@ -37,7 +36,6 @@ def verify_password(uid, p):
     if potential_user:
         if bcrypt.checkpw(p.encode('utf-8'), potential_user.password.encode('utf-8')):
             return True
-
     return False
 
 def hashPassword(password):
@@ -50,7 +48,8 @@ def get_user(userid):
     return m.User.query.get(userid)
 
 def get_user_data(userid):
-    return json.loads(m.User.query.get(userid).userData)
+    data = m.User.query.get(userid).userData
+    return json.loads(data if data else "{}" )
 
 def set_user_data(userid, fullname, age, address, taxnumber, taxclass, gender, employer):
     newUserData={}
