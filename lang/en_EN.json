@@ -72,12 +72,14 @@
     "age":"Age", 
     "adress":"Adress", 
     "taxClass":"Tax Class", 
-    "Mann":"Men", 
-    "Frau":"Female", 
-    "Divers": "Divers", 
+    "gender-male":"Male", 
+    "gender-female":"Female", 
+    "gender-queer": "Queer", 
+    "gender-no-selection": "Not applicable",
     "workingPlace":"Workingplace", 
     "openingTime": "Opened from", 
     "closingTime": "Closed from", 
     "adressOffice": "Adress", 
-    "officeName": "Name of Office"
+    "officeName": "Name of Office",
+    "dateofbirth": "Date of Birth"
 }
