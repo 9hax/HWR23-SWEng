@@ -5,6 +5,7 @@ import time
 import datetime
 import random
 import string
+import re
 from simpleticket import m
 
 try:
@@ -51,18 +52,88 @@ def get_user_data(userid):
     data = m.User.query.get(userid).userData
     return json.loads(data if data else "{}" )
 
-def set_user_data(userid, fullname, age, address, taxnumber, taxclass, gender, employer):
+def set_user_data_validate(userid, userData):
     newUserData={}
-    newUserData["fullname"] = fullname
-    newUserData["age"] = age
-    newUserData["address"] = address
-    newUserData["taxnumber"] = taxnumber
-    newUserData["taxclass"] = taxclass
-    newUserData["gender"] = gender
-    newUserData["employer"] = employer
+    if validateFullname(userData["fullname"]):
+        newUserData["fullname"] =  userData["fullname"]
+    else: 
+        raise ValueError("Invalid fullname")
+    
+    if validateDateofbirth(userData["dateofbirth"]):
+        newUserData["dateofbirth"] =  userData["dateofbirth"]
+    else: 
+        raise ValueError("Invalid dateofbirth")
+    
+    if validateAddress(userData["address"]):
+        newUserData["address"] =  userData["address"]
+    else: 
+        raise ValueError("Invalid address")
+    
+    taxnumber= userData["taxnumber"]
+    taxnumber = taxnumber.replace(" ","")
+
+    if validateTaxnumber(taxnumber):
+        newUserData["taxnumber"] =  taxnumber
+    else: 
+        raise ValueError("Invalid taxnumber")
+
+    if validateTaxclass(userData["taxclass"]):
+        newUserData["taxclass"] =  userData["taxclass"]
+    else: 
+        raise ValueError("Invalid taxclass")
+    
+    if validateGender(userData["gender"]):
+        newUserData["gender"] =  userData["gender"]
+    else: 
+        raise ValueError("Invalid gender")
+    
+    if validateEmployer(userData["employer"]):
+        newUserData["employer"] =  userData["employer"]
+    else: 
+        raise ValueError("Invalid employer")
+     
     modified_user = get_user(userid)
     modified_user.userData = json.dumps(newUserData)
     m.db.session.commit()
+
+def validateFullname(name):
+    if " " not in name:
+        return False
+    if name.__len__() < 3:
+        return False
+    return True
+    
+def validateDateofbirth(dateofbirth):
+    pattern = "^(19\d{2}|20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
+    return  re.match(pattern,dateofbirth)
+
+def validateAddress(address):
+    return True
+
+def validateTaxnumber(taxnumber):
+    try: 
+        number = int(taxnumber)
+    except: 
+        return False
+    
+    if taxnumber.__len__() != 11:
+        return False
+    return True
+
+def validateTaxclass(taxclass):
+    
+    if taxclass.__len__() != 1:
+        return False
+    return True
+
+def validateGender(gender):
+    validoptions = ["gender-male","gender-female","gender-queer","gender-no-selection"]
+    if gender in validoptions:
+        return True
+    return False
+
+def validateEmployer(employer):
+    return True
 
 def create_ticket(title, text, media, created_by, assigned_to):
     new_ticket = m.Ticket()

@@ -44,6 +44,7 @@
     "create": "Create",
     "user-create-error": "Error while creating user. Is there a user with this name already present?",
     "user-modify-error": "Error while modifying user. Is the password valid?",
+    "user-modify-invalid": "Error while modifying user. The following field is invalid:",
     "user-not-found-error": "This user cannot be found.",
     "low-perms": "Default User",
     "high-perms": "Administrator",
