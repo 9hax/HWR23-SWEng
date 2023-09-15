@@ -71,7 +71,7 @@
     "save-as-note": "Als Notiz speichern", 
     "user-data-update": "Benutzerdaten aktualisieren", 
     "age":"Alter", 
-    "adress":"Adresse", 
+    "address":"Adresse", 
     "taxClass":"Steuerklasse", 
     "gender-male":"männlich", 
     "gender-female":"weiblich", 
@@ -80,7 +80,8 @@
     "workingPlace":"Arbeitsplatz", 
     "openingTime": "Geöffnet von", 
     "closingTime": "Geschlossen von", 
-    "adressOffice": "Adresse", 
+    "adressOffice": "Adresse des Arbeitgebers", 
     "officeName": "Name der Behörde",
-    "dateofbirth": "Geburtsdatum"
+    "dateofbirth": "Geburtsdatum",
+    "taxnumber": "Steuerversicherungsnummer"
 }
