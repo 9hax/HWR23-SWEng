@@ -278,17 +278,19 @@ def changeSettings():
 def updateUserData():
     if "login" in session.keys() and session['login']:
         if user.verify_password(g.current_user.id, request.form["passwordValidation"]):
+            myForm = request.form.to_dict()
+            myForm["passwordValidation"] = ''
             try:
-                user.set_user_data_validate(g.current_user.id, request.form)
+                user.set_user_data_validate(g.current_user.id, myForm)
             except sqlalchemy.exc.IntegrityError:
                 return render_template('account-settings.html', message = lang["user-modify-error"])
             except KeyError as e:
                 print (e)
             except ValueError as e:
-                 return render_template('account-settings.html', message = lang["user-modify-invalid"] + " " + str(e), userData = request.form)
+                 return render_template('account-settings.html', message = lang["user-modify-invalid"] + " " + str(e), userData = myForm)
             return redirect(url_for('home'))
         else:
-            return render_template('account-settings.html', message = lang["user-modify-error"], userData = request.form)
+            return render_template('account-settings.html', message = lang["user-modify-error"], userData = myForm)
     else:
         abort(403)
 

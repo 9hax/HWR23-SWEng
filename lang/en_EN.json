@@ -71,7 +71,7 @@
     "save-as-note": "Save as Note", 
     "user-data-update": "Update User Data", 
     "age":"Age", 
-    "adress":"Adress", 
+    "address":"Adress", 
     "taxClass":"Tax Class", 
     "gender-male":"Male", 
     "gender-female":"Female", 
@@ -82,5 +82,6 @@
     "closingTime": "Closed from", 
     "adressOffice": "Adress", 
     "officeName": "Name of Office",
-    "dateofbirth": "Date of Birth"
+    "dateofbirth": "Date of Birth", 
+    "taxnumber": "Taxnumber"
 }
