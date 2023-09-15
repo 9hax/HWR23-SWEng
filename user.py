@@ -121,7 +121,8 @@ def validateTaxnumber(taxnumber):
     return True
 
 def validateTaxclass(taxclass):
-    
+    if taxclass not in ("1", "2", "3", "4", "5"):
+        return False
     if taxclass.__len__() != 1:
         return False
     return True
