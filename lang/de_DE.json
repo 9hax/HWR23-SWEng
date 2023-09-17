@@ -83,5 +83,10 @@
     "adressOffice": "Adresse des Arbeitgebers", 
     "officeName": "Name der Behörde",
     "dateofbirth": "Geburtsdatum",
-    "taxnumber": "Steuerversicherungsnummer"
+    "taxnumber": "Steuerversicherungsnummer", 
+    "lengthTaxNumber": "Die Steuerversciherungsnummer muss 11 Zeichen lang sein", 
+    "addOptional": "Ein optionales Feld hinzufügen", 
+    "add":"Hinzufügen", 
+    "nameForOptionalField": "Name des Feldes", 
+    "dataForOptionalField": "Daten"
 }

@@ -12,6 +12,7 @@ class User(db.Model):
     highPermissionLevel = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     isOffice = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     userData = db.Column(db.Text, unique=False, nullable=True)
+    optionalData = db.Column(db.Text, unique=False, nullable=True)
     def __repr__(self):
         return '<User %r>' % self.username
 

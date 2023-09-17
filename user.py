@@ -74,8 +74,8 @@ def set_user_data_validate(userid, userData):
 
     if validateTaxnumber(taxnumber):
         newUserData["taxnumber"] =  taxnumber
-    else: 
-        raise ValueError("Invalid taxnumber")
+    else: raise ValueError("Invalid taxnumber")
+        
 
     if validateTaxclass(userData["taxclass"]):
         newUserData["taxclass"] =  userData["taxclass"]
@@ -95,7 +95,15 @@ def set_user_data_validate(userid, userData):
     modified_user = get_user(userid)
     modified_user.userData = json.dumps(newUserData)
     m.db.session.commit()
+    
+def set_optional_user_data_validate(userid, optionalData, nameOfOptional, dataOfOptional):
+    newOptionalUserData={}
+    newOptionalUserData[nameOfOptional] =  optionalData[dataOfOptional]
 
+    modified_user = get_user(userid)
+    modified_user.optionalData = json.dumps(newOptionalUserData)
+    m.db.session.commit()
+    
 def validateFullname(name):
     if " " not in name:
         return False
@@ -123,7 +131,7 @@ def validateTaxnumber(taxnumber):
 def validateTaxclass(taxclass):
     if taxclass not in ("1", "2", "3", "4", "5"):
         return False
-    if taxclass.__len__() != 1:
+    if taxclass.__len__() == 11:
         return False
     return True
 

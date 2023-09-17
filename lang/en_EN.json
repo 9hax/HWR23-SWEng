@@ -83,5 +83,10 @@
     "adressOffice": "Adress", 
     "officeName": "Name of Office",
     "dateofbirth": "Date of Birth", 
-    "taxnumber": "Taxnumber"
+    "taxnumber": "Taxnumber", 
+    "lengthTaxNumber": "The taxnumber should be 11 characters long", 
+    "addOptional": "Add optional field", 
+    "add": "Add", 
+    "nameForOptionalField": "Name of the field", 
+    "dataForOptionalField": "Data"
 }

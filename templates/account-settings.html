@@ -1,9 +1,9 @@
 {% set title = lang["account-settings"]%} {% extends "master.html" %} {% block body %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script type="text/javascript" src="https://raw.githubusercontent.com/UgoSansH/mdl-datepicker/master/dist/material-datepicker.min.js"></script>
-    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%; max-width: 30em;">
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%; width:100%;">
         <p>
-            <form action="/account-settings-data" method="POST">
+            <form action="/account-settings-data" method="POST" id="newDataSubmitionForm">
                 {% if message %}
                     {{message}}
                 {% endif %}
@@ -11,46 +11,46 @@
                     {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="officeName" name="officeName" 
-                        value="{{'Behörde Elend Sachsen'}}">
+                        value="{{'Behörde Elend Sachsen'}}"required>
                         <label class="mdl-textfield__label" for="firstName">{{lang["officeName"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="adressOffice" name="adressOffice" 
-                        value="{{'Elend, Weinstrasse 15'}}">
+                        <required class="mdl-textfield__input" type="text" id="adressOffice" name="adressOffice" 
+                        value="{{'Elend, Weinstrasse 15'}}" required>
                         <label class="mdl-textfield__label" for="adressOffice">{{lang["adressOffice"]}}</label>
                     </div>
                     <p style="color:#33e8ff">{{lang["openingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" name="openingTime">
+                        <input class="mdl-textfield__input" type="time" name="openingTime" required>
                     </div>
                     <p style="color:#33e8ff">{{lang["closingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" name="closingTime">
+                        <input class="mdl-textfield__input" type="time" name="closingTime" required>
                     </div>
                 {% else %}
                 <div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="fullname" name="fullname" 
-                        value="{{userData['fullname']}}" maxlength="64">
+                        value="{{userData['fullname']}}" maxlength="64required">
                         <label class="mdl-textfield__label" for="fullname">{{lang["fullname"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="date" min="1900-01-01" id="dateofbirth" name="dateofbirth" 
-                        value="{{userData['dateofbirth']}}">
+                        value="{{userData['dateofbirth']}}" required>
                         <label class="mdl-textfield__label" for="dateofbirth">{{lang["dateofbirth"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="address" name="address" 
-                        value="{{userData['address']}}">
+                        value="{{userData['address']}}" required>
                         <label class="mdl-textfield__label" for="address">{{lang["address"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="number" maxlength="11" id="taxnumber" name="taxnumber" 
-                        value="{{userData['taxnumber']}}">
-                        <label class="mdl-textfield__label" for="taxnumber">{{lang["taxnumber"]}}</label>
+                        value="{{userData['taxnumber']}}" maxlength="11" required>
+                        <label class="mdl-textfield__label" for="taxnumber" id="labelTaxnumber">{{lang["taxnumber"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <select class="mdl-textfield__input" id="taxclass" name="taxclass">
+                        <select class="mdl-textfield__input" id="taxclass" name="taxclass" required>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -70,37 +70,67 @@
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="employer" name="employer" 
-                        value="{{userData['employer']}}">
+                        value="{{userData['employer']}}" required>
                         <label class="mdl-textfield__label" for="employer">{{lang["workingPlace"]}}</label>
                     </div>
                 </div>
                 {% endif %}
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" onkeyup="success()" type="password" id="passwordValidation" name="passwordValidation" >
+                    <input class="mdl-textfield__input" onkeyup="success('passwordValidation','update-account-submit' )" type="password" id="passwordValidation" name="passwordValidation" required>
                     <label class="mdl-textfield__label" for="passwordValidation">{{lang["password"]}}</label>
                 </div>
                 <button type="submit" id="update-account-submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" disabled>
                     {{lang["save"]}}
                 </button>
-                <script>
-                    function success() {
-                        if(document.getElementById("passwordValidation").value==="") { 
-                            document.getElementById('update-account-submit').disabled = true; 
-                        } else { 
-                            document.getElementById('update-account-submit').disabled = false;
-                        }
-                    }
-                </script>
+                
             </form>
         </p>
     </div>
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
         <p>
-            <form action="" method="POST">
+            {{lang["addOptional"]}}
+            <form action="" method="POST" id="optionalDataSubmitionForm" >
+                    <div id="optionalFields">
+                        {% if optionalData is not defined %}
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input nameForOptionalField" id="nameForOptionalField" type="text" name="nameForOptionalField" required>
+                                <label class="mdl-textfield__label nameForOptionalField" for="nameForOptionalField">{{lang["nameForOptionalField"]}}</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input dataForOptionalField" type="text" id="dataForOptionalField" name="dataForOptionalField"  required>
+                                <label class="mdl-textfield__label dataForOptionalField" for="{{dataForOptionalField}}">{{lang["dataForOptionalField"]}}</label>
+                            </div>
+                        {% else %}
+                            {% for nameForOptionalField, dataForOptionalField in optionalData.items() %}
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input nameForOptionalField" id="{{nameForOptionalField}}" type="text" value="{{nameForOptionalField}}" name="nameForOptionalField" required>
+                                    <label class="mdl-textfield__label nameForOptionalField" for="{{nameForOptionalField}}">{{lang["nameForOptionalField"]}}</label>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input dataForOptionalField" type="text" id="{{dataForOptionalField}}" name="dataForOptionalField" value="{{dataForOptionalField}}"required>
+                                    <label class="mdl-textfield__label dataForOptionalField" for="{{dataForOptionalField}}">{{lang["dataForOptionalField"]}}</label>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" onkeyup="success('passwordValidationOptional','add-optional-field' )" type="password" id="passwordValidationOptional" name="passwordValidation" required>
+                    <label class="mdl-textfield__label" for="passwordValidationOptional">{{lang["password"]}}</label>
+                </div>
+                <button type="submit" id="add-optional-field" onClick="addOptionalField()" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" disabled>
+                    {{lang["add"]}}
+                </button>
+            </form>
+        </p>
+    </div>
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
+        <p>
+            <form action="/account-settings-data" id="setNewPassword">
                 {{lang["password-update"]}}
                 <div id="name">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="password" id="first" name="password">
+                        <input class="mdl-textfield__input" type="password" id="first" name="password" >
                         <label class="mdl-textfield__label" for="first">{{lang["password"]}}</label>
                     </div>
                 </div>
@@ -111,4 +141,43 @@
             </form>
         </p>
     </div>
+        
+    <script>
+        function success(componentID, passwordButtonID) {
+            if(document.getElementById(componentID).value==="" ) { 
+                document.getElementById(passwordButtonID).disabled = true; 
+            } else { 
+                document.getElementById(passwordButtonID).disabled = false;
+            }
+        }
+        document.getElementById('newDataSubmitionForm').addEventListener('submit', function(event) {
+            const taxnumberInput = document.getElementById('taxnumber');
+            const labelTaxNumber = document.getElementById("labelTaxnumber")
+
+            const taxNumberSize = 11; 
+            if (taxnumberInput.value.length !== taxNumberSize) {
+                event.preventDefault(); // Prevent form submission
+                labelTaxNumber.innerHTML = "The tax number should be 11 characters long"
+                labelTaxNumber.style.color = 'red'
+                throw new TypeError("Invalid taxnumber")
+            }
+        });
+        function addOptionalField(){
+            const addOptionalButton = document.getElementById('add-optional-field');
+        
+            if(document.querySelectorAll(`.${dataForOptionalField}`).length > 2){
+                const newOptionalDiv = `
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input nameForOptionalField" id="{{nameForOptionalField}}" type="text" value="{{nameForOptionalField}}" name="nameForOptionalField" required>
+                    <label class="mdl-textfield__label nameForOptionalField" for="{{nameForOptionalField}}">{{nameForOptionalField}}</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input dataForOptionalField" type="text" id="{{dataForOptionalField}}" name="dataForOptionalField" value="{{dataForOptionalField}}" required>
+                    <label class="mdl-textfield__label dataForOptionalField" for="{{dataForOptionalField}}">{{dataForOptionalField}}</label>
+                </div>`
+                document.getElementById("optionalFields").insertAdjacentHTML('beforeend', newOptionalDiv);
+            };
+        }
+    </script>
+
 {% endblock %}
