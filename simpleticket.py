@@ -266,7 +266,7 @@ def changeSettings():
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
             try:
-                user.modify_user_password(g.current_user.id, user.hashPassword(request.form["passwordValidation"]))
+                user.modify_user_password(g.current_user.id, user.hashPassword(request.form["password"]))
             except sqlalchemy.exc.IntegrityError:
                 return render_template('account-settings.html', message = lang["user-modify-error"], userData = user.get_user_data(g.current_user.id))
             return redirect(url_for('home'))
@@ -289,26 +289,6 @@ def updateUserData():
             return redirect(url_for('home'))
         else:
             return render_template('account-settings.html', message = lang["user-modify-error"], userData = request.form)
-    else:
-        abort(403)
-@app.route('/account-settings-data', methods=['POST'])
-def updateOptionalData():
-    if "login" in session.keys() and session['login']:
-        if user.verify_password(g.current_user.id, request.form["passwordValidationOptional"]):
-            myForm = request.form["optionalDataSubmitionForm"].to_dict()
-            myForm["passwordValidationOptional"] = ''
-        
-            try:
-                user.set_optional_user_data_validate(g.current_user.id, myForm, request.form["nameForOptionalField"], request.form["dataForOptionalField"])
-            except sqlalchemy.exc.IntegrityError:
-                return render_template('account-settings.html', message = lang["user-modify-error"])
-            except KeyError as e:
-                print (e)
-            except ValueError as e:
-                return render_template('account-settings.html', message = lang["user-modify-invalid"] + " " + str(e), optionalData = myForm)
-            return redirect(url_for('home'))
-        else:
-            return render_template('account-settings.html', message = lang["user-modify-error"], optionalData = myForm)
     else:
         abort(403)
 
