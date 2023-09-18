@@ -54,7 +54,7 @@ def get_user_data(userid):
 
 def set_user_data_validate(userid, userData):
     newUserData={}
-    if validateFullname(userData["fullname"]):
+    if validateName(userData["fullname"]):
         newUserData["fullname"] =  userData["fullname"]
     else: 
         raise ValueError("Invalid fullname")
@@ -95,6 +95,32 @@ def set_user_data_validate(userid, userData):
     modified_user = get_user(userid)
     modified_user.userData = json.dumps(newUserData)
     m.db.session.commit()
+
+def set_office_data_validate(userid, userData):
+    newUserData={}
+    if validateName(userData["officeName"]):
+        newUserData["officeName"] =  userData["officeName"]
+    else: 
+        raise ValueError("Invalid office name")
+
+    if validateAddress(userData["address"]):
+        newUserData["address"] =  userData["address"]
+    else: 
+        raise ValueError("Invalid address")
+    
+    if validateOpeningAndClosingTime(userData["openingTime"]):
+        newUserData["openingTime"] =  userData["openingTime"]
+    else: 
+        raise ValueError("Invalid opening time")
+    
+    if validateOpeningAndClosingTime(userData["closingTime"]):
+        newUserData["closingTime"] =  userData["closingTime"]
+    else: 
+        raise ValueError("Invalid closing time")
+    
+    modified_user = get_user(userid)
+    modified_user.userData = json.dumps(newUserData)
+    m.db.session.commit()
     
 def set_optional_user_data_validate(userid, optionalData, nameOfOptional, dataOfOptional):
     newOptionalUserData={}
@@ -104,7 +130,7 @@ def set_optional_user_data_validate(userid, optionalData, nameOfOptional, dataOf
     modified_user.optionalData = json.dumps(newOptionalUserData)
     m.db.session.commit()
     
-def validateFullname(name):
+def validateName(name):
     if " " not in name:
         return False
     if name.__len__() < 3:
@@ -143,6 +169,11 @@ def validateGender(gender):
 
 def validateEmployer(employer):
     return True
+
+def validateOpeningAndClosingTime(time):
+    timePattern = "^(0\d|1\d|2[0-3]):([0-5]\d)$"
+    return re.match(timePattern, time)
+
 
 def create_ticket(title, text, media, created_by, assigned_to):
     new_ticket = m.Ticket()
