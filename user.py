@@ -102,9 +102,8 @@ def set_office_data_validate(userid, userData):
         newUserData["officeName"] =  userData["officeName"]
     else: 
         raise ValueError("Invalid office name")
-
-    if validateAddress(userData["address"]):
-        newUserData["address"] =  userData["address"]
+    if validateAddress(userData["addressOffice"]):
+        newUserData["addressOffice"] =  userData["addressOffice"]
     else: 
         raise ValueError("Invalid address")
     
