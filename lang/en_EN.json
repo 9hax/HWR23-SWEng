@@ -25,6 +25,7 @@
     "view-ticket": "Viewing ticket",
     "faq": "FAQ",
     "about": "About SimpleTicket",
+    "about-title": "About us",
     "about-text": "SimpleTicket is an easy to use Ticket Tracking System with very few requirements and fast loading times for teams of all sizes.<br>SimpleTicket has an Apache OpenSource license. For further information please visit the GitHub project site.",
     "version": "Version",
     "visit-github": "Open GitHub Page",
@@ -88,6 +89,5 @@
     "addOptional": "Add optional field", 
     "add": "Add", 
     "nameForOptionalField": "Name of the field", 
-    "dataForOptionalField": "Data",
-    "about-us": "About us"
+    "dataForOptionalField": "Data"
 }
