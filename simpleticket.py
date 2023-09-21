@@ -48,8 +48,8 @@ def global_template_vars():
         "lang": lang,
         "stversion": version,
         "current_user": g.current_user,
-        "ticket_list": m.Ticket.query.all(),
-        "ticket_replies": m.TicketReply.query.all(),
+        "ticket_list": m.Document.query.all(),
+        "ticket_replies": m.DocumentReply.query.all(),
         "ctime": time.ctime,
         "getTime": user.getTime,
         "hasValidReply": user.hasValidReply
@@ -95,21 +95,21 @@ def createTicket():
 # the page to view and edit tickets.
 @app.route('/view/<ticketid>', methods=['GET', 'POST'])
 def viewTicket(ticketid):
-    ticket = m.Ticket.query.filter_by(id = ticketid).first()
+    ticket = m.Document.query.filter_by(id = ticketid).first()
     if ticket == None:
         abort(404)
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
             ticket.assigned_to_id = request.form["new-assignee-id"]
             m.db.session.commit()
-        ticket_replies = m.TicketReply.query.filter_by(main_ticket = ticket)
+        ticket_replies = m.DocumentReply.query.filter_by(main_ticket = ticket)
         return render_template('ticket-view.html', ticket = ticket, replies = ticket_replies)
     else:
         abort(403)
 
 @app.route('/view/<ticketid>/close')
 def closeTicket(ticketid):
-    ticket = m.Ticket.query.filter_by(id = ticketid).first()
+    ticket = m.Document.query.filter_by(id = ticketid).first()
     if ticket == None:
         abort(404)
     if "login" in session.keys() and session['login']:
@@ -124,7 +124,7 @@ def closeTicket(ticketid):
 
 @app.route('/view/<ticketid>/reopen')
 def reopenTicket(ticketid):
-    ticket = m.Ticket.query.filter_by(id = ticketid).first()
+    ticket = m.Document.query.filter_by(id = ticketid).first()
     if ticket == None:
         abort(404)
     if "login" in session.keys() and session['login']:
@@ -139,7 +139,7 @@ def reopenTicket(ticketid):
 
 @app.route('/view/<ticketid>/hide')
 def hideTicket(ticketid):
-    ticket = m.Ticket.query.filter_by(id = ticketid).first()
+    ticket = m.Document.query.filter_by(id = ticketid).first()
     if ticket == None:
         abort(404)
     if "login" in session.keys() and session['login']:
@@ -154,7 +154,7 @@ def hideTicket(ticketid):
 
 @app.route('/view/<ticketid>/unhide')
 def unhideTicket(ticketid):
-    ticket = m.Ticket.query.filter_by(id = ticketid).first()
+    ticket = m.Document.query.filter_by(id = ticketid).first()
     if ticket == None:
         abort(404)
     if "login" in session.keys() and session['login']:

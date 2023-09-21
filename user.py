@@ -137,7 +137,7 @@ def validateEmployer(employer):
     return True
 
 def create_ticket(title, text, media, created_by, assigned_to):
-    new_ticket = m.Ticket()
+    new_ticket = m.Document()
     new_ticket.title = title
     new_ticket.is_open = True
     new_ticket.text = text
@@ -149,7 +149,7 @@ def create_ticket(title, text, media, created_by, assigned_to):
     m.db.session.commit()
 
 def create_ticket_reply(text, media, created_by, main_ticket_id, isNote = False):
-    new_ticket = m.TicketReply()
+    new_ticket = m.DocumentReply()
     new_ticket.text = text
     new_ticket.media = media
     new_ticket.isNote = isNote
@@ -192,7 +192,7 @@ def getTime(timestamp):
         return "Invalid time"
 
 def hasValidReply(ticketid):
-    ticketReplyList = m.TicketReply.query.filter_by(main_ticket_id = ticketid).all()
+    ticketReplyList = m.DocumentReply.query.filter_by(main_ticket_id = ticketid).all()
     for reply in ticketReplyList:
         if m.User.query.filter_by(id = reply.created_by_id).first().highPermissionLevel:
             return True
