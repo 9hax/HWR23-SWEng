@@ -89,5 +89,10 @@
     "add":"Hinzufügen", 
     "nameForOptionalField": "Name des Feldes", 
     "dataForOptionalField": "Daten", 
-    "department-search":"Suche deine Verwaltungsstelle"
+    "department-search":"Suche deine Verwaltungsstelle", 
+    "contactPerson": "Kontakt Person", 
+    "number": "Nummer", 
+    "name": "Name" , 
+    "documents": "Dokumente", 
+    "important-news": "Wichtig"
 }

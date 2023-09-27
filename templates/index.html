@@ -1,7 +1,6 @@
 {% set title = lang["home"] %} {% extends "master.html" %} {% block body %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col"  style="width:100%;">
     <p>
-{% if not g.current_user.isOffice %}
     <p>
         <div class="mdl-textfield mdl-js-textfield" style="width: 100%; display: flex; align-items: center;">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" >
@@ -14,13 +13,12 @@
                 {%for data in officeData%}
                     <li class="mdl-list__item" style="padding-bottom:0;padding-top:0;">
                         <span class="mdl-list__item-primary-content" style="padding-bottom:0;padding-top:0;">
-                            <a class="option" id="office{{data["username"]}}" href="/office/{{data["officeName"] | replace(' ', '') | lower }}" style="padding-right: 10%;padding-left: 10%; padding-bottom: 1%;padding-top: 1%;text-decoration: none; display: block;text-align:center;margin:auto;  " onmouseover="this.style.backgroundColor='#DCDFE1';" onmouseout="this.style.backgroundColor='';">{{data["officeName"]}}</a>
+                            <a class="option" id="office{{data["username"]}}" href="/office/{{data["username"] | replace(' ', '') | lower }}" style="padding-right: 10%;padding-left: 10%; padding-bottom: 1%;padding-top: 1%;text-decoration: none; display: block;text-align:center;margin:auto;  " onmouseover="this.style.backgroundColor='#DCDFE1';" onmouseout="this.style.backgroundColor='';">{{data["officeName"]}}</a>
                         </span>
                     </li>
                 {%endfor%}
         </div>
-‚    </p>
-    {% endif %}
+    </p>
     <p>
         {{lang["open-tickets"]}}
         <table id="dataTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%;">

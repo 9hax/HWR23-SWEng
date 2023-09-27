@@ -90,6 +90,10 @@
     "add": "Add", 
     "nameForOptionalField": "Name of the field", 
     "dataForOptionalField": "Data",
-    "department-search":"Search for your department"
-
+    "department-search":"Search for your department",
+    "contactPerson": "Contact person", 
+    "number": "Number", 
+    "name": "Name", 
+    "documents":"Documents", 
+    "important-news": "News"
 }

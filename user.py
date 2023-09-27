@@ -54,7 +54,7 @@ def get_user_data(userid):
 
 def set_user_data_validate(userid, userData):
     newUserData={}
-    if validateFullname(userData["fullname"]):
+    if validateName(userData["fullname"]):
         newUserData["fullname"] =  userData["fullname"]
     else: 
         raise ValueError("Invalid fullname")
@@ -96,7 +96,48 @@ def set_user_data_validate(userid, userData):
     modified_user.userData = json.dumps(newUserData)
     m.db.session.commit()
 
-def validateFullname(name):
+def set_office_data_validate(officeid, userData):
+    newOfficeData={}
+    if validateName(userData["officeName"]):
+        newOfficeData["officeName"] =  userData["officeName"]
+    else: 
+        raise ValueError("Invalid name")
+    
+    if validateAddress(userData["adressOffice"]):
+        newOfficeData["adressOffice"] =  userData["adressOffice"]
+    else: 
+        raise ValueError("Invalid address")
+    
+    if validateTime(userData["openingTime"]):
+        newOfficeData["openingTime"] =  userData["openingTime"]
+    else: 
+        raise ValueError("Invalid time")
+    
+    if validateTime(userData["closingTime"]):
+        newOfficeData["closingTime"] =  userData["closingTime"]
+    else: 
+        raise ValueError("Invalid time")
+        
+    if validateName(userData["contactPersonName"]):
+        newOfficeData["contactPersonName"] =  userData["contactPersonName"]
+    else: 
+        raise ValueError("Invalid name")
+    
+    if validateEmail(userData["contactPersonEmail"]):
+        newOfficeData["contactPersonEmail"] =  userData["contactPersonEmail"]
+    else: 
+        raise ValueError("Invalid email")
+    
+    if validateNumber(userData["contactPersonNumber"]):
+        newOfficeData["contactPersonNumber"] =  userData["contactPersonNumber"]
+    else: 
+        raise ValueError("Invalid number")
+    print(newOfficeData)
+     
+    modified_user = get_user(officeid)
+    modified_user.userData = json.dumps(newOfficeData)
+    m.db.session.commit()
+def validateName(name:str):
     if " " not in name:
         return False
     if name.__len__() < 3:
@@ -108,6 +149,22 @@ def validateDateofbirth(dateofbirth):
     return  re.match(pattern,dateofbirth)
 
 def validateAddress(address):
+    return True
+
+def validateTime(time):
+    pattern = '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+    return  re.match(pattern,time)
+
+def validateEmail(email):
+    if "@" in email:
+        return True
+    else: return False
+def validateNumber(number):
+    if not number.isdigit():
+        print(number)
+        return False
+    print(number)
+
     return True
 
 def validateTaxnumber(taxnumber):
@@ -197,17 +254,36 @@ def hasValidReply(ticketid):
         if m.User.query.filter_by(id = reply.created_by_id).first().highPermissionLevel:
             return True
     return False
-def getOfficeData():
+def getAllOfficesData():
     officeList = m.User.query.filter_by(isOffice = True).all()
     officeData = []
     
     for office in officeList: 
         d = json.loads(office.userData)
         d["username"] = office.username
+        d["id"] = office.id
         officeData.append(d)
-    
     return officeData
 
+def getOfficeData(username):
+    office = m.User.query.filter_by(username = username).first()
+    officeData = []
+    
+    if office is None:
+        raise ValueError("Invalid office")
+    else:
+        d = json.loads(office.userData)
+        d["username"] = office.username
+        d["id"] = office.id
+        officeData.append(d)
+    return officeData
+def getDocumentsNames(officeid):
+    documents = m.Ticket.query.filter_by(created_by_id = officeid).all()
+    documentsListNames = []
+    for document in documents:
+        title = json.dumps(document.title)
+        documentsListNames.append(title)
+    return documentsListNames
 
     
    

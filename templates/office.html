@@ -1,8 +1,52 @@
-{% set title = lang["about"] %}
-{% extends "master.html" %}
-{% block body %}
-<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
-  h
-</div>
+{% set title = lang["account-settings"]%} {% extends "master.html" %} {% block body %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script type="text/javascript" src="https://raw.githubusercontent.com/UgoSansH/mdl-datepicker/master/dist/material-datepicker.min.js"></script>
 
+<h3 style="margin-left:5%;">{{office["officeName"]}}</h3>
+
+<div style="display: flex; align-items: center; width: 100%; margin: auto;">
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width: 50%;">
+        <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+            <div style="display: flex; align-items: center;">
+                <p><strong>{{ lang["adress"] }}: </strong></p><p>{{ office["adressOffice"] }}</p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <p><strong>{{ lang["openingTime"] }}: </strong></p><p>{{ office["openingTime"] }}</p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <p><strong>{{ lang["closingTime"] }}: </strong></p><p>{{ office["closingTime"] }}</p>
+            </div>
+        </section>
+    </div>
+    <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="width: 50%; background-color: #6C797F; color: white;">
+        <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+            <div style="display: flex; align-items: center;">
+                <p><strong>{{ lang["name"] }}: </strong></p><p>{{ office["contactPersonName"] }}</p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <p><strong>{{ lang["email-address"] }}: </strong></p><p>{{ office["contactPersonEmail"] }}</p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <p><strong>{{ lang["number"] }}: </strong></p><p>{{ office["contactPersonNumber"] }}</p>
+            </div>
+        </section>
+    </div>
+    {% if "news" in office %}
+        <h5 style="margin-left:5%;padding-bottom:3%">{{lang["important-news"]}}</h5>
+        <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="width: 50%; background-color: #6C797F; color: white;">
+            <p>{{ office["news"]}}</p>
+        </div>
+    {% endif%}
+</div>
+{% if  documents | length == 0  %}
+    <h5 style="margin-left:5%;padding-bottom:3%">{{lang["documents"]}}</h5>
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+        {% for name in documents%}
+            <p><strong>{{name}}: </strong></p>
+        {% endfor %}
+    </div>
+{% endif%}
+
+    
+        
 {% endblock %}
