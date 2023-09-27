@@ -304,3 +304,17 @@ def adminUserSettigs():
         return render_template('admin-settings.html')
     else:
         abort(403)
+        
+@app.route('/office/<useroffice>')
+def viewOffice(useroffice):
+    offices = m.User.query.filter_by(username = useroffice).first()
+    if offices == None:
+        abort(404)
+    if "login" in session.keys() and session['login']:
+        return render_template('office.html')
+    else:
+        abort(403)
+
+
+      
+            

@@ -202,7 +202,12 @@ def getOfficeData():
     officeData = []
     
     for office in officeList: 
-        officeData.append(json.loads(office.userData))
+        d = json.loads(office.userData)
+        d["username"] = office.username
+        officeData.append(d)
     
     return officeData
+
+
+    
    
