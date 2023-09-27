@@ -197,3 +197,12 @@ def hasValidReply(ticketid):
         if m.User.query.filter_by(id = reply.created_by_id).first().highPermissionLevel:
             return True
     return False
+def getOfficeData():
+    officeList = m.User.query.filter_by(isOffice = True).all()
+    officeData = []
+    
+    for office in officeList: 
+        officeData.append(json.loads(office.userData))
+    
+    return officeData
+   

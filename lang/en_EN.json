@@ -89,5 +89,7 @@
     "addOptional": "Add optional field", 
     "add": "Add", 
     "nameForOptionalField": "Name of the field", 
-    "dataForOptionalField": "Data"
+    "dataForOptionalField": "Data",
+    "department-search":"Search for your department"
+
 }

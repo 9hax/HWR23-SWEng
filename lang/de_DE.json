@@ -88,5 +88,6 @@
     "addOptional": "Ein optionales Feld hinzufügen", 
     "add":"Hinzufügen", 
     "nameForOptionalField": "Name des Feldes", 
-    "dataForOptionalField": "Daten"
+    "dataForOptionalField": "Daten", 
+    "department-search":"Suche deine Verwaltungsstelle"
 }

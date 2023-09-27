@@ -52,9 +52,9 @@ def global_template_vars():
         "ticket_replies": m.TicketReply.query.all(),
         "ctime": time.ctime,
         "getTime": user.getTime,
-        "hasValidReply": user.hasValidReply
+        "hasValidReply": user.hasValidReply, 
+        "officeData": user.getOfficeData(),
     }
-
 # set a custom 404 error page to make the web app pretty
 @app.errorhandler(404)
 def pageNotFound(e):
