@@ -4,35 +4,41 @@
 
 <h3 style="margin-left:5%;">{{office["officeName"]}}</h3>
 
-<div style="display: flex; align-items: center; width: 100%; margin: auto;">
+<div style="display: flex; align-items: center; width: 100%; margin: auto;max-height:30em; ">
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width: 50%;">
         <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-            <div style="display: flex; align-items: center;">
+            <div style="display: flex; align-items: center;margin-top: 4%;">
                 <p><strong>{{ lang["adress"] }}: </strong></p><p>{{ office["adressOffice"] }}</p>
+                <i class="material-icons location" style:"margin-left: 4%;">location_on</i>
             </div>
-            <div style="display: flex; align-items: center;">
+            <div style="display: flex; align-items: center;margin-top: 4%;">
                 <p><strong>{{ lang["openingTime"] }}: </strong></p><p>{{ office["openingTime"] }}</p>
+                <i class="material-icons schedule" style:"margin-left: 4%;">schedule</i>
             </div>
-            <div style="display: flex; align-items: center;">
+            <div style="display: flex; align-items: center;margin-top: 4%;">
                 <p><strong>{{ lang["closingTime"] }}: </strong></p><p>{{ office["closingTime"] }}</p>
+                <i class="material-icons schedule" style:"margin-left: 4%;">schedule</i>
             </div>
         </section>
     </div>
     <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="width: 50%; background-color: #6C797F; color: white;">
-        <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-            <div style="display: flex; align-items: center;">
+        <h5 style="margin-bottom:3%">{{ lang["contactPerson"] }}</h5>
+        <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;padding-top:1%">
+            <div style="display: flex; align-items: center;margin-top: 4%;">
                 <p><strong>{{ lang["name"] }}: </strong></p><p>{{ office["contactPersonName"] }}</p>
             </div>
-            <div style="display: flex; align-items: center;">
+            <div style="display: flex; align-items: center;margin-top: 4%;">
                 <p><strong>{{ lang["email-address"] }}: </strong></p><p>{{ office["contactPersonEmail"] }}</p>
+                <i class="material-icons email" style:"margin-left: 4%;">email</i>
             </div>
-            <div style="display: flex; align-items: center;">
+            <div style="display: flex; align-items: center;margin-top: 4%;">
                 <p><strong>{{ lang["number"] }}: </strong></p><p>{{ office["contactPersonNumber"] }}</p>
+                <i class="material-icons call" style:"margin-left: 4%;">call</i>
             </div>
         </section>
     </div>
     {% if "news" in office %}
-        <h5 style="margin-left:5%;padding-bottom:3%">{{lang["important-news"]}}</h5>
+        {{lang["important-news"]}}
         <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="width: 50%; background-color: #6C797F; color: white;">
             <p>{{ office["news"]}}</p>
         </div>
