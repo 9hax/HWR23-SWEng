@@ -90,5 +90,7 @@
     "nameForOptionalField": "Name des Feldes", 
     "dataForOptionalField": "Daten",
     "profilePicture":"Profilbild",
-    "imagePreview": "Bildvorschau"
+    "imagePreview": "Bildvorschau", 
+    "upload": "Hochladen"
+
 }

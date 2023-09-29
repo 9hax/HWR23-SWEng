@@ -91,6 +91,6 @@
     "nameForOptionalField": "Name of the field", 
     "dataForOptionalField": "Data",
     "profilePicture":"Profile picture",
-    "imagePreview": "Image preview"
-
+    "imagePreview": "Image preview",
+    "upload": "Upload"
 }
