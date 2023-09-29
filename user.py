@@ -6,6 +6,8 @@ import datetime
 import random
 import string
 import re
+import sqlite3
+import base64
 from simpleticket import m
 
 try:
@@ -91,7 +93,14 @@ def set_user_data_validate(userid, userData):
         newUserData["employer"] =  userData["employer"]
     else: 
         raise ValueError("Invalid employer")
-     
+    
+    newUserData["imageName"] =  userData["imageName"]
+    newUserData["base64Txt"] =  userData["base64Txt"]
+
+    print(newUserData)
+
+
+    
     modified_user = get_user(userid)
     modified_user.userData = json.dumps(newUserData)
     m.db.session.commit()
@@ -102,13 +111,29 @@ def validateFullname(name):
     if name.__len__() < 3:
         return False
     return True
+
+def validateImageName(imagePath):
+    imageDataExtentions = [".png", ".jpeg", ".jpg"]
+    for extension in imageDataExtentions:
+        if imagePath.endswith(extension):
+            return True
+        else:continue
+    return False
+
+def validateImageBase64(base64):
+    return not any(char.isdigit() for char in base64)
     
 def validateDateofbirth(dateofbirth):
     pattern = "^(19\d{2}|20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
     return  re.match(pattern,dateofbirth)
 
 def validateAddress(address):
+    if " " not in address:
+        return False
+    if not any(char.isdigit() for char in address):
+        return False
     return True
+
 
 def validateTaxnumber(taxnumber):
     try: 
@@ -197,3 +222,9 @@ def hasValidReply(ticketid):
         if m.User.query.filter_by(id = reply.created_by_id).first().highPermissionLevel:
             return True
     return False
+
+def convertToBase64(imagePath):
+    print(base64.b64encode(imagePath.encode()).decode())
+    return base64.b64encode(imagePath.encode()).decode()
+
+    

@@ -2,7 +2,7 @@
 
 
 # Handle Imports
-from flask import Flask, session, render_template, redirect, url_for, request, abort, g
+from flask import Flask, jsonify, session, render_template, redirect, url_for, request, abort, g
 from flask_migrate import Migrate
 import sqlalchemy
 import models as m
@@ -264,6 +264,7 @@ def addUser():
 @app.route('/account-settings', methods=['GET', 'POST'])
 def changeSettings():
     if "login" in session.keys() and session['login']:
+        image_src = ""
         if request.method == 'POST':
             try:
                 user.modify_user_password(g.current_user.id, user.hashPassword(request.form["password"]))
