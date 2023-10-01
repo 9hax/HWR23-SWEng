@@ -83,7 +83,7 @@
                         <input class="mdl-textfield__input" type="text" id="base64Txt" name="base64Txt" value="{{userData['base64Txt']}}" style="display:none">
                     </div>
                     <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if userData['base64Txt'] == ""  else 'block'}}" id="previewContainer">
-                        <img class="img" id="avatar" src="{{userData['base64Txt']}}"  style="max-width: 100%;height: auto;  border-radius: 100%;"/>
+                        <img class="img" id="avatar" src="{{userData['base64Txt']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
                     </div>
                 </div>
                         

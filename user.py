@@ -94,13 +94,20 @@ def set_user_data_validate(userid, userData):
     else: 
         raise ValueError("Invalid employer")
     
-    newUserData["imageName"] =  userData["imageName"]
-    newUserData["base64Txt"] =  userData["base64Txt"]
-
-    print(newUserData)
-
-
     
+    
+    if validateImageName(userData["imageName"]):
+        newUserData["imageName"] =  userData["imageName"]
+    else: 
+        raise ValueError("Invalid file type")
+    
+    if validateImageBase64(userData["base64Txt"]):
+        newUserData["base64Txt"] =  userData["base64Txt"]
+    else: 
+        raise ValueError("Invalid Base 64 Txt")
+    
+
+   
     modified_user = get_user(userid)
     modified_user.userData = json.dumps(newUserData)
     m.db.session.commit()
@@ -113,15 +120,15 @@ def validateFullname(name):
     return True
 
 def validateImageName(imagePath):
+    print(imagePath)
     imageDataExtentions = [".png", ".jpeg", ".jpg"]
     for extension in imageDataExtentions:
         if imagePath.endswith(extension):
             return True
-        else:continue
     return False
 
 def validateImageBase64(base64):
-    return not any(char.isdigit() for char in base64)
+    return True
     
 def validateDateofbirth(dateofbirth):
     pattern = "^(19\d{2}|20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
