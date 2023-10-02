@@ -2,10 +2,11 @@
 
 
 # Handle Imports
-from flask import Flask, session, render_template, redirect, url_for, request, abort, g
+from flask import Flask, session, render_template, redirect, url_for, request, abort, g, send_file
 from flask_migrate import Migrate
 import sqlalchemy
 import models as m
+import pdfText as p
 
 try: 
     import userconfig as config
@@ -302,5 +303,30 @@ def adminUserSettigs():
                 return render_template('admin-settings.html', message = lang["user-modify-error"])
             return redirect(url_for('home'))
         return render_template('admin-settings.html')
+    else:
+        abort(403)
+
+@app.route('/fill', methods=['GET', 'POST'])
+def fillformular():
+    if "login" in session.keys() and session['login']:
+        if request.method == 'POST':
+            if 'pdf_file' in request.files:
+                pdf_file = request.files['pdf_file']
+                if pdf_file.filename != '':
+                    pdf_data = [{'text': 'Text für das PDF', 'x': 100, 'y': 100}]  # Beispiel-PDF-Daten
+
+                    # Speichern Sie die hochgeladene Datei als temporäre Datei
+                    temp_filename = 'temp.pdf'
+                    pdf_file.save(temp_filename)
+
+                    # Bearbeiten Sie die hochgeladene PDF-Datei und erstellen Sie die "output.pdf"
+                    p.addText(temp_filename, 'output.pdf', [pdf_data])
+
+                    # Löschen Sie die temporäre Datei
+                    os.remove(temp_filename)
+
+                    return send_file('output.pdf', as_attachment=True)
+
+        return render_template('test-editing-pdf.html')
     else:
         abort(403)
