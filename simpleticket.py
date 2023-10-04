@@ -313,16 +313,24 @@ def fillformular():
             if 'pdf_file' in request.files:
                 pdf_file = request.files['pdf_file']
                 if pdf_file.filename != '':
-                    pdf_data = [{'text': 'Text für das PDF', 'x': 100, 'y': 100}]  # Beispiel-PDF-Daten
+                    
+                    user_data = json.loads(g.current_user.userData)
+                    x, y = 50, 800
+                    pdf_data = [
+                        {'text': user_data.get('fullname'), 'x': x, 'y': y},
+                        {'text': user_data.get('age'), 'x': x, 'y': y - 30},
+                        {'text': user_data.get('address'), 'x': x, 'y': y - 60},
+                        {'text': user_data.get('taxnumber'), 'x': x, 'y': y - 90},
+                        {'text': user_data.get('taxclass'), 'x': x, 'y': y - 120},
+                        {'text': user_data.get('gender'), 'x': x, 'y': y - 150},
+                        {'text': user_data.get('employer'), 'x': x, 'y': y - 180}
+                    ]
 
-                    # Speichern Sie die hochgeladene Datei als temporäre Datei
+                
                     temp_filename = 'temp.pdf'
                     pdf_file.save(temp_filename)
 
-                    # Bearbeiten Sie die hochgeladene PDF-Datei und erstellen Sie die "output.pdf"
                     p.addText(temp_filename, 'output.pdf', [pdf_data])
-
-                    # Löschen Sie die temporäre Datei
                     os.remove(temp_filename)
 
                     return send_file('output.pdf', as_attachment=True)
