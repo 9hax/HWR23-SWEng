@@ -7,10 +7,8 @@
                 {% if message %}
                     {{message}}
                 {% endif %}
-                {{lang["user-data-update"]}}
                 {% if current_user.isOffice %}
                 <div>
-                    {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="officeName" name="officeName" 
                         value="{{userData['officeName']}}">
@@ -46,7 +44,6 @@
                 </div>
                 {% else %}
                 <div>
-                    {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="fullname" name="fullname" 
                         value="{{userData['fullname']}}" maxlength="64">
@@ -106,6 +103,8 @@
                 </div>
                         
                 </div>
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
+        <p>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input class="mdl-textfield__input" onkeyup="success()" type="password" id="passwordValidation" name="passwordValidation" >
                     <label class="mdl-textfield__label" for="passwordValidation">{{lang["password"]}}</label>
@@ -116,30 +115,7 @@
             </form>
         </p>
     </div>
-
-    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
-        <p>
-            {{lang["AddAnDocument"]}}
-            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp"  >
-                <thead style="background-color:#69767C; color: white;">
-                  <tr>
-                    <th class="mdl-data-table__cell--non-numeric">{{lang["documentName"]}}</th>
-                    <th>{{lang["fileName"]}}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">test</td>
-                    <td>test1</td>
-                  </tr>
-                </tbody>
-              </table>
-            <button type="submit" id="update-account-submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                {{lang["Add"]}}
-            </button>
-        </p>
-    </div>
-
+    
 
     
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
