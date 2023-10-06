@@ -137,6 +137,7 @@ def set_office_data_validate(officeid, userData):
     modified_user = get_user(officeid)
     modified_user.userData = json.dumps(newOfficeData)
     m.db.session.commit()
+
 def validateName(name:str):
     if " " not in name:
         return False
@@ -192,6 +193,11 @@ def validateGender(gender):
 
 def validateEmployer(employer):
     return True
+
+def validateOpeningAndClosingTime(time):
+    timePattern = "^(0\d|1\d|2[0-3]):([0-5]\d)$"
+    return re.match(timePattern, time)
+
 
 def create_ticket(title, text, media, created_by, assigned_to):
     new_ticket = m.Ticket()
