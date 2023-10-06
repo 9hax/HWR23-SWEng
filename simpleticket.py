@@ -2,7 +2,7 @@
 
 
 # Handle Imports
-from flask import Flask, jsonify, session, render_template, redirect, url_for, request, abort, g, send_file
+from flask import Flask, session, render_template, redirect, url_for, request, abort, g, send_file
 from flask_migrate import Migrate
 import sqlalchemy
 import models as m
@@ -325,7 +325,7 @@ def fillformular():
                     x, y = 50, 800
                     pdf_data = [
                         {'text': user_data.get('fullname'), 'x': x, 'y': y},
-                        {'text': user_data.get('age'), 'x': x, 'y': y - 30},
+                        {'text': user_data.get('dateofbirth'), 'x': x, 'y': y - 30},
                         {'text': user_data.get('address'), 'x': x, 'y': y - 60},
                         {'text': user_data.get('taxnumber'), 'x': x, 'y': y - 90},
                         {'text': user_data.get('taxclass'), 'x': x, 'y': y - 120},

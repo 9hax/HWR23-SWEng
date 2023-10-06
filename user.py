@@ -95,7 +95,6 @@ def set_user_data_validate(userid, userData):
         raise ValueError("Invalid employer")
     
     
-    
     if validateImageName(userData["imageName"]):
         newUserData["imageName"] =  userData["imageName"]
     else: 
@@ -162,12 +161,15 @@ def validateName(name:str):
     return True
 
 def validateImageName(imagePath):
-    print(imagePath)
-    imageDataExtentions = [".png", ".jpeg", ".jpg"]
-    for extension in imageDataExtentions:
+    if imagePath is None or imagePath == "":
+        return True  # Akzeptieren, wenn imagePath leer oder None ist
+    
+    imageDataExtensions = [".png", ".jpeg", ".jpg"]
+    for extension in imageDataExtensions:
         if imagePath.endswith(extension):
             return True
-    return False
+    
+    return False 
 
 def validateImageBase64(base64):
     return True
