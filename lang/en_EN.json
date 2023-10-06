@@ -95,6 +95,16 @@
     "upload": "upload",
     "fill": "Fill out",
     "choose-form": "Choose form",
-    "choose-param-file": "Choose parameter file"
-
+    "choose-param-file": "Choose parameter file",
+    "profilePicture":"Profile picture",
+    "imagePreview": "Image preview",
+    "AddAnDocument": "Add an document",
+    "documentName":"Name", 
+    "fileName": "File name",
+    "department-search":"Search for your department",
+    "contactPerson": "Contact person", 
+    "number": "Number", 
+    "name": "Name", 
+    "documents":"Documents", 
+    "important-news": "News"
 }

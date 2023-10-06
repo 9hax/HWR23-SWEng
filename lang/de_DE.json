@@ -94,5 +94,16 @@
     "upload": "Hochladen",
     "fill": "Ausfüllen",
     "choose-form": "Formular auswählen",
-    "choose-param-file": "Wähle Parameter-Datei"
+    "choose-param-file": "Wähle Parameter-Datei",
+    "AddAnDocument":"Füge ein Dokument hinzu", 
+    "documentName":"Name", 
+    "fileName": "Dateiname",
+    "profilePicture":"Profilbild",
+    "imagePreview": "Bildvorschau", 
+    "department-search":"Suche deine Verwaltungsstelle", 
+    "contactPerson": "Kontakt Person", 
+    "number": "Nummer", 
+    "name": "Name" , 
+    "documents": "Dokumente", 
+    "important-news": "Wichtig"
 }

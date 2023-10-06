@@ -1,34 +1,52 @@
 {% set title = lang["account-settings"]%} {% extends "master.html" %} {% block body %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script type="text/javascript" src="https://raw.githubusercontent.com/UgoSansH/mdl-datepicker/master/dist/material-datepicker.min.js"></script>
-    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%; max-width: 30em;">
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%; max-width: 60em;">
         <p>
             <form action="/account-settings-data" method="POST">
                 {% if message %}
                     {{message}}
                 {% endif %}
+                {{lang["user-data-update"]}}
                 {% if current_user.isOffice %}
+                <div>
                     {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="officeName" name="officeName" 
-                        value="{{'Behörde Elend Sachsen'}}">
+                        value="{{userData['officeName']}}">
                         <label class="mdl-textfield__label" for="firstName">{{lang["officeName"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="adressOffice" name="adressOffice" 
-                        value="{{'Elend, Weinstrasse 15'}}">
+                        value="{{userData['adressOffice']}}">
                         <label class="mdl-textfield__label" for="adressOffice">{{lang["adressOffice"]}}</label>
                     </div>
                     <p style="color:#33e8ff">{{lang["openingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" name="openingTime">
+                        <input class="mdl-textfield__input" type="time" name="openingTime" value="{{userData['openingTime']}}">
                     </div>
                     <p style="color:#33e8ff">{{lang["closingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" name="closingTime">
+                        <input class="mdl-textfield__input" type="time" name="closingTime" value="{{userData['closingTime']}}">
                     </div>
+                    <p style="color:#33e8ff">{{lang["contactPerson"]}}</p>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="contactPersonName" value="{{userData['contactPersonName']}}">
+                        <label class="mdl-textfield__label" for="contactPersonName">{{lang["name"]}}</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="email" name="contactPersonEmail" value="{{userData['contactPersonEmail']}}">
+                        <label class="mdl-textfield__label" for="contactPersonEmail">{{lang["email-address"]}}</label>
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="contactPersonNumber" value="{{userData['contactPersonNumber']}}">
+                        <label class="mdl-textfield__label" for="contactPersonNumber">{{lang["number"]}}</label>
+                    </div>      
+                </div>
                 {% else %}
                 <div>
+                    {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="fullname" name="fullname" 
                         value="{{userData['fullname']}}" maxlength="64">
@@ -75,6 +93,19 @@
                     </div>
                 </div>
                 {% endif %}
+                <p style="color:#33e8ff">{{lang["profilePicture"]}}</p>
+                <div style="display: flex; align-items: center;">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-right:5%">
+                        <input class="mdl-textfield__input" type="file" id="imageName" name="imageName" value="{{userData['imageName']}}">
+                        <label class="mdl-textfield__lab">
+                        <input class="mdl-textfield__input" type="text" id="base64Txt" name="base64Txt" value="{{userData['base64Txt']}}" style="display:none">
+                    </div>
+                    <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if userData['base64Txt'] == ""  else 'block'}}" id="previewContainer">
+                        <img class="img" id="avatar" src="{{userData['base64Txt']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
+                    </div>
+                </div>
+                        
+                </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input class="mdl-textfield__input" onkeyup="success()" type="password" id="passwordValidation" name="passwordValidation" >
                     <label class="mdl-textfield__label" for="passwordValidation">{{lang["password"]}}</label>
@@ -82,21 +113,38 @@
                 <button type="submit" id="update-account-submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" disabled>
                     {{lang["save"]}}
                 </button>
-                <script>
-                    function success() {
-                        if(document.getElementById("passwordValidation").value==="") { 
-                            document.getElementById('update-account-submit').disabled = true; 
-                        } else { 
-                            document.getElementById('update-account-submit').disabled = false;
-                        }
-                    }
-                </script>
             </form>
         </p>
     </div>
+
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
         <p>
-            <form action="" method="POST">
+            {{lang["AddAnDocument"]}}
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp"  >
+                <thead style="background-color:#69767C; color: white;">
+                  <tr>
+                    <th class="mdl-data-table__cell--non-numeric">{{lang["documentName"]}}</th>
+                    <th>{{lang["fileName"]}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric">test</td>
+                    <td>test1</td>
+                  </tr>
+                </tbody>
+              </table>
+            <button type="submit" id="update-account-submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                {{lang["Add"]}}
+            </button>
+        </p>
+    </div>
+
+
+    
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
+        <p>
+            <form action="/account-settings-data" id="setNewPassword">
                 {{lang["password-update"]}}
                 <div id="name">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -111,4 +159,61 @@
             </form>
         </p>
     </div>
+
+    <script>
+        function success() {
+            if(document.getElementById("passwordValidation").value==="") { 
+                document.getElementById('update-account-submit').disabled = true; 
+            } else { 
+                document.getElementById('update-account-submit').disabled = false;
+            }
+        }
+
+        const convertBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+        
+                fileReader.onload = () => {
+                    resolve(fileReader.result);
+                };
+        
+                fileReader.onerror = (error) => {
+                    reject(error);
+                };
+            });
+        };
+
+        const uploadImage = async (event) => {
+            const avatar = document.getElementById("avatar")
+            const file = event.target.files[0];
+            const base64 = await convertBase64(file);
+            const previewContainer = document.getElementById("previewContainer")
+
+            avatar.src = base64;
+            if(avatar.getAttribute('src') != ""){
+                previewContainer.style.display="block"
+            }
+            console.log(avatar.src)
+            base64Txt.value = base64
+            return base64
+        };
+        
+        document.getElementById("imageName").addEventListener("change", (e) => {
+            uploadImage(e);
+        });
+        
+    </script>
+
+    <style>
+        input[type=file]::file-selector-button {
+            border-radius: 10%;
+            padding: 2%%;
+            border-radius: .2em;
+            background-color: #54B9D1;
+            transition: 1s;
+            color:white; 
+          }
+    </style>
+
 {% endblock %}
