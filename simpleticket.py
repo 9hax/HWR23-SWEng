@@ -52,9 +52,9 @@ def global_template_vars():
         "ticket_replies": m.TicketReply.query.all(),
         "ctime": time.ctime,
         "getTime": user.getTime,
-        "hasValidReply": user.hasValidReply
+        "hasValidReply": user.hasValidReply, 
+        "officeData": user.getAllOfficesData(),
     }
-
 # set a custom 404 error page to make the web app pretty
 @app.errorhandler(404)
 def pageNotFound(e):
@@ -275,12 +275,18 @@ def changeSettings():
     else:
         abort(403)
 
+
 @app.route('/account-settings-data', methods=['POST'])
 def updateUserData():
-    if "login" in session.keys() and session['login']:
+    if "login" in session.keys() and session['login'] :
         if user.verify_password(g.current_user.id, request.form["passwordValidation"]):
+            myForm = request.form.to_dict()
+            myForm["passwordValidationOptional"] = ''
             try:
-                user.set_user_data_validate(g.current_user.id, request.form)
+                if g.current_user.isOffice: 
+                    user.set_office_data_validate(g.current_user.id, myForm)
+                else: 
+                    user.set_user_data_validate(g.current_user.id, myForm)
             except sqlalchemy.exc.IntegrityError:
                 return render_template('account-settings.html', message = lang["user-modify-error"])
             except KeyError as e:
@@ -289,7 +295,7 @@ def updateUserData():
                  return render_template('account-settings.html', message = lang["user-modify-invalid"] + " " + str(e), userData = request.form)
             return redirect(url_for('home'))
         else:
-            return render_template('account-settings.html', message = lang["user-modify-error"], userData = request.form)
+            return render_template('account-settings.html', message = lang["user-modify-error"], userData = myForm)
     else:
         abort(403)
 
@@ -305,3 +311,23 @@ def adminUserSettigs():
         return render_template('admin-settings.html')
     else:
         abort(403)
+        
+
+@app.route('/office/<useroffice>')
+def viewOffice(useroffice):
+    offices = user.getOfficeData(useroffice)[0]
+    print(offices)
+    
+    officeID = offices["id"]
+    documents = user.getDocumentsNames(officeID)
+    
+    if offices == None:
+        abort(404)
+    if "login" in session.keys() and session['login']:
+        return render_template('office.html', office = offices, documents=documents)
+    else:
+        abort(403)
+
+
+      
+            

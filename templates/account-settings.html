@@ -7,28 +7,46 @@
                 {% if message %}
                     {{message}}
                 {% endif %}
+                {{lang["user-data-update"]}}
                 {% if current_user.isOffice %}
+                <div>
                     {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="officeName" name="officeName" 
-                        value="{{'Behörde Elend Sachsen'}}">
+                        value="{{userData['officeName']}}">
                         <label class="mdl-textfield__label" for="firstName">{{lang["officeName"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="adressOffice" name="adressOffice" 
-                        value="{{'Elend, Weinstrasse 15'}}">
+                        value="{{userData['adressOffice']}}">
                         <label class="mdl-textfield__label" for="adressOffice">{{lang["adressOffice"]}}</label>
                     </div>
                     <p style="color:#33e8ff">{{lang["openingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" name="openingTime">
+                        <input class="mdl-textfield__input" type="time" name="openingTime" value="{{userData['openingTime']}}">
                     </div>
                     <p style="color:#33e8ff">{{lang["closingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" name="closingTime">
+                        <input class="mdl-textfield__input" type="time" name="closingTime" value="{{userData['closingTime']}}">
                     </div>
+                    <p style="color:#33e8ff">{{lang["contactPerson"]}}</p>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="contactPersonName" value="{{userData['contactPersonName']}}">
+                        <label class="mdl-textfield__label" for="contactPersonName">{{lang["name"]}}</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="email" name="contactPersonEmail" value="{{userData['contactPersonEmail']}}">
+                        <label class="mdl-textfield__label" for="contactPersonEmail">{{lang["email-address"]}}</label>
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="contactPersonNumber" value="{{userData['contactPersonNumber']}}">
+                        <label class="mdl-textfield__label" for="contactPersonNumber">{{lang["number"]}}</label>
+                    </div>      
+                </div>
                 {% else %}
                 <div>
+                    {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="fullname" name="fullname" 
                         value="{{userData['fullname']}}" maxlength="64">
@@ -98,9 +116,35 @@
             </form>
         </p>
     </div>
+
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
         <p>
-            <form action="" method="POST">
+            {{lang["AddAnDocument"]}}
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp"  >
+                <thead style="background-color:#69767C; color: white;">
+                  <tr>
+                    <th class="mdl-data-table__cell--non-numeric">{{lang["documentName"]}}</th>
+                    <th>{{lang["fileName"]}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric">test</td>
+                    <td>test1</td>
+                  </tr>
+                </tbody>
+              </table>
+            <button type="submit" id="update-account-submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                {{lang["Add"]}}
+            </button>
+        </p>
+    </div>
+
+
+    
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
+        <p>
+            <form action="/account-settings-data" id="setNewPassword">
                 {{lang["password-update"]}}
                 <div id="name">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -157,6 +201,19 @@
         
         document.getElementById("imageName").addEventListener("change", (e) => {
             uploadImage(e);
+        });
+
+        document.getElementById('newDataSubmitionForm').addEventListener('submit', function(event) {
+            const taxnumberInput = document.getElementById('taxnumber');
+            const labelTaxNumber = document.getElementById("labelTaxnumber")
+
+            const taxNumberSize = 11; 
+            if (taxnumberInput.value.length !== taxNumberSize) {
+                event.preventDefault(); // Prevent form submission
+                labelTaxNumber.innerHTML = "The tax number should be 11 characters long"
+                labelTaxNumber.style.color = 'red'
+                throw new TypeError("Invalid taxnumber")
+            }
         });
         
     </script>

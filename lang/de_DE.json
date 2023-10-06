@@ -88,9 +88,18 @@
     "addOptional": "Ein optionales Feld hinzufügen", 
     "add":"Hinzufügen", 
     "nameForOptionalField": "Name des Feldes", 
+    "AddAnDocument":"Füge ein Dokument hinzu", 
+    "documentName":"Name", 
+    "fileName": "Dateiname",
     "dataForOptionalField": "Daten",
     "profilePicture":"Profilbild",
     "imagePreview": "Bildvorschau", 
     "upload": "Hochladen"
-
+, 
+    "department-search":"Suche deine Verwaltungsstelle", 
+    "contactPerson": "Kontakt Person", 
+    "number": "Nummer", 
+    "name": "Name" , 
+    "documents": "Dokumente", 
+    "important-news": "Wichtig"
 }

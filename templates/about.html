@@ -2,6 +2,13 @@
 {% extends "master.html" %}
 {% block body %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+  {% if not g.current_user.isOffice %}
+    <p>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="searchBar" name="searchBar">
+      </div>
+    </p>
+  {% endif %}
   <p>
     <h3>{{lang["about-title"]}}</h3>
     <div class="horizontal" style="display: inline-block;">
