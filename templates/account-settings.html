@@ -202,19 +202,6 @@
         document.getElementById("imageName").addEventListener("change", (e) => {
             uploadImage(e);
         });
-
-        document.getElementById('newDataSubmitionForm').addEventListener('submit', function(event) {
-            const taxnumberInput = document.getElementById('taxnumber');
-            const labelTaxNumber = document.getElementById("labelTaxnumber")
-
-            const taxNumberSize = 11; 
-            if (taxnumberInput.value.length !== taxNumberSize) {
-                event.preventDefault(); // Prevent form submission
-                labelTaxNumber.innerHTML = "The tax number should be 11 characters long"
-                labelTaxNumber.style.color = 'red'
-                throw new TypeError("Invalid taxnumber")
-            }
-        });
         
     </script>
 
