@@ -3,14 +3,14 @@
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
     <p>
         <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">PDF Formular ausfüllen</h2>
+            <h2 class="mdl-card__title-text">{{lang["fill-formular"]}}</h2>
         </div>
         <div class="mdl-card__supporting-text">
             <form action="/fill" method="POST" enctype="multipart/form-data">
-                <label for="pdf_file">PDF auswählen:</label>
+                <label for="pdf_file">{{lang["choose-form"]}}</label>
                 <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" />
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
-                    PDF ausfüllen
+                    {{lang["fill"]}}
                 </button>
             </form>
         </div>

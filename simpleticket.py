@@ -335,6 +335,15 @@ def fillformular():
 
                     return send_file('output.pdf', as_attachment=True)
 
-        return render_template('test-editing-pdf.html')
+        return render_template('fill-pdf.html')
+    else:
+        abort(403)
+
+@app.route('/store', methods=['GET', 'POST'])
+def storeformular():
+    if "login" in session.keys() and session['login']:
+        if request.method == 'POST':
+            return render_template('ticket-view.html')
+        return render_template('store-pdf.html')
     else:
         abort(403)

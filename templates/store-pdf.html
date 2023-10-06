@@ -1,0 +1,27 @@
+{% set title = lang["store-formular"] %}
+{% extends "master.html" %}
+{% block body %}
+
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%">
+    <p>
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">{{lang["store-formular"]}}</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <form action="/store" method="POST" enctype="multipart/form-data">
+                <label for="pdf_file">{{lang["choose-form"]}}</label>
+                <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" />
+                <br /><br /> 
+
+                <label for="txt_file">{{lang[""]}}</label>
+                <input type="file" name="txt_file" id="txt_file" accept=".txt" />
+                <br /><br /> 
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+                    {{lang["Upload"]}}
+                </button>
+            </form>
+        </div>
+    </p>
+</div>
+{% endblock %}

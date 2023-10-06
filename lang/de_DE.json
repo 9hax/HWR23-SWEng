@@ -89,5 +89,10 @@
     "add":"Hinzufügen", 
     "nameForOptionalField": "Name des Feldes", 
     "dataForOptionalField": "Daten",
-    "fill-formular": "Füll dein Formular aus"
+    "fill-formular": "Formular ausfüllen",
+    "store-formular": "Formular hinterlegen",
+    "upload": "Hochladen",
+    "fill": "Ausfüllen",
+    "choose-form": "Formular auswählen",
+    "choose-param-file": "Wähle Parameter-Datei"
 }
