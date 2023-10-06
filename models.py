@@ -12,7 +12,6 @@ class User(db.Model):
     highPermissionLevel = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     isOffice = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     userData = db.Column(db.Text, unique=False, nullable=True)
-    optionalData = db.Column(db.Text, unique=False, nullable=True)
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -43,3 +42,13 @@ class TicketReply(db.Model):
     main_ticket = db.relationship('Ticket', backref = 'ticket_reply_main_ticket', foreign_keys=[main_ticket_id])
     def __repr__(self):
         return '<TicketReply to %r>' % self.main_ticket
+
+class Document(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), unique=False, nullable=False)
+    fileName = db.Column(db.Text, unique=False, nullable=False)
+    created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    fields = db.Column(db.Text, unique=False, nullable=False)
+    
+    created_by = db.relationship('User', backref='documents_created_by', foreign_keys=[created_by_id])
+

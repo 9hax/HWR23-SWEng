@@ -88,5 +88,8 @@
     "addOptional": "Ein optionales Feld hinzufügen", 
     "add":"Hinzufügen", 
     "nameForOptionalField": "Name des Feldes", 
-    "dataForOptionalField": "Daten"
+    "dataForOptionalField": "Daten",
+    "AddAnDocument":"Füge ein Dokument hinzu", 
+    "documentName":"Name", 
+    "fileName": "Dateiname"
 }
