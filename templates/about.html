@@ -1,23 +1,21 @@
 {% set title = lang["about"] %}
 {% extends "master.html" %}
 {% block body %}
-<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="height: auto; width: auto;">
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
   <p>
-    <h3>{{lang["about-us"]}}</h3>
-    <div id="description" style="display: flex; justify-content: center; padding-top: 1em;">
-      <div style="width: 45%; margin-right: 8%;">
-        <p style="font-size: 1.5em; line-height: 1.5;">
-          EasyFormular ist eine Plattform, die darauf abzielt bürokratische Vorgänge zu vereinfachen und diese effizienter zu gestalten. 
-          <br>
-          EasyFormular ist eine Lösung für die digitale Verwaltung von Formularen und Dokumenten. Bei EasyFormular bekommt ihr eine klare Übersicht über eure hinterlegten Daten und könnt, diese jederzeit bearbeiten und überprüfen. Wenn ihr euer Dokument fertig ausgefüllt habt, könnt ihr es 
-          direkt an die zuständige Behörden weiterleiten, die eure Dokumente mithilfe von EasyFormularschnell und automatisiert überprüfen kann. Ihr könnt eure bereits verifizierte personenbezogene Daten in der Zukunft erneut verwenden. Dies erlaubt es Dokumente automatisch auszufüllen, um 
-          den Erstellungsprozess zu beschleunigen.
+    <h3>{{lang["about-title"]}}</h3>
+    <div class="horizontal" style="display: inline-block;">
+      <div>
+        <p>
+          {{lang["about-text"] | safe }}
         </p>
       </div>
-      <div style="width: 45%; background-color: #657279; display: flex; flex-direction: column; justify-content: center;">
-        <img src="../static/transparent_logo.png" style="width: 100%; height: auto; float: left; margin-right: 1em;">
+      <div style="aspect-ratio:1/1; background-color: #657279;">
+        <img src="../static/favicon_website_color.svg" style="width: 100%; height: auto; float: left;">
       </div>
     </div>
+    {% if g.current_user.highPermissionLevel %}<br>
+    {{lang["version"] + " " + stversion}} {% endif %}
   </p>
 </div>
 

@@ -74,8 +74,8 @@ def set_user_data_validate(userid, userData):
 
     if validateTaxnumber(taxnumber):
         newUserData["taxnumber"] =  taxnumber
-    else: raise ValueError("Invalid taxnumber")
-        
+    else: 
+        raise ValueError("Invalid taxnumber")
 
     if validateTaxclass(userData["taxclass"]):
         newUserData["taxclass"] =  userData["taxclass"]
@@ -156,7 +156,7 @@ def validateTaxnumber(taxnumber):
 def validateTaxclass(taxclass):
     if taxclass not in ("1", "2", "3", "4", "5"):
         return False
-    if taxclass.__len__() == 11:
+    if taxclass.__len__() != 1:
         return False
     return True
 
