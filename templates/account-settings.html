@@ -1,56 +1,74 @@
 {% set title = lang["account-settings"]%} {% extends "master.html" %} {% block body %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script type="text/javascript" src="https://raw.githubusercontent.com/UgoSansH/mdl-datepicker/master/dist/material-datepicker.min.js"></script>
-    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%; width:100%;">
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%; max-width: 30em;">
         <p>
-            <form action="/account-settings-data" method="POST" id="newDataSubmitionForm">
+            <form action="/account-settings-data" method="POST">
                 {% if message %}
                     {{message}}
                 {% endif %}
+                {{lang["user-data-update"]}}
                 {% if current_user.isOffice %}
+                <div>
                     {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="officeName" name="officeName" 
-                        value="{{'Behörde Elend Sachsen'}}"required>
+                        value="{{userData['officeName']}}">
                         <label class="mdl-textfield__label" for="firstName">{{lang["officeName"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <required class="mdl-textfield__input" type="text" id="adressOffice" name="adressOffice" 
-                        value="{{'Elend, Weinstrasse 15'}}" required>
+                        <input class="mdl-textfield__input" type="text" id="adressOffice" name="adressOffice" 
+                        value="{{userData['adressOffice']}}">
                         <label class="mdl-textfield__label" for="adressOffice">{{lang["adressOffice"]}}</label>
                     </div>
                     <p style="color:#33e8ff">{{lang["openingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" name="openingTime" required>
+                        <input class="mdl-textfield__input" type="time" name="openingTime" value="{{userData['openingTime']}}">
                     </div>
                     <p style="color:#33e8ff">{{lang["closingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="time" name="closingTime" required>
+                        <input class="mdl-textfield__input" type="time" name="closingTime" value="{{userData['closingTime']}}">
                     </div>
+                    <p style="color:#33e8ff">{{lang["contactPerson"]}}</p>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="contactPersonName" value="{{userData['contactPersonName']}}">
+                        <label class="mdl-textfield__label" for="contactPersonName">{{lang["name"]}}</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="email" name="contactPersonEmail" value="{{userData['contactPersonEmail']}}">
+                        <label class="mdl-textfield__label" for="contactPersonEmail">{{lang["email-address"]}}</label>
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="contactPersonNumber" value="{{userData['contactPersonNumber']}}">
+                        <label class="mdl-textfield__label" for="contactPersonNumber">{{lang["number"]}}</label>
+                    </div>      
+                </div>
                 {% else %}
                 <div>
+                    {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="fullname" name="fullname" 
-                        value="{{userData['fullname']}}" maxlength="64required">
+                        value="{{userData['fullname']}}" maxlength="64">
                         <label class="mdl-textfield__label" for="fullname">{{lang["fullname"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="date" min="1900-01-01" id="dateofbirth" name="dateofbirth" 
-                        value="{{userData['dateofbirth']}}" required>
+                        value="{{userData['dateofbirth']}}">
                         <label class="mdl-textfield__label" for="dateofbirth">{{lang["dateofbirth"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="address" name="address" 
-                        value="{{userData['address']}}" required>
+                        value="{{userData['address']}}">
                         <label class="mdl-textfield__label" for="address">{{lang["address"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="number" maxlength="11" id="taxnumber" name="taxnumber" 
-                        value="{{userData['taxnumber']}}" maxlength="11" required>
-                        <label class="mdl-textfield__label" for="taxnumber" id="labelTaxnumber">{{lang["taxnumber"]}}</label>
+                        value="{{userData['taxnumber']}}">
+                        <label class="mdl-textfield__label" for="taxnumber">{{lang["taxnumber"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <select class="mdl-textfield__input" id="taxclass" name="taxclass" required>
+                        <select class="mdl-textfield__input" id="taxclass" name="taxclass">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -70,19 +88,27 @@
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="employer" name="employer" 
-                        value="{{userData['employer']}}" required>
+                        value="{{userData['employer']}}">
                         <label class="mdl-textfield__label" for="employer">{{lang["workingPlace"]}}</label>
                     </div>
                 </div>
                 {% endif %}
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" onkeyup="success('passwordValidation','update-account-submit' )" type="password" id="passwordValidation" name="passwordValidation" required>
+                    <input class="mdl-textfield__input" onkeyup="success()" type="password" id="passwordValidation" name="passwordValidation" >
                     <label class="mdl-textfield__label" for="passwordValidation">{{lang["password"]}}</label>
                 </div>
                 <button type="submit" id="update-account-submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" disabled>
                     {{lang["save"]}}
                 </button>
-                
+                <script>
+                    function success() {
+                        if(document.getElementById("passwordValidation").value==="") { 
+                            document.getElementById('update-account-submit').disabled = true; 
+                        } else { 
+                            document.getElementById('update-account-submit').disabled = false;
+                        }
+                    }
+                </script>
             </form>
         </p>
     </div>
@@ -118,7 +144,7 @@
                 {{lang["password-update"]}}
                 <div id="name">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="password" id="first" name="password" >
+                        <input class="mdl-textfield__input" type="password" id="first" name="password">
                         <label class="mdl-textfield__label" for="first">{{lang["password"]}}</label>
                     </div>
                 </div>

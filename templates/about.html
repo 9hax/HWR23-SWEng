@@ -2,14 +2,28 @@
 {% extends "master.html" %}
 {% block body %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+  {% if not g.current_user.isOffice %}
+    <p>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="searchBar" name="searchBar">
+      </div>
+    </p>
+  {% endif %}
   <p>
-    {{lang["about-text"] | safe}}
+    <h3>{{lang["about-title"]}}</h3>
+    <div class="horizontal" style="display: inline-block;">
+      <div>
+        <p>
+          {{lang["about-text"] | safe }}
+        </p>
+      </div>
+      <div style="aspect-ratio:1/1; background-color: #657279;">
+        <img src="../static/favicon_white.svg" style="width: 100%; height: auto; float: left;">
+      </div>
+    </div>
     {% if g.current_user.highPermissionLevel %}<br>
     {{lang["version"] + " " + stversion}} {% endif %}
   </p>
-  <a href="http://github.com/9hax/simpleticket">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-      {{lang["visit-github"]}}
-    </button></a>
 </div>
+
 {% endblock %}
