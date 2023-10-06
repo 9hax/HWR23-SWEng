@@ -2,9 +2,14 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script type="text/javascript" src="https://raw.githubusercontent.com/UgoSansH/mdl-datepicker/master/dist/material-datepicker.min.js"></script>
 
-<h3 style="margin-left:5%;">{{office["officeName"]}}</h3>
+<div style="display: flex; align-items: center; width: 100%; margin: auto;max-height:30em;   box-sizing: border-box;margin-bottom:5%;">
+    <h3 style="margin-left:5%;">{{office["officeName"]}}</h3>
+    <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if office['base64Txt'] == ""  else 'block'}}" id="previewContainer">
+        <img class="img" id="avatar" src="{{office['base64Txt']}}"  style="max-width: 50%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
+    </div>
+</div>
 
-<div style="display: flex; align-items: center; width: 100%; margin: auto;max-height:30em; ">
+<div style="display: flex; align-items: center; width: 100%; margin: auto;max-height:30em;box-sizing: border-box;">
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width: 50%;">
         <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
             <div style="display: flex; align-items: center;margin-top: 4%;">

@@ -4,10 +4,11 @@
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%; max-width: 60em;">
         <p>
             <form action="/account-settings-data" method="POST">
+                {{lang["user-data-update"]}}
+
                 {% if message %}
                     {{message}}
                 {% endif %}
-                {{lang["user-data-update"]}}
                 {% if current_user.isOffice %}
                 <div>
                     {{lang["user-data-update"]}}
@@ -46,7 +47,6 @@
                 </div>
                 {% else %}
                 <div>
-                    {{lang["user-data-update"]}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="fullname" name="fullname" 
                         value="{{userData['fullname']}}" maxlength="64">
@@ -194,7 +194,6 @@
             if(avatar.getAttribute('src') != ""){
                 previewContainer.style.display="block"
             }
-            console.log(avatar.src)
             base64Txt.value = base64
             return base64
         };

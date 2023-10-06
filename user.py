@@ -148,7 +148,19 @@ def set_office_data_validate(officeid, userData):
         newOfficeData["contactPersonNumber"] =  userData["contactPersonNumber"]
     else: 
         raise ValueError("Invalid number")
-    print(newOfficeData)
+    
+        
+    print(userData["imageName"])
+
+    if validateImageName(userData["imageName"]):
+        newOfficeData["imageName"] =  userData["imageName"]
+    else: 
+        raise ValueError("Invalid file type")
+    
+    if validateImageBase64(userData["base64Txt"]):
+        newOfficeData["base64Txt"] =  userData["base64Txt"]
+    else: 
+        raise ValueError("Invalid Base 64 Txt")
      
     modified_user = get_user(officeid)
     modified_user.userData = json.dumps(newOfficeData)
@@ -162,7 +174,6 @@ def validateName(name:str):
     return True
 
 def validateImageName(imagePath):
-    print(imagePath)
     imageDataExtentions = [".png", ".jpeg", ".jpg"]
     for extension in imageDataExtentions:
         if imagePath.endswith(extension):
