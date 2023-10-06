@@ -9,16 +9,16 @@
         </div>
         <div class="mdl-card__supporting-text">
             <form action="/store" method="POST" enctype="multipart/form-data">
-                <label for="pdf_file">{{lang["choose-form"]}}</label>
+                <label for="pdf_file">{{lang["choose-form"]}}:</label>
                 <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" />
                 <br /><br /> 
 
-                <label for="txt_file">{{lang[""]}}</label>
+                <label for="txt_file">{{lang["choose-param-file"]}}:</label>
                 <input type="file" name="txt_file" id="txt_file" accept=".txt" />
                 <br /><br /> 
 
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
-                    {{lang["Upload"]}}
+                    {{lang["upload"]}}
                 </button>
             </form>
         </div>
