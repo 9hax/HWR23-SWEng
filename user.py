@@ -260,15 +260,19 @@ def hasValidReply(ticketid):
         if m.User.query.filter_by(id = reply.created_by_id).first().highPermissionLevel:
             return True
     return False
+
 def getAllOfficesData():
     officeList = m.User.query.filter_by(isOffice = True).all()
     officeData = []
     
     for office in officeList: 
-        d = json.loads(office.userData)
-        d["username"] = office.username
-        d["id"] = office.id
-        officeData.append(d)
+        try:         
+            d = json.loads(office.userData)
+            d["username"] = office.username
+            d["id"] = office.id
+            officeData.append(d)
+        except: 
+            print("OfficeData for", office, "is empty! Error while creating global template Var.")
     return officeData
 
 def getOfficeData(username):

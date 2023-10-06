@@ -279,7 +279,7 @@ def changeSettings():
 def updateUserData():
     if "login" in session.keys() and session['login'] :
         if user.verify_password(g.current_user.id, request.form["passwordValidation"]):
-            myForm = request.form["optionalDataSubmitionForm"].to_dict()
+            myForm = request.form.to_dict()
             myForm["passwordValidationOptional"] = ''
             try:
                 if g.current_user.isOffice: 
