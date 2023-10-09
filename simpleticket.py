@@ -86,7 +86,7 @@ def home():
 def createTicket():
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
-            user.create_ticket(request.form["documentName"], request.form["base64TxtDocumentUpload"], g.current_user, None)
+            user.create_ticket(request.form["documentName"], request.form["base64TxtDocumentUpload"], g.current_user.id, None)
             return redirect(url_for('home'))
         return render_template('ticket-create.html')
     else:
@@ -315,9 +315,7 @@ def adminUserSettigs():
 
 @app.route('/office/<useroffice>')
 def viewOffice(useroffice):
-    offices = user.getOfficeData(useroffice)[0]
-    print(offices)
-    
+    offices = user.getOfficeData(useroffice)[0]    
     officeID = offices["id"]
     documents = user.getDocumentsNames(officeID)
     

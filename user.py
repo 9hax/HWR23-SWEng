@@ -248,7 +248,7 @@ def validateOpeningAndClosingTime(time):
     return re.match(timePattern, time)
 
 
-def create_ticket(title, document, created_by, assigned_to):
+def create_ticket(title, document, created_by_id, assigned_to):
     new_ticket = m.Ticket()
     
     title_of_document = path.splitext(title)[0]
@@ -257,7 +257,7 @@ def create_ticket(title, document, created_by, assigned_to):
     new_ticket.is_open = True
     new_ticket.document = document
     new_ticket.time = time.time()
-    new_ticket.created_by_id = created_by
+    new_ticket.created_by_id = created_by_id
     new_ticket.assigned_to = assigned_to
     m.db.session.add(new_ticket)
     m.db.session.commit()
