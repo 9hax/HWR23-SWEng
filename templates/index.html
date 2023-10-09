@@ -25,7 +25,8 @@
             <thead>
                 <tr>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-status"]}}</th>
-                    <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-title"]}}</th>
+                    <th class="mdl-data-table__cell--non-numeric sort-key" >{{lang["ticket-title"]}}</th>
+                    <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-document"]}}</th>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-time"]}}</th>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-created-by"]}}</th>
                 </tr>
@@ -35,9 +36,10 @@
                 <td class="mdl-data-table__cell--non-numeric" style="background: {{ 'lightcoral' if ticket.is_open and not hasValidReply(ticket.id) else 'khaki' if ticket.is_open and hasValidReply(ticket.id) else 'lightgreen'}}">{{ lang["ticket-status-open"] if ticket.is_open and not hasValidReply(ticket.id) else lang["ticket-status-assigned"] if ticket.is_open and hasValidReply(ticket.id) else lang["ticket-status-closed"]}}
                     <span class="material-icons ticket-icon">{{ 'error_outline' if ticket.is_open and not hasValidReply(ticket.id) else 'pending' if ticket.is_open and hasValidReply(ticket.id) else 'check_circle'}}</span>
                 </td>
-                <td class="mdl-data-table__cell--non-numeric">{{ticket.title}}</td>
+                <td class="mdl-data-table__cell--non-numeric" id = "documentTitle">{{ticket.title}}</td>
+                <td class="mdl-data-table__cell--non-numeric" id="documentColumn"><a href="{{ticket.document}}" id = "downloadLink"></a></td>
                 <td class="mdl-data-table__cell--non-numeric">{{getTime(ticket.time)}}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ticket.created_by.fullname}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{ticket.created_by}}</td>
             </tr>
             {% endif %} {% endfor %}
         </table>
@@ -49,6 +51,7 @@
             <thead>
                 <tr>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-status"]}}</th>
+                    <td class="mdl-data-table__cell--non-numeric">{{ticket.document}}</td>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-title"]}}</th>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-time"]}}</th>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-created-by"]}}</th>
@@ -60,7 +63,8 @@
 
                     <span class="material-icons ticket-icon">{{ 'error_outline' if ticket.is_open and not hasValidReply(ticket.id) else 'pending' if ticket.is_open and hasValidReply(ticket.id) else 'check_circle'}}</span>
                 </td>
-                <td class="mdl-data-table__cell--non-numeric">{{ticket.title}}</td>
+                <td class="mdl-data-table__cell--non-numeric" id = "documentTitle">{{ticket.title}}</td>
+                <td class="mdl-data-table__cell--non-numeric"id="documentColumn">{{ticket.document}}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{getTime(ticket.time)}}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ticket.created_by.fullname}}</td>
             </tr>
@@ -78,7 +82,7 @@
         a = document.getElementsByClassName("option");
         filter = input.value.toUpperCase();
         
-        if ( e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA"  ){
+        if ( e.target.id  == "searchBar"){
             li = document.getElementsByClassName("mdl-list__item");
             for (i = 0; i < li.length; i++) {
                 txtValue = a[i].textContent || a[i].innerText;
@@ -94,10 +98,34 @@
         }
     }
     window.onclick = function(e){
-        if ( e.target.nodeName != "INPUT" || e.target.nodeName != "TEXTAREA"  ){
+        if ( e.target.id  != "searchBar"){
             div.style.display="none"
         }
     }
+
+    const downloadLink = document.getElementById("downloadLink");
+    const base64String = downloadLink.href
+
+    const base64WithoutPrefix = base64String.replace(/^data:application\/(pdf|png|txt|jpeg|jpg);base64,/, "");
+
+// Decode the base64 string
+    const binaryData = atob(base64WithoutPrefix);
+    console.log(binaryData)
+
+    const arrayBuffer = new ArrayBuffer(binaryData.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < binaryData.length; i++) {
+        uint8Array[i] = binaryData.charCodeAt(i);
+    }
+
+    const blob = new Blob([uint8Array]);
+    const objectURL = URL.createObjectURL(blob);
+
+    downloadLink.href = objectURL;
+    downloadLink.download = document.getElementById("documentTitle").textContent+".pdf"; 
+    downloadLink.textContent = "Download File"; 
+        
+    URL.revokeObjectURL(objectURL);
 
 </script>
 

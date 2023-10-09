@@ -9,6 +9,7 @@ import re
 import sqlite3
 import base64
 from simpleticket import m
+from os import path
 
 try:
     import userconfig as config
@@ -247,15 +248,18 @@ def validateOpeningAndClosingTime(time):
     return re.match(timePattern, time)
 
 
-def create_ticket(title, text, media, created_by, assigned_to):
+def create_ticket(title, document, created_by, assigned_to):
     new_ticket = m.Ticket()
-    new_ticket.title = title
+    
+    title_of_document = path.splitext(title)[0]
+    new_ticket.title = title_of_document
+    
     new_ticket.is_open = True
-    new_ticket.text = text
-    new_ticket.media = media
+    new_ticket.document = document
     new_ticket.time = time.time()
     new_ticket.created_by = created_by
     new_ticket.assigned_to = assigned_to
+    print(new_ticket)
     m.db.session.add(new_ticket)
     m.db.session.commit()
 

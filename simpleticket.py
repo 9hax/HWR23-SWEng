@@ -86,7 +86,7 @@ def home():
 def createTicket():
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
-            user.create_ticket(request.form["ticket-title"], request.form["ticket-text"], None, g.current_user, None)
+            user.create_ticket(request.form["documentName"], request.form["base64TxtDocumentUpload"], g.current_user, None)
             return redirect(url_for('home'))
         return render_template('ticket-create.html')
     else:

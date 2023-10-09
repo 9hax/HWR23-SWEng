@@ -54,6 +54,8 @@
     "ticket-status-closed": "Geschlossen",
     "ticket-status-assigned": "In Bearbeitung",
     "ticket-time": "Zeit",
+    "ticket-document": "Dokument",
+    "ticket-download":"Dokument herunterladen",
     "ticket-created-by": "Erstellt von",
     "ticket-reply-by": "Antwort von",
     "ticket-note-by": "Notiz von",
@@ -94,12 +96,12 @@
     "dataForOptionalField": "Daten",
     "profilePicture":"Profilbild",
     "imagePreview": "Bildvorschau", 
-    "upload": "Hochladen"
-, 
+    "upload": "Hochladen", 
     "department-search":"Suche deine Verwaltungsstelle", 
     "contactPerson": "Kontakt Person", 
     "number": "Nummer", 
     "name": "Name" , 
     "documents": "Dokumente", 
-    "important-news": "Wichtig"
+    "important-news": "Wichtig",
+    "uploadDocument": "Dokument hochladen"
 }
