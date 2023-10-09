@@ -257,9 +257,8 @@ def create_ticket(title, document, created_by, assigned_to):
     new_ticket.is_open = True
     new_ticket.document = document
     new_ticket.time = time.time()
-    new_ticket.created_by = created_by
+    new_ticket.created_by_id = created_by
     new_ticket.assigned_to = assigned_to
-    print(new_ticket)
     m.db.session.add(new_ticket)
     m.db.session.commit()
 
@@ -312,11 +311,6 @@ def hasValidReply(ticketid):
         if m.User.query.filter_by(id = reply.created_by_id).first().highPermissionLevel:
             return True
     return False
-
-def convertToBase64(imagePath):
-    print(base64.b64encode(imagePath.encode()).decode())
-    return base64.b64encode(imagePath.encode()).decode()
-
     
 def getAllOfficesData():
     officeList = m.User.query.filter_by(isOffice = True).all()

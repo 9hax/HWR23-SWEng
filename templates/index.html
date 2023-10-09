@@ -26,7 +26,6 @@
                 <tr>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-status"]}}</th>
                     <th class="mdl-data-table__cell--non-numeric sort-key" >{{lang["ticket-title"]}}</th>
-                    <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-document"]}}</th>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-time"]}}</th>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-created-by"]}}</th>
                 </tr>
@@ -36,8 +35,7 @@
                 <td class="mdl-data-table__cell--non-numeric" style="background: {{ 'lightcoral' if ticket.is_open and not hasValidReply(ticket.id) else 'khaki' if ticket.is_open and hasValidReply(ticket.id) else 'lightgreen'}}">{{ lang["ticket-status-open"] if ticket.is_open and not hasValidReply(ticket.id) else lang["ticket-status-assigned"] if ticket.is_open and hasValidReply(ticket.id) else lang["ticket-status-closed"]}}
                     <span class="material-icons ticket-icon">{{ 'error_outline' if ticket.is_open and not hasValidReply(ticket.id) else 'pending' if ticket.is_open and hasValidReply(ticket.id) else 'check_circle'}}</span>
                 </td>
-                <td class="mdl-data-table__cell--non-numeric" id = "documentTitle">{{ticket.title}}</td>
-                <td class="mdl-data-table__cell--non-numeric" id="documentColumn"><a href="{{ticket.document}}" id = "downloadLink"></a></td>
+                <td class="mdl-data-table__cell--non-numeric" name="documentTitle"><a href="{{ticket.document}}" name="downloadLink" download ="{{ticket.title}}">{{ticket.title}}</a></td>
                 <td class="mdl-data-table__cell--non-numeric">{{getTime(ticket.time)}}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ticket.created_by}}</td>
             </tr>
@@ -63,8 +61,7 @@
 
                     <span class="material-icons ticket-icon">{{ 'error_outline' if ticket.is_open and not hasValidReply(ticket.id) else 'pending' if ticket.is_open and hasValidReply(ticket.id) else 'check_circle'}}</span>
                 </td>
-                <td class="mdl-data-table__cell--non-numeric" id = "documentTitle">{{ticket.title}}</td>
-                <td class="mdl-data-table__cell--non-numeric"id="documentColumn">{{ticket.document}}</td>
+                <td class="mdl-data-table__cell--non-numeric" name="documentTitle"><a href="{{ticket.document}}" name="downloadLink" download ="{{ticket.title}}">{{ticket.title}}</a></td>
                 <td class="mdl-data-table__cell--non-numeric">{{getTime(ticket.time)}}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ticket.created_by.fullname}}</td>
             </tr>
@@ -103,30 +100,26 @@
         }
     }
 
-    const downloadLink = document.getElementById("downloadLink");
-    const base64String = downloadLink.href
+    const downloadLink = document.getElementsByClassName("downloadLink")[];
+    for (var i=0 ; i<=downloadLink.length; ++i ) {
+        const base64String = downloadLink[i].href
+        if(base64String.includes("data")){
+            const base64WithoutPrefix = base64String.replace(/^data:application\/(pdf|png|txt|jpeg|jpg);base64,/, "");
 
-    const base64WithoutPrefix = base64String.replace(/^data:application\/(pdf|png|txt|jpeg|jpg);base64,/, "");
+            const binaryData = atob(base64WithoutPrefix);
 
-// Decode the base64 string
-    const binaryData = atob(base64WithoutPrefix);
-    console.log(binaryData)
+            const arrayBuffer = new ArrayBuffer(binaryData.length);
+            const uint8Array = new Uint8Array(arrayBuffer);
+            for (let i = 0; i < binaryData.length; i++) {
+                uint8Array[i] = binaryData.charCodeAt(i);
+            }
 
-    const arrayBuffer = new ArrayBuffer(binaryData.length);
-    const uint8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < binaryData.length; i++) {
-        uint8Array[i] = binaryData.charCodeAt(i);
-    }
-
-    const blob = new Blob([uint8Array]);
-    const objectURL = URL.createObjectURL(blob);
-
-    downloadLink.href = objectURL;
-    downloadLink.download = document.getElementById("documentTitle").textContent+".pdf"; 
-    downloadLink.textContent = "Download File"; 
-        
-    URL.revokeObjectURL(objectURL);
-
+            const blob = new Blob([uint8Array]);
+            const objectURL = URL.createObjectURL(blob);
+            downloadLink.href = objectURL;
+            URL.revokeObjectURL(objectURL);
+        }
+    }   
 </script>
 
 {% endblock %}
