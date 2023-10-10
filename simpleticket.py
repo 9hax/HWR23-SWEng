@@ -6,7 +6,8 @@ from flask import Flask, session, render_template, redirect, url_for, request, a
 from flask_migrate import Migrate
 import sqlalchemy
 import models as m
-import pdfText as p
+import PDFEdit as p
+import document as d
 
 try: 
     import userconfig as config
@@ -76,7 +77,8 @@ def serverError(e):
 def home():
     if config.REQUIRE_LOGIN:
         if "login" in session.keys() and session['login']:
-            return render_template('index.html')
+            documents = m.Document.query.all()
+            return render_template('index.html', documents=documents)
         else:
             return redirect(url_for("login"))
     else: 
@@ -350,7 +352,18 @@ def fillformular():
 def storeformular():
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
-            return render_template('ticket-view.html')
+            pdf_file = request.files['pdf_file']
+            if pdf_file.filename == '': 
+                return 'Keine ausgewählte Datei'
+            
+            upload_path = 'C:/EasyFormular/'
+            if not os.path.exists(upload_path):
+                os.makedirs(upload_path)
+            pdf_file.save(os.path.join(upload_path, pdf_file.filename))
+            file_path = os.path.join(upload_path, pdf_file.filename)
+
+            d.create_document(request.form["document-title"], file_path, g.current_user, request.form["document-fields"])
+            
         return render_template('store-pdf.html')
     else:
         abort(403)

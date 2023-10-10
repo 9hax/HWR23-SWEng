@@ -20,6 +20,25 @@
         </div>
     </p>
 </div>
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col"  style="width:100%;">
+    <p>
+    <div class="mdl-cell mdl-cell--12-col">
+        <ul class="mdl-list mdl-shadow--2dp">
+            {% for document in documents %}
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        <span>{{ document.title }}</span>
+                    </span>
+                    <span class="mdl-list__item-secondary-content">
+                        <span>{{ document.created_by.fullname }}</span>
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    </p>
+</div>
+
 <script>
     var div = document.getElementById("options")
     var input = document.getElementById('searchBar');
@@ -51,5 +70,4 @@
     }
 
 </script>
-
 {% endblock %}

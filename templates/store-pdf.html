@@ -2,26 +2,34 @@
 {% extends "master.html" %}
 {% block body %}
 
-<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%">
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
     <p>
-        <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">{{lang["store-formular"]}}</h2>
-        </div>
-        <div class="mdl-card__supporting-text">
-            <form action="/store" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {{lang["create-document"]}}
+            <div id="name">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="first" name="document-title">
+                    <label class="mdl-textfield__label" for="first">{{lang["document-title"]}}</label>
+                </div>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                  <textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" name="document-fields"></textarea>
+                  <label class="mdl-textfield__label" for="sample5">Positiondaten für die Felder !not implemented!</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
                 <label for="pdf_file">{{lang["choose-form"]}}:</label>
                 <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" />
-                <br /><br /> 
+            </div>
 
-                <label for="txt_file">{{lang["choose-param-file"]}}:</label>
-                <input type="file" name="txt_file" id="txt_file" accept=".txt" />
-                <br /><br /> 
-
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
-                    {{lang["upload"]}}
-                </button>
-            </form>
-        </div>
+            <button type="submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                {{lang["create"]}}
+            </button>
+        </form>
     </p>
 </div>
 {% endblock %}
+
+
+
+
+  

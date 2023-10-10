@@ -105,5 +105,7 @@
     "number": "Nummer", 
     "name": "Name" , 
     "documents": "Dokumente", 
-    "important-news": "Wichtig"
+    "important-news": "Wichtig",
+    "create-document": "Erstelle ein neues Dokument",
+    "document-title": "Titel des Dokuments"
 }

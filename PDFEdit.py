@@ -46,3 +46,5 @@ def addText(documentFileName: str, outputFileName: str, pageModificationList: li
         filename = outputFileName + "_overlay_" + str(overlayNumber) + ".pdf"
         if os.path.exists(filename):
             os.remove(filename)
+
+
