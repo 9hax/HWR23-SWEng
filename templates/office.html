@@ -52,7 +52,7 @@
             {% for document in documents %}
                 <li class="mdl-list__item">
                     <span class="mdl-list__item-primary-content">
-                        <span>{{ document.title }}</span>
+                        <a href="{{ url_for('download_document', document_id=document.id) }}">{{ document.title }}</a>
                     </span>
                     <span class="mdl-list__item-secondary-content">
                         <span>{{ document.created_by.fullname }}</span>

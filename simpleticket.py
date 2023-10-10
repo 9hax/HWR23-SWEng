@@ -384,6 +384,13 @@ def viewOffice(useroffice):
     else:
         abort(403)
 
+@app.route('/download/<int:document_id>')
+def download_document(document_id):
+    document = m.Document.query.get(document_id)
 
+    filename = document.title + ".pdf"; 
+    file_path = document.fileName;  
+
+    return send_file(file_path, as_attachment=True, download_name=filename)
       
             
