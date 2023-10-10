@@ -44,14 +44,24 @@
         </div>
     {% endif%}
 </div>
-{% if  documents | length == 0  %}
-    <h5 style="margin-left:5%;padding-bottom:3%">{{lang["documents"]}}</h5>
-    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
-        {% for name in documents%}
-            <p><strong>{{name}}: </strong></p>
-        {% endfor %}
+
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
+    <div class="mdl-cell mdl-cell--12-col">
+        <h5>Öffentliche Dokumente</h5> 
+        <ul class="mdl-list mdl-shadow--2dp">
+            {% for document in documents %}
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        <span>{{ document.title }}</span>
+                    </span>
+                    <span class="mdl-list__item-secondary-content">
+                        <span>{{ document.created_by.fullname }}</span>
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
-{% endif%}
+</div>
 
     
         

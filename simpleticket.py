@@ -375,7 +375,7 @@ def viewOffice(useroffice):
     print(offices)
     
     officeID = offices["id"]
-    documents = user.getDocumentsNames(officeID)
+    documents = m.Document.query.filter_by(created_by_id=officeID).all()
     
     if offices == None:
         abort(404)
