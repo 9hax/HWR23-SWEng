@@ -1,7 +1,7 @@
 {% set title = lang["home"] %} {% extends "master.html" %} {% block body %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col"  style="width:100%;">
     <p>
-    <p>
+        <h5>Behörde suchen:</h5>
         <div class="mdl-textfield mdl-js-textfield" style="width: 100%; display: flex; align-items: center;">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" >
                     <i class="material-icons search">search</i>
@@ -20,9 +20,9 @@
         </div>
     </p>
 </div>
-<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col"  style="width:100%;">
-    <p>
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
     <div class="mdl-cell mdl-cell--12-col">
+        <h5>Meine Dokumente</h5> 
         <ul class="mdl-list mdl-shadow--2dp">
             {% for document in documents %}
                 <li class="mdl-list__item">
@@ -36,7 +36,6 @@
             {% endfor %}
         </ul>
     </div>
-    </p>
 </div>
 
 <script>

@@ -77,7 +77,7 @@ def serverError(e):
 def home():
     if config.REQUIRE_LOGIN:
         if "login" in session.keys() and session['login']:
-            documents = m.Document.query.all()
+            documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
             return render_template('index.html', documents=documents)
         else:
             return redirect(url_for("login"))
