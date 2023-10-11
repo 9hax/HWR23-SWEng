@@ -9,6 +9,7 @@ import models as m
 import PDFEdit as p
 import document as d
 
+
 try: 
     import userconfig as config
 except: 
@@ -319,32 +320,16 @@ def adminUserSettigs():
 def fillformular():
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
-            if 'pdf_file' in request.files:
-                pdf_file = request.files['pdf_file']
-                if pdf_file.filename != '':
-                    
-                    user_data = json.loads(g.current_user.userData)
-                    x, y = 50, 800
-                    pdf_data = [
-                        {'text': user_data.get('fullname'), 'x': x, 'y': y},
-                        {'text': user_data.get('dateofbirth'), 'x': x, 'y': y - 30},
-                        {'text': user_data.get('address'), 'x': x, 'y': y - 60},
-                        {'text': user_data.get('taxnumber'), 'x': x, 'y': y - 90},
-                        {'text': user_data.get('taxclass'), 'x': x, 'y': y - 120},
-                        {'text': user_data.get('gender'), 'x': x, 'y': y - 150},
-                        {'text': user_data.get('employer'), 'x': x, 'y': y - 180}
-                    ]
-
-                
-                    temp_filename = 'temp.pdf'
-                    pdf_file.save(temp_filename)
-
-                    p.addText(temp_filename, 'output.pdf', [pdf_data])
-                    os.remove(temp_filename)
-
-                    return send_file('output.pdf', as_attachment=True)
-
-        return render_template('fill-pdf.html')
+            selected_documents = request.form.getlist('selected_documents')
+            user_data = json.loads(g.current_user.userData)
+            documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
+            for document_id in selected_documents:
+                filename = d.fill_and_download_document(document_id, user_data)
+                return send_file(filename, as_attachment=True)
+            return render_template('fill-pdf.html', documents=documents)
+        else:
+            documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
+            return render_template('fill-pdf.html', documents=documents)
     else:
         abort(403)
 
@@ -361,8 +346,10 @@ def storeformular():
                 os.makedirs(upload_path)
             pdf_file.save(os.path.join(upload_path, pdf_file.filename))
             file_path = os.path.join(upload_path, pdf_file.filename)
+            field_positions = d.get_field_positions(request.form["document-fields"])
+            document_fields = json.dumps(field_positions)
 
-            d.create_document(request.form["document-title"], file_path, g.current_user, request.form["document-fields"])
+            d.create_document(request.form["document-title"], file_path, g.current_user, document_fields)
             
         return render_template('store-pdf.html')
     else:

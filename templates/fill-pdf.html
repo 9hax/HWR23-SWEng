@@ -7,8 +7,24 @@
         </div>
         <div class="mdl-card__supporting-text">
             <form action="/fill" method="POST" enctype="multipart/form-data">
-                <label for="pdf_file">{{lang["choose-form"]}}:</label>
-                <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" />
+                <div class="mdl-cell mdl-cell--12-col">
+                    <ul class="mdl-list mdl-shadow--2dp">
+                        {% for document in documents %}
+                            <li class="mdl-list__item">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-{{ document.id }}">
+                                    <input type="checkbox" id="checkbox-{{ document.id }}" class="mdl-checkbox__input" name="selected_documents" value="{{ document.id }}">
+                                    <span class="mdl-checkbox__label">{{ document.title }}</span>
+                                </label>
+                                <span class="mdl-list__item-primary-content">
+                                    <a>{{ document.title }}</a>
+                                </span>
+                                <span class="mdl-list__item-secondary-content">
+                                    <span>{{ document.created_by.fullname }}</span>
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
                     {{lang["fill"]}}
                 </button>

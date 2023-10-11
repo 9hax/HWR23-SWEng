@@ -1,4 +1,7 @@
-from simpleticket import m
+from simpleticket import m, p
+import os, json
+from pathlib import Path as pa
+from flask import send_file
 
 try:
     import userconfig as config
@@ -29,22 +32,56 @@ def delete_document(document_id):
         m.db.session.rollback()
         return False, str(e)
 
-# def get_field_positions(form_string):
-    field_data = {}
+def get_field_positions(input_string):
+    attributes = input_string.split(';')
+    field_positions = {}
 
-    lines = form_string.split('\n')
+    for attribute in attributes:
+        key, positions = attribute.split('=')
+        x, y = positions.split(',')
+        
+        field_positions[key + '-x'] = x
+        field_positions[key + '-y'] = y
 
-    for line in lines:
-        parts = line.strip().split('=')
-        if len(parts) == 2:
-            name = parts[0].strip()
-            values = parts[1].strip().split(';')
-            if len(values) == 2:
-                x_position = int(values[0].strip())
-                y_position = int(values[1].strip())
-                field_data[name] = {
-                    "X-Position": x_position,
-                    "Y-Position": y_position
-                }
+    return field_positions
 
-    return field_data
+def fill_and_download_document(document_id, user_data):
+    document = m.Document.query.get(document_id)
+    filename = document.title + "_filled.pdf"
+    filepath = document.fileName
+    field_positions = json.loads(document.fields)
+
+    #debugging
+    field_positions.get('fullname-x')
+    field_positions.get('dateofbirth-x')
+    field_positions.get('address-x')
+    field_positions.get('taxclass-x')
+    field_positions.get('taxnumber-x')
+    field_positions.get('gender-x')
+    field_positions.get('employer-x')
+
+    pdf_data = [
+        {'text': user_data.get('fullname'), 'x': int(field_positions.get('fullname-x')), 'y': int(field_positions.get('fullname-y'))},
+        {'text': user_data.get('dateofbirth'), 'x': int(field_positions.get('dateofbirth-x')), 'y': int(field_positions.get('dateofbirth-y'))},
+        {'text': user_data.get('address'), 'x': int(field_positions.get('address-x')), 'y': int(field_positions.get('address-y'))},
+        {'text': user_data.get('taxnumber'), 'x': int(field_positions.get('taxnumber-x')), 'y': int(field_positions.get('taxnumber-y'))},
+        {'text': user_data.get('taxclass'), 'x': int(field_positions.get('taxclass-x')), 'y': int(field_positions.get('taxclass-y'))},
+        {'text': user_data.get('gender'), 'x': int(field_positions.get('gender-x')), 'y': int(field_positions.get('gender-y'))},
+        {'text': user_data.get('employer'), 'x': int(field_positions.get('employer-x')), 'y': int(field_positions.get('employer-y'))}
+    ]
+    try:
+        with open(filepath, "rb") as document_file:
+            content = document_file.read()
+        with open('temp.pdf', "wb") as temp_file:
+            temp_file.write(content)
+
+    except FileNotFoundError:
+        print("Die Datei wurde nicht gefunden.")
+    except Exception as e:
+        print(f"Ein Fehler ist aufgetreten: {str(e)}")
+
+    p.addText('temp.pdf', filename, [pdf_data])
+    os.remove('temp.pdf')
+
+    return filename
+
