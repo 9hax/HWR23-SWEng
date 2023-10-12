@@ -31,6 +31,7 @@
                     </span>
                     <span class="mdl-list__item-secondary-content">
                         <span>{{ document.created_by.fullname }}</span>
+                        <a href="{{ url_for('delete_document', document_id=document.id) }}" class="delete-icon">Löschen</a>
                     </span>
                 </li>
             {% endfor %}

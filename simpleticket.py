@@ -379,5 +379,11 @@ def download_document(document_id):
     file_path = document.fileName;  
 
     return send_file(file_path, as_attachment=True, download_name=filename)
-      
+
+@app.route('/delete/<int:document_id>')
+def delete_document(document_id):
+    d.delete_document(document_id)
+    documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
+    return render_template('index.html', documents=documents)
+     
             
