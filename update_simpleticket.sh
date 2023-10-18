@@ -21,9 +21,9 @@ sudo -u simpleticket git pull
 # Start database migrations
 echo ${green}Running database migrations...${reset}
 sudo -u simpleticket python3 -m flask db upgrade
-sudo -u simpleticket python3 -m flask db migrate -m "SimpleTicket Update"
+sudo -u simpleticket python3 -m flask db migrate -m "simpleticket Update"
 sudo -u simpleticket python3 -m flask db upgrade
-sudo -u simpleticket python3 -m flask db migrate -m "SimpleTicket Update"
+sudo -u simpleticket python3 -m flask db migrate -m "simpleticket Update"
 
 # Start apache2
 echo ${green}Starting apache...${reset}

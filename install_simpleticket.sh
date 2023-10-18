@@ -16,7 +16,7 @@ sudo apt install python3 python3-pip -y
 sudo apt install libapache2-mod-wsgi-py3 -y
 
 # Create simpleticket user for the wsgi process
-sudo useradd simpleticket -c "SimpleTicket WSGI Daemon Owner" -r -m
+sudo useradd simpleticket -c "simpleticket WSGI Daemon Owner" -r -m
 sudo usermod -L simpleticket
 
 ###############################
@@ -98,4 +98,4 @@ echo ${green}Start website${reset}
 # Start apache2
 sudo service apache2 start
 
-echo ${green}You can set up SimpleTicket with the file /opt/simpleticket/userconfig.py and smtpsetup.py.${reset}
+echo ${green}You can set up simpleticket with the file /opt/simpleticket/userconfig.py and smtpsetup.py.${reset}

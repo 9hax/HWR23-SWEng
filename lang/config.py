@@ -1,5 +1,5 @@
 ###################################
-# SIMPLETICKET CONFIGURATION FILE #
+# simpleticket CONFIGURATION FILE #
 ###################################
 
 ###############################################
@@ -13,7 +13,7 @@ INTERFACE_IP = "0.0.0.0"
 INTERFACE_PORT = "80"
 
 ######################################
-# General SimpleTicket Configuration #
+# General EasyFormular Configuration #
 ######################################
 
 # Require login for opening the home page?
@@ -21,11 +21,11 @@ INTERFACE_PORT = "80"
 REQUIRE_LOGIN = True
 
 # Language file that is used for the web interface.
-# The language file has .json as a file format and is located in the lang directory at the simpleticket install path root.
+# The language file has .json as a file format and is located in the lang directory at the EasyFormular install path root.
 LANGUAGE = "en_EN"
 
 # Site Name (Displayed in header, title, about page...)
-SITE_NAME = "SimpleTicket Development Instance"
+SITE_NAME = "EasyFormular Development Instance"
 
 # Needed for sessions. Change this to logout all users.
 SECRET_KEY = 'm-_2hz7kJL-oOHtwKkI5ew'

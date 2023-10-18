@@ -1,6 +1,6 @@
-# SimpleTicket Ticket Management System
+# EasyFormular Ticket Management System
 
-SimpleTicket is a simple ticket system built using flask and wsgi.
+EasyFormular is a simple ticket system built using flask and wsgi.
 
 Its designed to be easy to use and set up, providiing a fast, easy and portable solution for smaller teams.
 
@@ -18,7 +18,7 @@ Fix icon spacings in table
 
 ## Installation
 
-You can easily install SimpleTicket on any debian System using the provided install script.
+You can easily install simpleticket on any debian System using the provided install script.
 
 TODO: Fix DB errors right after installation and software updates.
 
