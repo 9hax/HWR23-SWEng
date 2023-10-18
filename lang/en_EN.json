@@ -109,6 +109,6 @@
     "important-news": "News",
     "create-document": "Create new Document",
     "document-title": "Document title", 
-    "no-file-error": "No document available. Please insert document."
-
+    "no-file-error": "No document available. Please insert document.",
+    "eleven-chars":"Taxnumber must be eleven characters long"
 }

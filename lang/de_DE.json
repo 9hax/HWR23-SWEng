@@ -108,5 +108,6 @@
     "important-news": "Wichtig",
     "create-document": "Erstelle ein neues Dokument",
     "document-title": "Titel des Dokuments", 
-    "no-file-error": "Kein Dokement vorhanden. Bitte Datei einfügen."
+    "no-file-error": "Kein Dokement vorhanden. Bitte Datei einfügen.",
+    "eleven-chars":"SV-Nummer muss 11 Yeichen lang sein"
 }
