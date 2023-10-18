@@ -9,6 +9,8 @@ import re
 import sqlite3
 import base64
 from simpleticket import m
+from datetime import datetime
+
 
 try:
     import userconfig as config
@@ -123,12 +125,16 @@ def set_office_data_validate(officeid, userData):
     else: 
         raise ValueError("Invalid address")
     
-    if validateTime(userData["openingTime"]):
+    
+    opening_time = datetime.strptime(userData["openingTime"], "%H:%M")
+    closing_time = datetime.strptime(userData["closingTime"], "%H:%M")
+    
+    if validateTime(userData["openingTime"]) and opening_time<closing_time:
         newOfficeData["openingTime"] =  userData["openingTime"]
     else: 
         raise ValueError("Invalid time")
     
-    if validateTime(userData["closingTime"]):
+    if validateTime(userData["closingTime"]) and opening_time<closing_time:
         newOfficeData["closingTime"] =  userData["closingTime"]
     else: 
         raise ValueError("Invalid time")
