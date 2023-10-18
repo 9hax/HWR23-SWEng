@@ -233,6 +233,17 @@ def validateOpeningAndClosingTime(time):
     return re.match(timePattern, time)
 
 
+def validateInputDocument(document_file:str):
+    trimmed_document_file = document_file.strip()
+    if trimmed_document_file == "" :
+        return False
+    return True
+def validateDocumentName(name:str):
+    trimmed_name = name.strip()
+    if trimmed_name == "":
+        return False
+    return True
+
 def create_ticket(title, text, media, created_by, assigned_to):
     new_ticket = m.Ticket()
     new_ticket.title = title
@@ -334,5 +345,10 @@ def getDocumentsNames(officeid):
         documentsListNames.append(title)
     return documentsListNames
 
+def verify_file(document_name, document_file):
+    if  not validateDocumentName(document_name): 
+        raise ValueError("Invalid Document Name")
     
+    if not validateInputDocument(document_file): 
+        raise ValueError("Empty file")
    
