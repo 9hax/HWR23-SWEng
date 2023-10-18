@@ -108,5 +108,7 @@
     "documents":"Documents", 
     "important-news": "News",
     "create-document": "Create new Document",
-    "document-title": "Document title"
+    "document-title": "Document title", 
+    "no-file-error": "No document available. Please insert document."
+
 }
