@@ -200,6 +200,7 @@ def validateEmail(email):
     if "@" in email:
         return True
     else: return False
+
 def validateNumber(number):
     if not number.isdigit():
         print(number)
@@ -238,12 +239,12 @@ def validateOpeningAndClosingTime(time):
     timePattern = "^(0\d|1\d|2[0-3]):([0-5]\d)$"
     return re.match(timePattern, time)
 
-
 def validateInputDocument(document_file:str):
     trimmed_document_file = document_file.strip()
     if trimmed_document_file == "" :
         return False
     return True
+
 def validateDocumentName(name:str):
     trimmed_name = name.strip()
     if trimmed_name == "":
@@ -290,7 +291,6 @@ def modify_user_password(userid, newPasswordHash):
     modified_user.password = newPasswordHash
     m.db.session.commit()
     
-
 def sendmail(address, htmlcontent, subject):
     import smtplib, ssl
     mailstring = "From: "+smtpconfig.SMTP_USER+"\nTo: "+address+"\nSubject: "+subject+"\n\n"+htmlcontent+"\n"
@@ -316,7 +316,6 @@ def convertToBase64(imagePath):
     print(base64.b64encode(imagePath.encode()).decode())
     return base64.b64encode(imagePath.encode()).decode()
 
-    
 def getAllOfficesData():
     officeList = m.User.query.filter_by(isOffice = True).all()
     officeData = []
@@ -343,6 +342,7 @@ def getOfficeData(username):
         d["id"] = office.id
         officeData.append(d)
     return officeData
+
 def getDocumentsNames(officeid):
     documents = m.Ticket.query.filter_by(created_by_id = officeid).all()
     documentsListNames = []
