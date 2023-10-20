@@ -341,7 +341,7 @@ def storeformular():
             if pdf_file.filename == '': 
                 return 'Keine ausgewählte Datei'
             
-            upload_path = 'C:/simpleticket/'
+            upload_path = 'document_data/'
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
             pdf_file.save(os.path.join(upload_path, pdf_file.filename))
