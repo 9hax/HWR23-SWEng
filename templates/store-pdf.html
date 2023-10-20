@@ -23,20 +23,20 @@ fullname=x,y;dateofbirth=x,y;address=x,y;taxnumber=x,y;taxclass=x,y;gender=x,y;e
                 <label class="mdl-textfield__label" for="sample5">Positiondaten für die Felder !not implemented!</label>
           </div>
             <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
-                <input type="file" name="documentFile" id="documentFile" accept=".pdf" onchange="success()" />
-                <label for="documentFile">{{lang["choose-form"]}}:</label>
+                <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" onchange="success()" />
+                <label for="pdf_file">{{lang["choose-form"]}}:</label>
             </div>
+            <button type="submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" id="createDocument" disabled>
+                {{lang["create"]}}
+            </button>
         </form>
-        <button type="submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" id="createDocument" disabled>
-            {{lang["create"]}}
-        </button>
     </p>
 </div>
 
 <script>
     function success() {
         const createDocument = document.getElementById("createDocument")
-        if (document.getElementById("documentFile").files.length > 0) {
+        if (document.getElementById("pdf_file").files.length > 0) {
             createDocument.disabled = false;
         }else{
             createDocument.disabled = true;
