@@ -13,7 +13,7 @@
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width: 50%;">
         <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
             <div style="display: flex; align-items: center;margin-top: 4%;">
-                <p><strong>{{ lang["adress"] }}: </strong></p><p>{{ office["adressOffice"] }}</p>
+                <p><strong>{{ lang["address"] }}: </strong></p><p>{{ office["adressOffice"] }}</p>
                 <i class="material-icons location" style:"margin-left: 4%;">location_on</i>
             </div>
             <div style="display: flex; align-items: center;margin-top: 4%;">
@@ -42,8 +42,8 @@
                     <i class="material-icons call" style:"margin-left: 4%;">call</i>
                 </div>
             </section>
-            <div class="col" style="width:60%; max-width: 30em;margin:auto;display:{{ 'none' if office['base64TxtContactPerson'] == ""  else 'block'}}" id="previewContainer">
-                <img class="img" id="avatar" src="{{office['base64TxtContactPerson']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1; margin-left:20%"/>
+            <div class="col" style="width:50%; max-width: 30em;margin-left: 10%;display:{{ 'none' if office['base64TxtContactPerson'] == ""  else 'block'}}" id="previewContainer">
+                <img class="img" id="avatar" src="{{office['base64TxtContactPerson']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1;"/>
             </div>
         </div>
     </div>
