@@ -321,7 +321,10 @@ def fillformular():
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
             selected_documents = request.form.getlist('selected_documents')
-            user_data = json.loads(g.current_user.userData)
+            try:
+                user_data = json.loads(g.current_user.userData)
+            except TypeError:
+                return redirect(url_for('changeSettings'))
             documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
             for document_id in selected_documents:
                 filename = d.fill_and_download_document(document_id, user_data)
