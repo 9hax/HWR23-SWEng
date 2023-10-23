@@ -11,14 +11,12 @@
   {% endif %}
   <p>
     <h3>{{lang["about-title"]}}</h3>
-    <div class="horizontal" style="display: inline-block;">
-      <div>
-        <p>
-          {{lang["about-text"] | safe }}
-        </p>
-      </div>
-      <div style="aspect-ratio:1/1; background-color: #657279;">
-        <img src="../static/favicon_white.svg" style="width: 100%; height: auto; float: left;">
+    <div class="horizontal" style="display: inline-block; text-align: center;">
+      <p style="text-align: left;">
+        {{lang["about-text"] | safe }}
+      </p>
+      <div style="display: inline-block;">
+        <img src="../static/logo_blue.png" style="max-width: 100%; height: auto; aspect-ratio: 1/1; display: inline-block; margin: 0 auto;">
       </div>
     </div>
     {% if g.current_user.highPermissionLevel %}<br>

@@ -43,7 +43,7 @@
     "user-signup-title": "Benutzer erstellen",
     "create": "Erstellen",
     "user-create-error": "Der Benutzer kann nicht erstellt werden. Ist der Benutzername bereits vorhanden?",
-    "user-modify-error": "Der Benutzer kann nciht modifiziert werden. Ist das Passwort gültig?",
+    "user-modify-error": "Der Benutzer kann nicht modifiziert werden. Ist das Passwort gültig?",
     "user-modify-invalid": "Der Benutzer kann nicht modifiziert werden. Das folgende Feld ist ungültig:",
     "user-not-found-error": "Der Benutzer kann nicht gefunden werden.",
     "low-perms": "Standardbenutzer",
@@ -110,5 +110,7 @@
     "important-news": "Wichtig",
     "create-document": "Erstelle ein neues Dokument",
     "document-title": "Titel des Dokuments",
-    "uploadDocument": "Dokument hochladen"
+    "uploadDocument": "Dokument hochladen", 
+    "no-file-error": "Kein Dokement vorhanden. Bitte Datei einfügen.",
+    "eleven-chars":"SV-Nummer muss 11 Yeichen lang sein"
 }

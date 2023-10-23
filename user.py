@@ -10,6 +10,8 @@ import sqlite3
 import base64
 from simpleticket import m
 from os import path
+from datetime import datetime
+
 
 try:
     import userconfig as config
@@ -124,12 +126,16 @@ def set_office_data_validate(officeid, userData):
     else: 
         raise ValueError("Invalid address")
     
-    if validateTime(userData["openingTime"]):
+    
+    opening_time = datetime.strptime(userData["openingTime"], "%H:%M")
+    closing_time = datetime.strptime(userData["closingTime"], "%H:%M")
+    
+    if validateTime(userData["openingTime"]) and opening_time<closing_time:
         newOfficeData["openingTime"] =  userData["openingTime"]
     else: 
         raise ValueError("Invalid time")
     
-    if validateTime(userData["closingTime"]):
+    if validateTime(userData["closingTime"]) and opening_time<closing_time:
         newOfficeData["closingTime"] =  userData["closingTime"]
     else: 
         raise ValueError("Invalid time")
@@ -216,6 +222,7 @@ def validateEmail(email):
     if "@" in email:
         return True
     else: return False
+
 def validateNumber(number):
     if not number.isdigit():
         print(number)
@@ -254,6 +261,17 @@ def validateOpeningAndClosingTime(time):
     timePattern = "^(0\d|1\d|2[0-3]):([0-5]\d)$"
     return re.match(timePattern, time)
 
+def validateInputDocument(document_file:str):
+    trimmed_document_file = document_file.strip()
+    if trimmed_document_file == "" :
+        return False
+    return True
+
+def validateDocumentName(name:str):
+    trimmed_name = name.strip()
+    if trimmed_name == "":
+        return False
+    return True
 
 def create_ticket(title, document, created_by_id, assigned_to):
     new_ticket = m.Ticket()
@@ -297,7 +315,6 @@ def modify_user_password(userid, newPasswordHash):
     modified_user.password = newPasswordHash
     m.db.session.commit()
     
-
 def sendmail(address, htmlcontent, subject):
     import smtplib, ssl
     mailstring = "From: "+smtpconfig.SMTP_USER+"\nTo: "+address+"\nSubject: "+subject+"\n\n"+htmlcontent+"\n"
@@ -319,6 +336,11 @@ def hasValidReply(ticketid):
             return True
     return False
     
+
+def convertToBase64(imagePath):
+    print(base64.b64encode(imagePath.encode()).decode())
+    return base64.b64encode(imagePath.encode()).decode()
+
 def getAllOfficesData():
     officeList = m.User.query.filter_by(isOffice = True).all()
     officeData = []
@@ -345,6 +367,7 @@ def getOfficeData(username):
         d["id"] = office.id
         officeData.append(d)
     return officeData
+
 def getDocumentsNames(officeid):
     documents = m.Ticket.query.filter_by(created_by_id = officeid).all()
     documentsListNames = []
@@ -353,5 +376,10 @@ def getDocumentsNames(officeid):
         documentsListNames.append(title)
     return documentsListNames
 
+def verify_file(document_name, document_file):
+    if  not validateDocumentName(document_name): 
+        raise ValueError("Invalid Document Name")
     
+    if not validateInputDocument(document_file): 
+        raise ValueError("Empty file")
    

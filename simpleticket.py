@@ -1,4 +1,4 @@
-# SimpleTicket main app file
+# simpleticket main app file
 
 
 # Handle Imports
@@ -185,7 +185,7 @@ def createTicketReply(ticketid):
         abort(403)
 
 
-# the about page. this shows the current software version and some general information about SimpleTicket.
+# the about page. this shows the current software version and some general information about simpleticket.
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -344,7 +344,7 @@ def storeformular():
             if pdf_file.filename == '': 
                 return 'Keine ausgewählte Datei'
             
-            upload_path = 'C:/EasyFormular/'
+            upload_path = 'document_data/'
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
             pdf_file.save(os.path.join(upload_path, pdf_file.filename))

@@ -1,5 +1,5 @@
 ###################################
-# SIMPLETICKET CONFIGURATION FILE #
+# simpleticket CONFIGURATION FILE #
 ###################################
 
 ###############################################
@@ -13,7 +13,7 @@ INTERFACE_IP = "0.0.0.0"
 INTERFACE_PORT = "80"
 
 ######################################
-# General SimpleTicket Configuration #
+# General simpleticket Configuration #
 ######################################
 
 # Require login for opening the home page?
@@ -25,7 +25,7 @@ REQUIRE_LOGIN = True
 LANGUAGE = "en_EN"
 
 # Site Name (Displayed in header, title, about page...)
-SITE_NAME = "SimpleTicket Development Instance"
+SITE_NAME = "EasyFormular Development Instance"
 
 # Needed for sessions. Change this to logout all users.
 SECRET_KEY = 'm-_2hz7kJL-oOHtwKkI5ew'

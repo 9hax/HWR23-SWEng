@@ -21,11 +21,11 @@
                         value="{{userData['adressOffice']}}">
                         <label class="mdl-textfield__label" for="adressOffice">{{lang["adressOffice"]}}</label>
                     </div>
-                    <p style="color:#33e8ff">{{lang["openingTime"]}}</p>
+                    <p style="color:rgb(0,188,212">{{lang["openingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="time" name="openingTime" value="{{userData['openingTime']}}">
                     </div>
-                    <p style="color:#33e8ff">{{lang["closingTime"]}}</p>
+                    <p style="color:rgb(0,188,212">{{lang["closingTime"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="time" name="closingTime" value="{{userData['closingTime']}}">
                     </div>
@@ -40,7 +40,7 @@
                             <img class="img" id="avatar" src="{{userData['base64Txt']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
                         </div>
                     </div>   
-                    <p style="color:#33e8ff">{{lang["contactPerson"]}}</p>
+                    <p style="color:rgb(0,188,212">{{lang["contactPerson"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" name="contactPersonName" value="{{userData['contactPersonName']}}">
                         <label class="mdl-textfield__label" for="contactPersonName">{{lang["name"]}}</label>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="number" maxlength="11" id="taxnumber" name="taxnumber" 
-                        value="{{userData['taxnumber']}}">
+                        value="{{userData['taxnumber']}}" placeholder="{{lang["eleven-chars"]}}" maxlength="11" size="11">
                         <label class="mdl-textfield__label" for="taxnumber">{{lang["taxnumber"]}}</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -158,6 +158,8 @@
     </div>
 
     <script>
+        
+
         function success() {
             if(document.getElementById("passwordValidation").value==="") { 
                 document.getElementById('update-account-submit').disabled = true; 
