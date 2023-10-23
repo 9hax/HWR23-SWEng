@@ -40,8 +40,10 @@ Migrate(app, m.db, render_as_batch=True)
 @app.before_request
 def initializeRequest():
     g.current_user = None
+    g.isLoggedIn = False
     if "login" in session.keys() and session['login']:
         g.current_user = user.get_user(session['acc_id'])
+        g.isLoggedIn = True
 
 # make some variables available to the templating engine
 @app.context_processor
@@ -76,14 +78,11 @@ def serverError(e):
 # the index and home landing page. this displays all the active and closed tickets.
 @app.route('/')
 def home():
-    if config.REQUIRE_LOGIN:
-        if "login" in session.keys() and session['login']:
-            documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
-            return render_template('index.html', documents=documents)
-        else:
-            return redirect(url_for("login"))
-    else: 
-        return render_template("index.html")
+    if "login" in session.keys() and session['login']:
+        user_documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
+        return render_template('index.html', user_documents=user_documents)
+    else:
+        return render_template('landing.html')
 
 # the page to create a new ticket on.
 @app.route('/create', methods=['GET', 'POST'])

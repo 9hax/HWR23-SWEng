@@ -16,10 +16,6 @@ INTERFACE_PORT = "80"
 # General simpleticket Configuration #
 ######################################
 
-# Require login for opening the home page?
-# This will automatically redirect to login if not logged in already.
-REQUIRE_LOGIN = True
-
 # Language file that is used for the web interface.
 # The language file has .json as a file format and is located in the lang directory at the simpleticket install path root.
 LANGUAGE = "en_EN"
