@@ -28,7 +28,7 @@ class Ticket(db.Model):
     base_document_id = db.Column(db.Integer, db.ForeignKey('document.id'), nullable = False)
     
     created_by = db.relationship('User', backref='tickets_created_by', foreign_keys=[created_by_id])
-    concerns = db.relationship('User', backref='tickets_created_by', foreign_keys=[created_by_id])
+    concerns = db.relationship('User', backref='tickets_concerning', foreign_keys=[concerns_id])
     def __repr__(self):
         return '<Ticket %r>' % self.title
 
