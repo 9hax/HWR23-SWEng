@@ -12,6 +12,7 @@ class User(db.Model):
     highPermissionLevel = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     isOffice = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     userData = db.Column(db.Text, unique=False, nullable=True)
+    
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -19,20 +20,22 @@ class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(512), unique=False, nullable=True)
     is_open = db.Column(db.Boolean, unique=False, nullable = False, default= True)
-    text = db.Column(db.Text, unique=False, nullable=False)
-    media = db.Column(db.Text, unique=False, nullable=True) #This contains base64'ed binary images and videos in a python list.
+    document = db.Column(db.Text, unique=False, nullable=False) #This contains base64'ed binary images and videos in a python list.
     time = db.Column(db.Integer, unique = False) # The time the ticket was created in epoch seconds
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     hidden = db.Column(db.Boolean, unique=False, default= False)
-
+    concerns_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = True)
+    base_document_id = db.Column(db.Integer, db.ForeignKey('document.id'), nullable = False)
+    
     created_by = db.relationship('User', backref='tickets_created_by', foreign_keys=[created_by_id])
+    concerns = db.relationship('User', backref='tickets_created_by', foreign_keys=[created_by_id])
     def __repr__(self):
         return '<Ticket %r>' % self.title
 
 class TicketReply(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     text = db.Column(db.Text, unique=False, nullable=False)
-    media = db.Column(db.Text, unique=False, nullable=True)
+    document = db.Column(db.Text, unique=False, nullable=False)
     isNote = db.Column(db.Boolean, unique=False, nullable = True)
     time = db.Column(db.Integer, unique = False) # The time the ticket reply was created in epoch seconds
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -45,6 +48,7 @@ class TicketReply(db.Model):
 
 class Document(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+
     title = db.Column(db.String(100), unique=False, nullable=False)
     fileName = db.Column(db.Text, unique=False, nullable=False)
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))

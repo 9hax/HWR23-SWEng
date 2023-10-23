@@ -2,22 +2,44 @@
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
     <p>
         <form action="" method="POST">
-            {{lang["create-ticket"]}}
-            <div id="name">
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" id="first" name="ticket-title">
-                    <label class="mdl-textfield__label" for="first">{{lang["ticket-title"]}}</label>
-                </div>
+            <p style="color:#33e8ff">{{lang["uploadDocument"]}}</p>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-right:5%">
+                <input class="mdl-textfield__input" type="file" id="documentName" name="documentName">
+                <input class="mdl-textfield__input" type="text" id="base64TxtDocumentUpload" name="base64TxtDocumentUpload" style="display:none" >
             </div>
-            <div class="mdl-textfield mdl-js-textfield">
-                <textarea class="mdl-textfield__input" type="text" rows="3" id="sample5" name="ticket-text" style="width: 100%"></textarea>
-                <label class="mdl-textfield__label" for="sample5">{{lang["ticket-text-placeholder"]}}</label>
-            </div>
-
             <button type="submit" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
                 {{lang["create"]}}
             </button>
         </form>
     </p>
 </div>
+<script>
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+    
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+    
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+    const uploadDocument = async (event) => {
+        const file = event.target.files[0];
+        const base64 = await convertBase64(file);
+        document.getElementById("base64TxtDocumentUpload").value = base64
+        console.log(base64)
+        return base64
+    };
+    
+    document.getElementById("documentName").addEventListener("change", (e) => {
+        uploadDocument(e);
+    });
+</script>
+
 {% endblock %}

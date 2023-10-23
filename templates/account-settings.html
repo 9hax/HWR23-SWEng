@@ -4,6 +4,8 @@
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%; max-width: 60em;">
         <p>
             <form action="/account-settings-data" method="POST">
+                {{lang["user-data-update"]}}
+
                 {% if message %}
                     {{message}}
                 {% endif %}
@@ -27,6 +29,17 @@
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="time" name="closingTime" value="{{userData['closingTime']}}">
                     </div>
+                    <p style="color:#33e8ff">{{lang["profilePicture"]}}</p>
+                    <div style="display: flex; align-items: center;">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-right:5%">
+                            <input class="mdl-textfield__input" type="file" id="imageName" name="imageName" value="{{userData['imageName']}}">
+                            <label class="mdl-textfield__lab">
+                            <input class="mdl-textfield__input" type="text" id="base64Txt" name="base64Txt" value="{{userData['base64Txt']}}" style="display:none">
+                        </div>
+                        <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if userData['base64Txt'] == ""  else 'block'}}" id="previewContainer">
+                            <img class="img" id="avatar" src="{{userData['base64Txt']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
+                        </div>
+                    </div>   
                     <p style="color:#33e8ff">{{lang["contactPerson"]}}</p>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" name="contactPersonName" value="{{userData['contactPersonName']}}">
@@ -40,7 +53,18 @@
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" name="contactPersonNumber" value="{{userData['contactPersonNumber']}}">
                         <label class="mdl-textfield__label" for="contactPersonNumber">{{lang["number"]}}</label>
-                    </div>      
+                    </div> 
+                    <p style="color:#33e8ff">{{lang["profilePicture"]}}</p>
+                    <div style="display: flex; align-items: center;">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-right:5%">
+                            <input class="mdl-textfield__input" type="file" id="imageNameContactPerson" name="imageNameContactPerson" value="{{userData['imageNameContactPerson']}}">
+                            <label class="mdl-textfield__lab">
+                            <input class="mdl-textfield__input" type="text" id="base64TxtContactPerson" name="base64TxtContactPerson" value="{{userData['base64TxtContactPerson']}}" style="display:none">
+                        </div>
+                        <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if userData['base64TxtContactPerson'] == ""  else 'block'}}" id="previewContainerContactPeson">
+                            <img class="img" id="avatarContactPerson" src="{{userData['base64TxtContactPerson']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
+                        </div>
+                    </div>     
                 </div>
                 {% else %}
                 <div>
@@ -88,20 +112,17 @@
                         value="{{userData['employer']}}">
                         <label class="mdl-textfield__label" for="employer">{{lang["workingPlace"]}}</label>
                     </div>
-                </div>
-                {% endif %}
-                <p style="color:#33e8ff">{{lang["profilePicture"]}}</p>
-                <div style="display: flex; align-items: center;">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-right:5%">
-                        <input class="mdl-textfield__input" type="file" id="imageName" name="imageName" value="{{userData['imageName']}}">
-                        <label class="mdl-textfield__lab">
-                        <input class="mdl-textfield__input" type="text" id="base64Txt" name="base64Txt" value="{{userData['base64Txt']}}" style="display:none">
-                    </div>
-                    <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if userData['base64Txt'] == ""  else 'block'}}" id="previewContainer">
-                        <img class="img" id="avatar" src="{{userData['base64Txt']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
-                    </div>
-                </div>
-                        
+                    <p style="color:#33e8ff">{{lang["profilePicture"]}}</p>
+                    <div style="display: flex; align-items: center;">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-right:5%">
+                            <input class="mdl-textfield__input" type="file" id="imageName" name="imageName" value="{{userData['imageName']}}">
+                            <label class="mdl-textfield__lab">
+                            <input class="mdl-textfield__input" type="text" id="base64Txt" name="base64Txt" value="{{userData['base64Txt']}}" style="display:none">
+                        </div>
+                        <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if userData['base64Txt'] == ""  else 'block'}}" id="previewContainer">
+                            <img class="img" id="avatar" src="{{userData['base64Txt']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
+                        </div>
+                    </div>   
                 </div>
     <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
         <p>
@@ -170,13 +191,32 @@
             if(avatar.getAttribute('src') != ""){
                 previewContainer.style.display="block"
             }
-            console.log(avatar.src)
             base64Txt.value = base64
             return base64
         };
         
         document.getElementById("imageName").addEventListener("change", (e) => {
             uploadImage(e);
+        });
+
+        const uploadImageContactPerson = async (event) => {
+            const avatarContactPerson = document.getElementById("avatarContactPerson")
+            const file = event.target.files[0];
+            const base64 = await convertBase64(file);
+            const previewContainerContactPerson = document.getElementById("previewContainerContactPeson")
+
+            avatarContactPerson.src = base64;
+            if(avatarContactPerson.getAttribute('src') != ""){
+                previewContainerContactPerson.style.display="block"
+            }
+            base64TxtContactPerson.value = base64
+            console.log(file)
+            console.log(base64)
+            return base64
+        };
+        
+        document.getElementById("imageNameContactPerson").addEventListener("change", (e) => {
+            uploadImageContactPerson(e);
         });
         
     </script>

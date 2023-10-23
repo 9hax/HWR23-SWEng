@@ -9,6 +9,7 @@ import re
 import sqlite3
 import base64
 from simpleticket import m
+from os import path
 
 try:
     import userconfig as config
@@ -147,8 +148,29 @@ def set_office_data_validate(officeid, userData):
         newOfficeData["contactPersonNumber"] =  userData["contactPersonNumber"]
     else: 
         raise ValueError("Invalid number")
-    print(newOfficeData)
+    
+        
+    if validateImageName(userData["imageName"]):
+        newOfficeData["imageName"] =  userData["imageName"]
+    else: 
+        raise ValueError("Invalid file type")
+    
+    if validateImageBase64(userData["base64Txt"]):
+        newOfficeData["base64Txt"] =  userData["base64Txt"]
+    else: 
+        raise ValueError("Invalid Base 64 Txt")
+    
+    if validateImageName(userData["imageNameContactPerson"]):
+        newOfficeData["imageNameContactPerson"] =  userData["imageNameContactPerson"]
+    else: 
+        raise ValueError("Invalid file type")
+    
+    if validateImageBase64(userData["base64TxtContactPerson"]):
+        newOfficeData["base64TxtContactPerson"] =  userData["base64TxtContactPerson"]
+    else: 
+        raise ValueError("Invalid Base 64 Txt")
      
+    print(newOfficeData)
     modified_user = get_user(officeid)
     modified_user.userData = json.dumps(newOfficeData)
     m.db.session.commit()
@@ -233,14 +255,16 @@ def validateOpeningAndClosingTime(time):
     return re.match(timePattern, time)
 
 
-def create_ticket(title, text, media, created_by, assigned_to):
+def create_ticket(title, document, created_by_id, assigned_to):
     new_ticket = m.Ticket()
-    new_ticket.title = title
+    
+    title_of_document = path.splitext(title)[0]
+    new_ticket.title = title_of_document
+    
     new_ticket.is_open = True
-    new_ticket.text = text
-    new_ticket.media = media
+    new_ticket.document = document
     new_ticket.time = time.time()
-    new_ticket.created_by = created_by
+    new_ticket.created_by_id = created_by_id
     new_ticket.assigned_to = assigned_to
     m.db.session.add(new_ticket)
     m.db.session.commit()
@@ -294,11 +318,6 @@ def hasValidReply(ticketid):
         if m.User.query.filter_by(id = reply.created_by_id).first().highPermissionLevel:
             return True
     return False
-
-def convertToBase64(imagePath):
-    print(base64.b64encode(imagePath.encode()).decode())
-    return base64.b64encode(imagePath.encode()).decode()
-
     
 def getAllOfficesData():
     officeList = m.User.query.filter_by(isOffice = True).all()

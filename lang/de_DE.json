@@ -54,6 +54,8 @@
     "ticket-status-closed": "Geschlossen",
     "ticket-status-assigned": "In Bearbeitung",
     "ticket-time": "Zeit",
+    "ticket-document": "Dokument",
+    "ticket-download":"Dokument herunterladen",
     "ticket-created-by": "Erstellt von",
     "ticket-reply-by": "Antwort von",
     "ticket-note-by": "Notiz von",
@@ -107,5 +109,6 @@
     "documents": "Dokumente", 
     "important-news": "Wichtig",
     "create-document": "Erstelle ein neues Dokument",
-    "document-title": "Titel des Dokuments"
+    "document-title": "Titel des Dokuments",
+    "uploadDocument": "Dokument hochladen"
 }

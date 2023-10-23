@@ -1,7 +1,6 @@
 {% set title = lang["view-ticket"]+" "+ticket.title %} {% extends "master.html" %} {% block body %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width: 100%">
     <h2>{{ticket.title}}</h2>
-    {{lang["ticket-created-by"] + " " + ticket.created_by.fullname}}
     <div class="aux" style="float: left">
         <span class="mdl-chip ticket-status-chip" style="background: {{ 'lightcoral' if ticket.is_open and not hasValidReply(ticket.id) else 'khaki' if ticket.is_open and hasValidReply(ticket.id) else 'lightgreen'}}">
       <span class="mdl-chip__text">

@@ -55,9 +55,11 @@
     "ticket-status-closed": "Closed",
     "ticket-status-assigned": "In Progress",
     "ticket-time": "Time",
+    "ticket-document": "Document",
     "ticket-created-by": "Created by",
     "ticket-reply-by": "Reply by",
     "ticket-note-by": "Note by",
+    "ticket-download":"Download document",
     "ticket-text-placeholder": "Enter your ticket text here.",
     "not-assigned": "Not assigned",
     "assigned-to": "Assigned to",
@@ -108,5 +110,6 @@
     "documents":"Documents", 
     "important-news": "News",
     "create-document": "Create new Document",
-    "document-title": "Document title"
+    "document-title": "Document title",
+    "uploadDocument": "Upload document"
 }
