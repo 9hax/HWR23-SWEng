@@ -112,5 +112,6 @@
     "document-title": "Titel des Dokuments",
     "uploadDocument": "Dokument hochladen", 
     "no-file-error": "Kein Dokement vorhanden. Bitte Datei einfügen.",
-    "eleven-chars":"SV-Nummer muss 11 Yeichen lang sein"
+    "eleven-chars":"SV-Nummer muss 11 Yeichen lang sein",
+    "register":"Registrieren"
 }
