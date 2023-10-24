@@ -11,9 +11,11 @@
       {{message}}
       <br>
       {% endif %}
-      {{lang["user-signup-text"]}}
-      {% if perms %}
-      {{perms}}
+      {% if debug %}
+        {{lang["user-signup-text"]}}
+        {% if perms %}
+        {{perms}}
+        {% endif %}
       {% endif %}
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" id="login" name="username" />
