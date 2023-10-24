@@ -227,7 +227,7 @@ def resetPW():
 
 @app.route('/add-admin', methods=['GET', 'POST'])
 def addAdmin():
-    if os.path.exists(config.CREATE_ADMIN_FILE):
+    if os.path.exists(config.CREATE_ADMIN_FILE) or ("login" in session.keys() and session['login'] and g.current_user.highPermissionLevel):
         if request.method == 'POST':
             try:
                 user.create_user(str.lower(request.form["username"]), request.form["fullname"], request.form["email"], user.hashPassword(request.form["password"]), highPermissionLevel=True)
