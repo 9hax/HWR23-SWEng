@@ -33,17 +33,13 @@ def delete_document(document_id):
         return False, str(e)
 
 def get_field_positions(input_string):
-    attributes = input_string.split(';')
-    field_positions = {}
+    try:
+        positions = json.loads(input_string)
+        # if this fails, the input is not a valid field position list and cannot be used.
+    except:
+        raise ValueError("Invalid Field positions! Please use the graphical editor.")
 
-    for attribute in attributes:
-        key, positions = attribute.split('=')
-        x, y = positions.split(',')
-        
-        field_positions[key + '-x'] = x
-        field_positions[key + '-y'] = y
-
-    return field_positions
+    return positions
 
 def fill_and_download_document(document_id, user_data):
     document = m.Document.query.get(document_id)
@@ -51,24 +47,12 @@ def fill_and_download_document(document_id, user_data):
     filepath = document.fileName
     field_positions = json.loads(document.fields)
 
-    #debugging
-    field_positions.get('fullname-x')
-    field_positions.get('dateofbirth-x')
-    field_positions.get('address-x')
-    field_positions.get('taxclass-x')
-    field_positions.get('taxnumber-x')
-    field_positions.get('gender-x')
-    field_positions.get('employer-x')
+    pdf_data = []
+    for index, page in enumerate(field_positions):
+        pdf_data[index] = []
+        for field_name in page:
+            pdf_data.append(user_data.get(field_name))        
 
-    pdf_data = [
-        {'text': user_data.get('fullname'), 'x': int(field_positions.get('fullname-x')), 'y': int(field_positions.get('fullname-y'))},
-        {'text': user_data.get('dateofbirth'), 'x': int(field_positions.get('dateofbirth-x')), 'y': int(field_positions.get('dateofbirth-y'))},
-        {'text': user_data.get('address'), 'x': int(field_positions.get('address-x')), 'y': int(field_positions.get('address-y'))},
-        {'text': user_data.get('taxnumber'), 'x': int(field_positions.get('taxnumber-x')), 'y': int(field_positions.get('taxnumber-y'))},
-        {'text': user_data.get('taxclass'), 'x': int(field_positions.get('taxclass-x')), 'y': int(field_positions.get('taxclass-y'))},
-        {'text': user_data.get('gender'), 'x': int(field_positions.get('gender-x')), 'y': int(field_positions.get('gender-y'))},
-        {'text': user_data.get('employer'), 'x': int(field_positions.get('employer-x')), 'y': int(field_positions.get('employer-y'))}
-    ]
     try:
         with open(filepath, "rb") as document_file:
             content = document_file.read()
