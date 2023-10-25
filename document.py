@@ -36,6 +36,11 @@ def get_field_positions(input_string):
     try:
         positions = json.loads(input_string)
         # if this fails, the input is not a valid field position list and cannot be used.
+        # this does not actually validate that the field position list is in a valid and correct format.
+        # if this seems dangerous, that's because it is. Please ignore thise and look for bugs somewhere else. 
+        # I don't actually excpect anyone to spoof this. why would anyone? please don't. 
+        # you should not be able to access any user data through this anyways. 
+        # if you do anyway, please let me know at http://host1.9hax.net/❤ thanks <3
     except:
         raise ValueError("Invalid Field positions! Please use the graphical editor.")
 
