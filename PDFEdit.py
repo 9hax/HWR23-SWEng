@@ -16,16 +16,16 @@ def addText(documentFileName: str, outputFileName: str, pageModificationList: li
     Every text Object is a dictionary containing the keys 'text', 'x' and 'y'.
     
     Example: 
-      addText('test.pdf', 'output.pdf', (({'text':"Hello World",'x':10,'y':10})))
+      addText('test.pdf', 'output.pdf', [[{'text':"Hello World",'x':0,'y':0}]])
     
-    This adds the text "Hello World to the top left corner of the Page. 
+    This adds the text "Hello World" to the bottom left corner of the Page. 
     '''
     pageNumber = 0
     for modificationList in pageModificationList:
         with open(outputFileName + "_overlay_" + str(pageNumber) + ".pdf", 'wb') as canvasFile:
             c = Canvas(canvasFile)
             for modification in modificationList:
-                c.drawString(modification['x'], modification['y'], modification['text'])
+                c.drawString(modification['x'] * 596, modification['y'] * 842, modification['text'])
             c.save()
         pageNumber += 1
     output = PdfWriter()
