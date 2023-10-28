@@ -17,7 +17,7 @@
     "ticket": "Dokument",
     "tickets": "Dokumente",
     "accounts": "Benutzer",
-    "account-settings": "Benutzereinstellungen",
+    "account-settings": "Meine Daten",
     "admin-settings": "Administration",
     "logout": "Logout",
     "home": "Startseite",
@@ -86,7 +86,7 @@
     "officeName": "Name der Behörde",
     "dateofbirth": "Geburtsdatum",
     "taxnumber": "Steuerversicherungsnummer", 
-    "lengthTaxNumber": "Die Steuerversciherungsnummer muss 11 Zeichen lang sein", 
+    "lengthTaxNumber": "Die Steuerversicherungsnummer muss 11 Zeichen lang sein", 
     "addOptional": "Ein optionales Feld hinzufügen", 
     "add":"Hinzufügen", 
     "nameForOptionalField": "Name des Feldes", 
@@ -112,6 +112,5 @@
     "document-title": "Titel des Dokuments",
     "uploadDocument": "Dokument hochladen", 
     "no-file-error": "Kein Dokement vorhanden. Bitte Datei einfügen.",
-    "eleven-chars":"SV-Nummer muss 11 Yeichen lang sein",
     "register":"Registrieren"
 }
