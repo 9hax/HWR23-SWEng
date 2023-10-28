@@ -1,7 +1,4 @@
 {% set title = lang["account-settings"]%} {% extends "master.html" %} {% block body %}
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script type="text/javascript" src="https://raw.githubusercontent.com/UgoSansH/mdl-datepicker/master/dist/material-datepicker.min.js"></script>
-
 <div style="display: flex; align-items: center; width: 100%; margin: auto;max-height:30em;   box-sizing: border-box;">
     <h3 style="margin-left:5%;">{{office["officeName"]}}</h3>
     <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if office['base64Txt'] == ""  else 'block'}}" id="previewContainer">

@@ -1,12 +1,12 @@
 {% set title = lang["home"] %} {% extends "master.html" %} {% block body %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col"  style="width:100%;">
-    <p>
-        <h5>Behörde suchen:</h5>
-        <div class="mdl-textfield mdl-js-textfield" style="width: 100%; display: flex; align-items: center;">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" >
-                    <i class="material-icons search">search</i>
-                </button>
-                <input class="mdl-textfield__input mdl-shadow--2dp" type="search" id="searchBar" placeholder="{{lang['department-search']}}" name="searchBar" style="border: 2px solid #0000; border-radius: 5px; outline: none; color: #9DBFAF; margin-left: 9%;padding-top:1%;padding-bottom:0;">
+    <div class="mdl-cell mdl-cell--12-col">
+        <h4>Behörde suchen</h4>
+        <div class="mdl-textfield mdl-js-textfield" style="width: 100%; display: flex;">
+            <input class="mdl-textfield__input mdl-shadow--2dp" type="search" id="searchBar" placeholder="{{lang['department-search']}}" name="searchBar" style="flex-grow: 1; padding-left: 0.5em"></input>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="position:relative; bottom: 0; margin-left: 1em" >
+                <i class="material-icons search">search</i>
+            </button>
         </div>
         <div id="options"style="border: 1px solid #606D74;display:none;margin-left: 9%">
             <ul class="demo-list-item mdl-list" id="officeOptionsUL" name="officeOptionsUL" style:"align-items:center; padding-bottom:0;padding-top:0;">
@@ -17,30 +17,61 @@
                         </span>
                     </li>
                 {%endfor%}
+            </ul>
         </div>
-    </p>
+    </div>
 </div>
 
-{% if false %}
-<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
+{% if current_user.isOffice %}
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
     <div class="mdl-cell mdl-cell--12-col">
-        <h5>Meine Dokumente</h5> 
-        <ul class="mdl-list mdl-shadow--2dp">
-            {% for document in documents %}
-                <li class="mdl-list__item">
-                    <span class="mdl-list__item-primary-content">
-                        <a href="{{ url_for('download_document', document_id=document.id) }}">{{ document.title }}</a>
-                    </span>
-                    <span class="mdl-list__item-secondary-content">
-                        <span>{{ document.created_by.fullname }}</span>
-                        <a href="{{ url_for('delete_document', document_id=document.id) }}" class="delete-icon">Löschen</a>
-                    </span>
-                </li>
-            {% endfor %}
-        </ul>
+        <h4>{{lang["open-tickets"]}}</h4>
+        <table id="dataTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%; margin-bottom: 16px;">
+            <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-status"]}}</th>
+                    <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-title"]}}</th>
+                    <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-time"]}}</th>
+                    <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-created-by"]}}</th>
+                </tr>
+            </thead>
+            {% for ticket in ticket_list %} {% if not ticket.hidden %}
+            <tr style="cursor: pointer" onclick="window.location='view/{{ticket.id}}'">
+                <td class="mdl-data-table__cell--non-numeric" style="background: {{ 'lightcoral' if ticket.is_open and not hasValidReply(ticket.id) else 'khaki' if ticket.is_open and hasValidReply(ticket.id) else 'lightgreen'}}">{{ lang["ticket-status-open"] if ticket.is_open and not hasValidReply(ticket.id) else lang["ticket-status-assigned"] if ticket.is_open and hasValidReply(ticket.id) else lang["ticket-status-closed"]}}
+                    <span class="material-icons ticket-icon">{{ 'error_outline' if ticket.is_open and not hasValidReply(ticket.id) else 'pending' if ticket.is_open and hasValidReply(ticket.id) else 'check_circle'}}</span>
+                </td>
+                <td class="mdl-data-table__cell--non-numeric">{{ticket.title}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{getTime(ticket.time)}}</td>
+                <td class="mdl-data-table__cell--non-numeric">{{ticket.created_by.fullname}}</td>
+            </tr>
+            {% endif %} {% endfor %}
+        </table>
     </div>
 </div>
 {% endif %}
+
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
+    <div class="mdl-cell mdl-cell--12-col">
+        <h4>Meine Formulare</h4> 
+        {% if documents|length < 1 %}
+        <p>Sie haben noch keine Formulare.</p>
+        {% else %}
+        <ul class="mdl-list mdl-shadow--2dp">
+            {% for document in documents %}
+            <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                    <a href="{{ url_for('download_document', document_id=document.id) }}">{{ document.title }}</a>
+                </span>
+                <span class="mdl-list__item-secondary-content">
+                    <span>{{ document.created_by.fullname }}</span>
+                    <a href="{{ url_for('delete_document', document_id=document.id) }}" class="delete-icon">Löschen</a>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
 
 <script>
     var div = document.getElementById("options")
