@@ -113,6 +113,5 @@
     "document-title": "Document title",
     "uploadDocument": "Upload document", 
     "no-file-error": "No document available. Please insert document.",
-    "eleven-chars":"Taxnumber must be eleven characters long",
     "register":"Register"
 }

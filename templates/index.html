@@ -1,7 +1,7 @@
 {% set title = lang["home"] %} {% extends "master.html" %} {% block body %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col"  style="width:100%;">
     <div class="mdl-cell mdl-cell--12-col">
-        <h4>Behörde suchen</h4>
+        <h4>Behörden durchsuchen</h4>
         <div class="mdl-textfield mdl-js-textfield" style="width: 100%; display: flex;">
             <input class="mdl-textfield__input mdl-shadow--2dp" type="search" id="searchBar" placeholder="{{lang['department-search']}}" name="searchBar" style="flex-grow: 1; padding-left: 0.5em"></input>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="position:relative; bottom: 0; margin-left: 1em" >
@@ -54,7 +54,7 @@
     <div class="mdl-cell mdl-cell--12-col">
         <h4>Meine Formulare</h4> 
         {% if documents|length < 1 %}
-        <p>Sie haben noch keine Formulare.</p>
+        <p>Sie haben noch keine Formulare erstellt.</p>
         {% else %}
         <ul class="mdl-list mdl-shadow--2dp">
             {% for document in documents %}
