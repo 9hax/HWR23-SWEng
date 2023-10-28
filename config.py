@@ -18,10 +18,10 @@ INTERFACE_PORT = "80"
 
 # Language file that is used for the web interface.
 # The language file has .json as a file format and is located in the lang directory at the simpleticket install path root.
-LANGUAGE = "en_EN"
+LANGUAGE = "de_DE"
 
 # Site Name (Displayed in header, title, about page...)
-SITE_NAME = "EasyFormular Development Instance"
+SITE_NAME = "EasyFormular"
 
 # Needed for sessions. Change this to logout all users.
 SECRET_KEY = 'm-_2hz7kJL-oOHtwKkI5ew'
