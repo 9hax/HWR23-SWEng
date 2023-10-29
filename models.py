@@ -53,7 +53,7 @@ class Document(db.Model):
     title = db.Column(db.String(100), unique=False, nullable=False)
     fileName = db.Column(db.Text, unique=False, nullable=False)
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    fields = db.Column(db.Text, unique=False, nullable=False)
+    fields = db.Column(db.Text, unique=False, nullable=True)
     
     created_by = db.relationship('User', backref='documents_created_by', foreign_keys=[created_by_id])
 
