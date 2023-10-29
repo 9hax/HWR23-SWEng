@@ -16,6 +16,8 @@ def create_document(title, filename, created_by, fields):
     new_document.fields = fields
     m.db.session.add(new_document)
     m.db.session.commit()
+    m.db.session.refresh(new_document)
+    return new_document.id
 
 def delete_document(document_id):
     try:
