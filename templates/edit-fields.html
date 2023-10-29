@@ -65,7 +65,7 @@ body %}
     }
   }
 
-  .coordinates-row .input-cell:nth-child(-n + 2) {
+  .coordinates-row *:nth-child(-n + 2) {
     max-width: 4em;
   }
 </style>
@@ -78,18 +78,12 @@ body %}
     {% if message %} {{message}} {% endif %} Bitte klicken Sie in das Formular,
     um neue Felder zu definieren.
     <form id="fields" action="" method="POST">
-      <input type="text" name="field-pos" id="field-pos"/>
-      <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
-        <input
-          type="text"
-          name="formtitle"
-          id="formtitle"
-          onkeyup="success()"
-        />
-        <label for="formtitle">{{lang["form-title"]}}:</label>
+      <input type="text" name="field-pos" id="field-pos" style="display:none"/>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text"  id="formtitle" name="formtitle" onkeyup="success()">
+          <label class="mdl-textfield__label" for="formtitle">{{lang["form-title"]}}</label>
       </div>
 
-      <div>
         <div id="pdfeditor" style="float: left">
           <div class="editor_frame">
             <p id="no_pdf">{{lang['pdf-error']}}</p>
@@ -111,12 +105,11 @@ body %}
             </svg>
             <canvas id="pdfContainer"></canvas>
           </div>
-          <p id="message">Last click at:</p>
+          <p id="message">{{lang['lastClick']}}: </p>
         </div>
         <div id="coordinate_editor">
           <p>
-            Verfügbare Platzhalter sind: fullname, dateofbirth, address,
-            taxnumber, taxclass, gender, employer.
+            {{lang['fillUpKeys']}}: {{lang['fullname']}}, {{lang['dateofbirth']}}, {{lang['taxnumber']}}, {{lang['gender']}}, {{lang['workingPlace']}}.
           </p>
           <div class="coordinates-container"></div>
         </div>
@@ -126,7 +119,7 @@ body %}
         onclick="convertToJSON()"
         class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white"
       >
-        Felder speichern
+      {{lang['saveFields']}}
       </button>
     </form>
   </div>
@@ -143,7 +136,7 @@ body %}
     // Create input cells for X, Y, and Note
     const xInputCell = createInputCell("X", x);
     const yInputCell = createInputCell("Y", y);
-    const noteInputCell = createInputCell("Platzhaltervariable", note);
+    const noteInputCell = creteDropdown(note);
 
     // Append input cells to the row
     newRow.appendChild(xInputCell);
@@ -155,20 +148,30 @@ body %}
   }
 
   function createInputCell(labelText, value) {
+    const mdlDiv = '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                      `${labelText}`+
+                      `<input class="mdl-textfield__input" type="text" value="${value}">`+
+                  '</div>'
+
     const inputCell = document.createElement("div");
-    inputCell.className = "input-cell";
-
-    const label = document.createElement("label");
-    label.textContent = labelText;
-
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = value;
-
-    inputCell.appendChild(label);
-    inputCell.appendChild(input);
-
+    inputCell.innerHTML = mdlDiv;
     return inputCell;
+  }
+
+  function creteDropdown(value){
+    var container = document.createElement('div');
+
+    const dropdownInnerHTML = 
+    '{{lang["fillUpKeys"]}}'+
+    '<select class="mdl-textfield__input" id="keyOptions" name="keyOptions">'+
+      '<option>{{lang["fullname"]}}</option>'+
+      '<option>{{lang["dateofbirth"]}}</option>'+
+      '<option>{{lang["taxnumber"]}}</option>'+
+      '<option>{{lang["gender"]}}</option>'+
+      '<option>{{lang["employer"]}}</option>'+
+      '</select>'
+    container.innerHTML = dropdownInnerHTML;
+    return container;
   }
 
   // URL of the PDF file you want to display

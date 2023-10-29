@@ -75,7 +75,8 @@
     "user-data-update": "Update User Data", 
     "age":"Age", 
     "address":"Address", 
-    "taxClass":"Tax Class", 
+    "taxClass":"Tax Class",
+    "gender":"Gender",
     "gender-male":"Male", 
     "gender-female":"Female", 
     "gender-queer": "Queer", 
@@ -113,5 +114,8 @@
     "document-title": "Document title",
     "uploadDocument": "Upload document", 
     "no-file-error": "No document available. Please insert document.",
-    "register":"Register"
+    "register":"Register", 
+    "lastClick": "Last click at",
+    "fillUpKeys": "Available placeholders are", 
+    "saveFields": "Save fields"
 }

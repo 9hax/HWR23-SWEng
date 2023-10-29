@@ -75,6 +75,7 @@
     "age":"Alter", 
     "address":"Adresse", 
     "taxClass":"Steuerklasse", 
+    "gender":"Geschlecht",
     "gender-male":"männlich", 
     "gender-female":"weiblich", 
     "gender-queer": "divers", 
@@ -116,5 +117,9 @@
     "register":"Registrieren",
     "edit-fields":"Felder definieren",
     "pdf-error":"Keine PDF-Datei geladen. Bitte aktivieren Sie JavaScript um diese Funktion zu nutzen.",
-    "form-title": "Formular-Name"
+    "form-title": "Formular-Name",
+    "lastClick": "Zuletzt geklickt",
+    "fillUpKeys": "Verfügbare Platzhalter sind",
+    "saveFields": "Felder speichern"
+
 }
