@@ -48,8 +48,7 @@ def get_field_positions(input_string):
 
     return positions
 
-def fill_and_download_document(document_id, user_data):
-    document = m.Document.query.get(document_id)
+def fill_and_download_document(document, user_data):
     filepath = document.fileName
     filename = filepath + document.title + "_filled.pdf"
     field_positions = json.loads(document.fields)
@@ -76,5 +75,5 @@ def fill_and_download_document(document_id, user_data):
     p.addText(filepath+'.temp.pdf', filename, pages)
     os.remove(filepath+'.temp.pdf')
 
-    return filename
+    return filename, pages
 
