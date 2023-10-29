@@ -366,9 +366,9 @@ def formSetup(formId):
         if document.created_by_id == g.current_user.id: 
             if request.method == 'POST':
                 document.title = request.form['formtitle']
-                document.fields = json.dumps(request.form['field-pos'])
+                document.fields = request.form['field-pos']
                 m.db.session.commit()
-                return redirect('home')
+                return redirect(url_for('home'))
             else:
                 return render_template('edit-fields.html', document = document)
         else:
