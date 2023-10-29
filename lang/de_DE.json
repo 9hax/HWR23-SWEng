@@ -95,7 +95,7 @@
     "store-formular": "Formular hinterlegen",
     "upload": "Hochladen",
     "fill": "Ausfüllen",
-    "choose-form": "Formular auswählen",
+    "choose-form": "Formular-Datei auswählen (PDF)",
     "choose-param-file": "Wähle Parameter-Datei",
     "AddAnDocument":"Füge ein Dokument hinzu", 
     "documentName":"Name", 
@@ -109,8 +109,10 @@
     "documents": "Dokumente", 
     "important-news": "Wichtig",
     "create-document": "Erstelle ein neues Dokument",
+    "create-formular": "Bitte laden Sie ein unausgefülltes Formulartemplate hoch. Im nächsten Schritt können Sie die Felder festlegen, die ausgefüllt werden.",
     "document-title": "Titel des Dokuments",
     "uploadDocument": "Dokument hochladen", 
     "no-file-error": "Kein Dokement vorhanden. Bitte Datei einfügen.",
-    "register":"Registrieren"
+    "register":"Registrieren",
+    "edit-fields":"Felder definieren"
 }
