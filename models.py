@@ -20,7 +20,7 @@ class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(512), unique=False, nullable=True)
     is_open = db.Column(db.Boolean, unique=False, nullable = False, default= True)
-    document = db.Column(db.Text, unique=False, nullable=False) #This contains base64'ed binary images and videos in a python list.
+    document = db.Column(db.Text, unique=False, nullable=False) #contains the data that is filled into the document on download.
     time = db.Column(db.Integer, unique = False) # The time the ticket was created in epoch seconds
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     hidden = db.Column(db.Boolean, unique=False, default= False)
