@@ -51,7 +51,7 @@ class Document(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(100), unique=False, nullable=False)
-    fileName = db.Column(db.Text, unique=False, nullable=False)
+    fileName = db.Column(db.Text, unique=True, nullable=False)
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     fields = db.Column(db.Text, unique=False, nullable=True)
     
