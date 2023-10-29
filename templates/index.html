@@ -22,11 +22,10 @@
     </div>
 </div>
 
-{% if current_user.isOffice %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" , style="width:100%">
     <div class="mdl-cell mdl-cell--12-col">
         <h4>{{lang["open-tickets"]}}</h4>
-        <table id="dataTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%; margin-bottom: 16px;">
+        <table id="dataTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%;">
             <thead>
                 <tr>
                     <th class="mdl-data-table__cell--non-numeric sort-key">{{lang["ticket-status"]}}</th>
@@ -38,6 +37,7 @@
             {% for ticket in ticket_list %} {% if not ticket.hidden %}
             <tr style="cursor: pointer" onclick="window.location='view/{{ticket.id}}'">
                 <td class="mdl-data-table__cell--non-numeric" style="background: {{ 'lightcoral' if ticket.is_open and not hasValidReply(ticket.id) else 'khaki' if ticket.is_open and hasValidReply(ticket.id) else 'lightgreen'}}">{{ lang["ticket-status-open"] if ticket.is_open and not hasValidReply(ticket.id) else lang["ticket-status-assigned"] if ticket.is_open and hasValidReply(ticket.id) else lang["ticket-status-closed"]}}
+
                     <span class="material-icons ticket-icon">{{ 'error_outline' if ticket.is_open and not hasValidReply(ticket.id) else 'pending' if ticket.is_open and hasValidReply(ticket.id) else 'check_circle'}}</span>
                 </td>
                 <td class="mdl-data-table__cell--non-numeric">{{ticket.title}}</td>
@@ -48,19 +48,20 @@
         </table>
     </div>
 </div>
-{% endif %}
 
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
     <div class="mdl-cell mdl-cell--12-col">
         <h4>Meine Formulare</h4> 
-        {% if documents|length < 1 %}
+        {% if user_documents|length < 1 %}
         <p>Sie haben noch keine Formulare erstellt.</p>
         {% else %}
         <ul class="mdl-list mdl-shadow--2dp">
-            {% for document in documents %}
+            {% for document in user_documents %}
             <li class="mdl-list__item">
                 <span class="mdl-list__item-primary-content">
-                    <a href="{{ url_for('download_document', document_id=document.id) }}">{{ document.title }}</a>
+                    {{document.title}}
+                    <a href="{{ url_for('download_document', document_id=document.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="position:relative; bottom: 0; margin-left: 1em" >Original</button></a>
+                    <a href="{{ url_for('fill_form', id=document.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="position:relative; bottom: 0; margin-left: 1em" >Ausgefüllt</button></a>
                 </span>
                 <span class="mdl-list__item-secondary-content">
                     <span>{{ document.created_by.fullname }}</span>

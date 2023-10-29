@@ -273,17 +273,18 @@ def validateDocumentName(name:str):
         return False
     return True
 
-def create_ticket(title, document, created_by_id, assigned_to):
+def create_ticket(title, document_data, base_id, created_by_id, assigned_to):
     new_ticket = m.Ticket()
     
     title_of_document = path.splitext(title)[0]
     new_ticket.title = title_of_document
     
     new_ticket.is_open = True
-    new_ticket.document = document
+    new_ticket.document = document_data
     new_ticket.time = time.time()
     new_ticket.created_by_id = created_by_id
     new_ticket.assigned_to = assigned_to
+    new_ticket.base_document_id = base_id
     m.db.session.add(new_ticket)
     m.db.session.commit()
 

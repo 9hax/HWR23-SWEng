@@ -5,23 +5,20 @@
 from flask import Flask, session, render_template, redirect, url_for, request, abort, g, send_file
 from flask_migrate import Migrate
 import sqlalchemy
+import hashlib
+
 import models as m
 import PDFEdit as p
 import document as d
-
-import hashlib
-
 
 try: 
     import userconfig as config
 except: 
     import config
 
-
 import json, user, git, os, time, datetime
 
 # prepare language files
-
 with open("lang/"+config.LANGUAGE+".json",'r',encoding="utf-8") as langfile:
     lang = json.load(langfile)
 
@@ -55,13 +52,12 @@ def global_template_vars():
         "lang": lang,
         "stversion": version,
         "current_user": g.current_user,
-        "ticket_list": m.Ticket.query.all(),
-        "ticket_replies": m.TicketReply.query.all(),
         "ctime": time.ctime,
         "getTime": user.getTime,
         "hasValidReply": user.hasValidReply, 
         "officeData": user.getAllOfficesData(),
     }
+
 # set a custom 404 error page to make the web app pretty
 @app.errorhandler(404)
 def pageNotFound(e):
@@ -81,8 +77,12 @@ def serverError(e):
 @app.route('/')
 def home():
     if "login" in session.keys() and session['login']:
+        ticket_list = []
+        if g.current_user.isOffice: 
+            ticket_list = list(m.Ticket.query.filter_by(concerns_id = g.current_user.id, hidden=False))
+        ticket_list.extend(m.Ticket.query.filter_by(created_by_id = g.current_user.id))
         user_documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
-        return render_template('index.html', user_documents=user_documents)
+        return render_template('index.html', user_documents=user_documents, ticket_list = ticket_list)
     else:
         return render_template('landing.html')
 
@@ -317,26 +317,6 @@ def adminUserSettigs():
     else:
         abort(403)
 
-@app.route('/fill', methods=['GET', 'POST'])
-def fillformular():
-    if "login" in session.keys() and session['login']:
-        if request.method == 'POST':
-            selected_documents = request.form.getlist('selected_documents')
-            try:
-                user_data = json.loads(g.current_user.userData)
-            except TypeError:
-                return redirect(url_for('changeSettings'))
-            documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
-            for document_id in selected_documents:
-                filename = d.fill_and_download_document(document_id, user_data)
-                return send_file(filename, as_attachment=True)
-            return render_template('fill-pdf.html', documents=documents)
-        else:
-            documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
-            return render_template('fill-pdf.html', documents=documents)
-    else:
-        abort(403)
-
 @app.route('/store', methods=['GET', 'POST'])
 def storeformular():
     if "login" in session.keys() and session['login']:
@@ -395,11 +375,22 @@ def viewOffice(useroffice):
 @app.route('/download/<int:document_id>')
 def download_document(document_id):
     document = m.Document.query.get(document_id)
-
     filename = document.title + ".pdf"; 
     file_path = document.fileName;  
-
     return send_file(file_path, as_attachment=True, download_name=filename)
+
+@app.route('/fill/<id>')
+def fill_form(id):
+    if "login" in session.keys() and session['login']:
+        try:
+            user_data = json.loads(g.current_user.userData)
+        except TypeError:
+            return redirect(url_for('changeSettings'))
+        document = m.Document.query.get(id)
+        filename, datastring = d.fill_and_download_document(document, user_data)
+        user.create_ticket(document.title, json.dumps(datastring), id, g.current_user.id, document.created_by_id)
+        return send_file(filename, as_attachment=True, download_name=filename)
+    abort(403)
 
 @app.route('/delete/<int:document_id>')
 def delete_document(document_id):
