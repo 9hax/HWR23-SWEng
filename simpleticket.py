@@ -9,6 +9,8 @@ import models as m
 import PDFEdit as p
 import document as d
 
+import hashlib
+
 
 try: 
     import userconfig as config
@@ -343,20 +345,38 @@ def storeformular():
             if pdf_file.filename == '': 
                 return 'Keine ausgewählte Datei'
             
-            upload_path = 'document_data/'
+            upload_path = 'static/document_data/' + str(g.current_user.id) + '/'
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
-            pdf_file.save(os.path.join(upload_path, pdf_file.filename))
-            file_path = os.path.join(upload_path, pdf_file.filename)
-            field_positions = d.get_field_positions(request.form["document-fields"])
-            document_fields = json.dumps(field_positions)
 
-            d.create_document(request.form["document-title"], file_path, g.current_user, document_fields)
+            file_path = os.path.join(upload_path, hashlib.md5(pdf_file.read()).hexdigest())
+            pdf_file.save(file_path)
             
+            formId = d.create_document("Unnamed Form", file_path, g.current_user, None)
+            return redirect(url_for('formSetup', formId = formId))
         return render_template('store-pdf.html')
     else:
         abort(403)
+
+@app.route('/formSetup/<formId>', methods=['GET', 'POST'])
+def formSetup(formId):
+    if "login" in session.keys() and session['login']:
+        document = m.Document.query.filter_by(id = formId).first()
+        if document.created_by_id == g.current_user.id: 
+            if request.method == 'POST':
+                document.title = request.form['formtitle']
+                document.fields = json.dumps(request.form['fields'])
+                m.db.session.commit()
+                return redirect('home')
+            else:
+                return render_template('edit-fields.html', document = document)
+        else:
+            abort(403)
+    else:
+        abort(403)
+    
         
+
 
 @app.route('/office/<useroffice>')
 def viewOffice(useroffice):
