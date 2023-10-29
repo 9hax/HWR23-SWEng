@@ -7,4 +7,4 @@ userconfig.py
 
 # file up- and download-folders per instance
 
-document_data/*
+static/document_data/*
