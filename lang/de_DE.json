@@ -114,5 +114,7 @@
     "uploadDocument": "Dokument hochladen", 
     "no-file-error": "Kein Dokement vorhanden. Bitte Datei einfügen.",
     "register":"Registrieren",
-    "edit-fields":"Felder definieren"
+    "edit-fields":"Felder definieren",
+    "pdf-error":"Keine PDF-Datei geladen. Bitte aktivieren Sie JavaScript um diese Funktion zu nutzen.",
+    "form-title": "Formular-Name"
 }

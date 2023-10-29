@@ -1,148 +1,292 @@
-{% set title = lang["store-formular"] %}
-{% extends "master.html" %}
-{% block body %}
+{% set title = lang["store-formular"] %} {% extends "master.html" %} {% block
+body %}
 <script src="/static/pdf.js"></script>
-<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
-    <div class="mdl-cell mdl-cell--12-col">
-        <h4>{{lang['edit-fields']}}</h4> 
-        {% if message %}
-        {{message}}
-        {% endif %}
-        <form action="" method="POST" enctype="multipart/form-data">
-            Bitte klicken Sie in das Formular, um neue Felder zu definieren.
-            <input type="text" name="field-pos" id="field-pos" style="display: none;" disabled> <!-- This input holds the field positions created by the positioning tool. -->
-            <style>
-                .editor_frame {
-            box-sizing: border-box;
-            width: 100%;
-            max-height: 100vh;
-            background-color: rgb(72, 172, 212);
-            border: 0.2em solid;
-        }
+<style>
+  .editor_frame {
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 100vh;
+    background-color: rgb(72, 172, 212);
+    border: 0.2em solid;
+  }
 
-        #pdfContainer {
-            display: block;
-            width: 100%;
-        }
+  #pdfContainer {
+    display: block;
+    width: 100%;
+  }
 
-        #no_pdf {
-            text-align: center;
-        }
+  #no_pdf {
+    text-align: center;
+  }
 
-        #loading_spinner {
-            position: relative;
-            left: 50%;
-            transform: translate(-50%, 0);
-        }
-            </style>
-            <div id="pdfeditor">
-                <div class="editor_frame">
-                    <p id="no_pdf">No PDF loaded.</p>
-                    <svg id="loading_spinner" width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <style>
-                            .spinner_ajPY {
-                                transform-origin: center;
-                                animation: spinner_AtaB .75s infinite linear
-                            }
-        
-                            @keyframes spinner_AtaB {
-                                100% {
-                                    transform: rotate(360deg)
-                                }
-                            }
-                        </style>
-                        <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25" />
-                        <path
-                            d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
-                            class="spinner_ajPY" />
-                    </svg>
-                    <canvas id="pdfContainer"></canvas>
-                </div>
-        
-                <p id="message">Last click at: </p>
-                <script>
-                    // URL of the PDF file you want to display
-                    const pdfFileUrl = '/static/{{document.fileName}}';
-                    const pdfFilePage = 1
-                    // Constants to store the DPI (dots per inch)
-                    const DPI = 96; // Standard screen DPI
-        
-                    var canvas = document.getElementById('pdfContainer');
-                    var context = canvas.getContext('2d');
-        
-                    // Function to convert mouse coordinates to a range of 0 to 1
-                    function getNormalizedCoordinates(event) {
-                        const rect = canvas.getBoundingClientRect();
-                        const x = ((event.clientX - rect.left) / rect.width).toFixed(3);
-                        const y = (1 - (event.clientY - rect.top) / rect.height).toFixed(3);
-                        return { x, y };
-                    }
-        
-                    // Asynchronous function to display the first page of the PDF
-                    async function displayPdf() {
-                        var loadingTask = pdfjsLib.getDocument(pdfFileUrl);
-                        loadingTask.promise.then(function (pdf) {
-                            pdf.getPage(pdfFilePage).then(function (page) {
-                                var container = document.querySelector('.editor_frame');
-                                var containerWidth = container.offsetWidth;
-                                var aspectRatio = page.getViewport({ scale: 1 }).height / page.getViewport({ scale: 1 }).width;
-        
-        
-                                canvas.width = containerWidth;
-                                canvas.height = containerWidth * aspectRatio;
-        
-                                var viewport = page.getViewport({ scale: containerWidth / page.getViewport({ scale: 1 }).width });
-                                var renderContext = {
-                                    canvasContext: context,
-                                    viewport: viewport
-                                };
-                                document.getElementById("no_pdf").outerHTML = "";
-                                document.getElementById("loading_spinner").style = "display: none;"
-                                page.render(renderContext);
-        
-                                // Event listener to detect mouse clicks
-                                canvas.addEventListener('click', function (event) {
-                                    const normalizedCoordinates = getNormalizedCoordinates(event);
-                                    document.getElementById("message").innerText = "Last click at " + normalizedCoordinates.x + "," + normalizedCoordinates.y
-                                });
-                            }).catch((error) => {
-                                document.getElementById("no_pdf").innerText = "Failed to load PDF data at page " + pdfFilePage + ".";
-                                console.error("Failed to load PDF data at page " + pdfFilePage + ".")
-                                document.getElementById("loading_spinner").style = "display: none;"
-                            });
-                        });
-                        loadingTask.promise.catch((error) => {
-                            document.getElementById("no_pdf").innerText = "Failed to load PDF file.";
-                            console.error("Failed to load PDF file.")
-                            document.getElementById("loading_spinner").style = "display: none;"
-                        })
-                    }
-        
-                    // Call the function to display the PDF
-                    displayPdf();
-                </script>
-            </div>
+  #loading_spinner {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
 
-        </form>
-    </div>
+  #pdfeditor {
+    max-width: 30em;
+    padding-right: 2em;
+  }
+  .coordinates-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .coordinates-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .input-cell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input {
+    width: 100%;
+  }
+  .spinner_ajPY {
+    transform-origin: center;
+    animation: spinner_AtaB 0.75s infinite linear;
+  }
+
+  @keyframes spinner_AtaB {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .coordinates-row .input-cell:nth-child(-n + 2) {
+    max-width: 4em;
+  }
+</style>
+<div
+  class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col"
+  style="width: 100%"
+>
+  <div class="mdl-cell mdl-cell--12-col">
+    <h4>{{lang['edit-fields']}}</h4>
+    {% if message %} {{message}} {% endif %} Bitte klicken Sie in das Formular,
+    um neue Felder zu definieren.
+    <form id="fields" action="" method="POST">
+      <input type="text" name="field-pos" id="field-pos"/>
+      <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
+        <input
+          type="text"
+          name="formtitle"
+          id="formtitle"
+          onkeyup="success()"
+        />
+        <label for="formtitle">{{lang["form-title"]}}:</label>
+      </div>
+
+      <div>
+        <div id="pdfeditor" style="float: left">
+          <div class="editor_frame">
+            <p id="no_pdf">{{lang['pdf-error']}}</p>
+            <svg
+              id="loading_spinner"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+                opacity=".25"
+              />
+              <path
+                d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+                class="spinner_ajPY"
+              />
+            </svg>
+            <canvas id="pdfContainer"></canvas>
+          </div>
+          <p id="message">Last click at:</p>
+        </div>
+        <div id="coordinate_editor">
+          <p>
+            Verfügbare Platzhalter sind: fullname, dateofbirth, address,
+            taxnumber, taxclass, gender, employer.
+          </p>
+          <div class="coordinates-container"></div>
+        </div>
+      </div>
+      <button
+        id="submitbutton" type="button"
+        onclick="convertToJSON()"
+        class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white"
+      >
+        Felder speichern
+      </button>
+    </form>
+  </div>
 </div>
 
-
 <script>
-    function success() {
-        const createDocument = document.getElementById("createDocument")
-        if (document.getElementById("pdf_file").files.length > 0) {
-            createDocument.disabled = false;
-        }else{
-            createDocument.disabled = true;
-        }
+  function addCoordinate(x, y, note) {
+    const container = document.querySelector(".coordinates-container");
+
+    // Create a new input row
+    const newRow = document.createElement("div");
+    newRow.className = "coordinates-row";
+
+    // Create input cells for X, Y, and Note
+    const xInputCell = createInputCell("X", x);
+    const yInputCell = createInputCell("Y", y);
+    const noteInputCell = createInputCell("Platzhaltervariable", note);
+
+    // Append input cells to the row
+    newRow.appendChild(xInputCell);
+    newRow.appendChild(yInputCell);
+    newRow.appendChild(noteInputCell);
+
+    // Append the new row to the container
+    container.appendChild(newRow);
+  }
+
+  function createInputCell(labelText, value) {
+    const inputCell = document.createElement("div");
+    inputCell.className = "input-cell";
+
+    const label = document.createElement("label");
+    label.textContent = labelText;
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = value;
+
+    inputCell.appendChild(label);
+    inputCell.appendChild(input);
+
+    return inputCell;
+  }
+
+  // URL of the PDF file you want to display
+  const pdfFileUrl = "/{{document.fileName}}";
+  const pdfFilePage = 1;
+  // Constants to store the DPI (dots per inch)
+  const DPI = 96; // Standard screen DPI
+
+  var canvas = document.getElementById("pdfContainer");
+  var context = canvas.getContext("2d");
+
+  // Function to convert mouse coordinates to a range of 0 to 1
+  function getNormalizedCoordinates(event) {
+    const rect = canvas.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width).toFixed(3);
+    const y = (1 - (event.clientY - rect.top) / rect.height).toFixed(3);
+    return { x, y };
+  }
+
+  function convertToJSON() {
+    const notes = []; // Initialize an array to store the notes
+
+    // Select all the rows in the coordinates-container
+    const rows = document.querySelectorAll(".coordinates-row");
+
+    // Loop through each row to extract the data
+    rows.forEach((row) => {
+      // Get the values from the input fields
+      const x = parseFloat(row.children[0].lastChild.value) || 0; // Parse the value as a number, default to 0 if not a valid number
+      const y = parseFloat(row.children[1].lastChild.value) || 0;
+      const text = row.children[2].lastChild.value;
+
+      // Create a note object
+      const note = {
+        x: x,
+        y: y,
+        text: text,
+      };
+
+      // Push the note object into the notes array
+      notes.push(note);
+    });
+
+    // Convert the array of notes into a JSON string
+    const jsonString = JSON.stringify(notes, null, 2);
+    document.getElementById("field-pos").value = "["+jsonString+"]"
+    // Log or use the JSON string as needed
+    console.log(jsonString);
+
+    document.getElementById("fields").submit();
+  }
+
+  // Asynchronous function to display the first page of the PDF
+  async function displayPdf() {
+    var loadingTask = pdfjsLib.getDocument(pdfFileUrl);
+    loadingTask.promise.then(function (pdf) {
+      pdf
+        .getPage(pdfFilePage)
+        .then(function (page) {
+          var container = document.querySelector(".editor_frame");
+          var containerWidth = container.offsetWidth;
+          var aspectRatio =
+            page.getViewport({ scale: 1 }).height /
+            page.getViewport({ scale: 1 }).width;
+
+          canvas.width = containerWidth;
+          canvas.height = containerWidth * aspectRatio;
+
+          var viewport = page.getViewport({
+            scale: containerWidth / page.getViewport({ scale: 1 }).width,
+          });
+          var renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+          };
+          document.getElementById("no_pdf").outerHTML = "";
+          document.getElementById("loading_spinner").style = "display: none;";
+          page.render(renderContext);
+
+          // Event listener to detect mouse clicks
+          canvas.addEventListener("click", function (event) {
+            const normalizedCoordinates = getNormalizedCoordinates(event);
+            document.getElementById("message").innerText =
+              "Last click at " +
+              normalizedCoordinates.x +
+              "," +
+              normalizedCoordinates.y;
+            addCoordinate(
+              normalizedCoordinates.x,
+              normalizedCoordinates.y,
+              "fullname"
+            );
+          });
+        })
+        .catch((error) => {
+          document.getElementById("no_pdf").innerText =
+            "Failed to load PDF data at page " + pdfFilePage + ".";
+          console.error("Failed to load PDF data at page " + pdfFilePage + ".");
+          document.getElementById("loading_spinner").style = "display: none;";
+        });
+    });
+    loadingTask.promise.catch((error) => {
+      document.getElementById("no_pdf").innerText = "Failed to load PDF file.";
+      console.error("Failed to load PDF file.");
+      document.getElementById("loading_spinner").style = "display: none;";
+    });
+  }
+
+  // Call the function to display the PDF
+  displayPdf();
+
+  function success() {
+    if (document.getElementById("formtitle").value === "") {
+      document.getElementById("submitbutton").disabled = true;
+    } else {
+      document.getElementById("submitbutton").disabled = false;
     }
+  }
 </script>
 
-
 {% endblock %}
-
-
-
-
-  

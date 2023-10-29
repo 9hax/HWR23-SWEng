@@ -52,18 +52,20 @@ def fill_and_download_document(document_id, user_data):
     document = m.Document.query.get(document_id)
     filename = document.title + "_filled.pdf"
     filepath = document.fileName
-    field_positions = json.loads(document.fields)
+    field_positions = json.loads(json.loads(document.fields))
 
-    pdf_data = []
-    for index, page in enumerate(field_positions):
-        pdf_data[index] = []
-        for field_name in page:
-            pdf_data.append(user_data.get(field_name))        
+    pages = []
+    for page in field_positions:
+        modifications = []
+        for modification in page:
+            modifications.append({'x':modification['x'], 'y':modification['y'], 'text':user_data[modification['text']]})
+        pages.append(modifications)
+
 
     try:
         with open(filepath, "rb") as document_file:
             content = document_file.read()
-        with open('temp.pdf', "wb") as temp_file:
+        with open(filepath+'.temp.pdf', "wb") as temp_file:
             temp_file.write(content)
 
     except FileNotFoundError:
@@ -71,8 +73,8 @@ def fill_and_download_document(document_id, user_data):
     except Exception as e:
         print(f"Ein Fehler ist aufgetreten: {str(e)}")
 
-    p.addText('temp.pdf', filename, [pdf_data])
-    os.remove('temp.pdf')
+    p.addText(filepath+'.temp.pdf', filename, pages)
+    os.remove(filepath+'.temp.pdf')
 
     return filename
 

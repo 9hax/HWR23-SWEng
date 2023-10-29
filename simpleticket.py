@@ -349,7 +349,8 @@ def storeformular():
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
 
-            file_path = os.path.join(upload_path, hashlib.md5(pdf_file.read()).hexdigest())
+            file_path = os.path.join(upload_path, hashlib.md5(pdf_file.read()).hexdigest()+".pdf")
+            pdf_file.seek(0)
             pdf_file.save(file_path)
             
             formId = d.create_document("Unnamed Form", file_path, g.current_user, None)
@@ -365,7 +366,7 @@ def formSetup(formId):
         if document.created_by_id == g.current_user.id: 
             if request.method == 'POST':
                 document.title = request.form['formtitle']
-                document.fields = json.dumps(request.form['fields'])
+                document.fields = json.dumps(request.form['field-pos'])
                 m.db.session.commit()
                 return redirect('home')
             else:
