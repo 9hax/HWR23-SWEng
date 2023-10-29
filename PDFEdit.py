@@ -20,19 +20,16 @@ def addText(documentFileName: str, outputFileName: str, pageModificationList: li
     
     This adds the text "Hello World" to the bottom left corner of the Page. 
     '''
-    pageNumber = 0
-    for modificationList in pageModificationList:
-        with open(outputFileName + "_overlay_" + str(pageNumber) + ".pdf", 'wb') as canvasFile:
-            c = Canvas(canvasFile)
-            for modification in modificationList:
-                c.drawString(modification['x'] * 596, modification['y'] * 842, modification['text'])
-            c.save()
-        pageNumber += 1
     output = PdfWriter()
     with open(documentFileName, 'rb') as documentFile:
         document = PdfReader(documentFile)
         for documentPageNumber in range(len(document.pages)):
             page = document.pages[documentPageNumber]
+            with open(outputFileName + "_overlay_" + str(documentPageNumber) + ".pdf", 'wb') as canvasFile:
+                c = Canvas(canvasFile)
+                for modification in (pageModificationList.__getitem__(documentPageNumber) or []):
+                    c.drawString(modification['x'] * int(page.mediabox.width), modification['y'] * int(page.mediabox.height), modification['text'])
+                c.save()
             try:
                 with open(outputFileName + "_overlay_" + str(documentPageNumber) + ".pdf", 'rb') as dataFile:
                     data = PdfReader(dataFile)
@@ -42,7 +39,7 @@ def addText(documentFileName: str, outputFileName: str, pageModificationList: li
                 pass
         with open(outputFileName, 'wb') as output_file:
             output.write(output_file)
-    for overlayNumber in range(0, pageNumber):
+    for overlayNumber in range(0, documentPageNumber):
         filename = outputFileName + "_overlay_" + str(overlayNumber) + ".pdf"
         if os.path.exists(filename):
             os.remove(filename)
