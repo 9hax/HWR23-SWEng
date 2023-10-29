@@ -1,7 +1,7 @@
 {% set title = lang["store-formular"] %}
 {% extends "master.html" %}
 {% block body %}
-
+<script src="/static/pdf.js"></script>
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
     <div class="mdl-cell mdl-cell--12-col">
         <h4>{{lang['edit-fields']}}</h4> 
@@ -62,7 +62,7 @@
                 <p id="message">Last click at: </p>
                 <script>
                     // URL of the PDF file you want to display
-                    const pdfFileUrl = 'temporary_upload_file.pdf';
+                    const pdfFileUrl = '/static/{{document.fileName}}';
                     const pdfFilePage = 1
                     // Constants to store the DPI (dots per inch)
                     const DPI = 96; // Standard screen DPI
