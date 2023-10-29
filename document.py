@@ -50,9 +50,9 @@ def get_field_positions(input_string):
 
 def fill_and_download_document(document_id, user_data):
     document = m.Document.query.get(document_id)
-    filename = document.title + "_filled.pdf"
     filepath = document.fileName
-    field_positions = json.loads(json.loads(document.fields))
+    filename = filepath + document.title + "_filled.pdf"
+    field_positions = json.loads(document.fields)
 
     pages = []
     for page in field_positions:
