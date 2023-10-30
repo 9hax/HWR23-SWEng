@@ -116,6 +116,7 @@ def set_office_data_validate(officeid, userData):
     newOfficeData={}
     if validateName(userData["officeName"]):
         newOfficeData["officeName"] =  userData["officeName"]
+        newOfficeData["fullname"] =  userData["officeName"]
     else: 
         raise ValueError("Invalid name")
     
