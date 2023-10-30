@@ -73,7 +73,11 @@
       <div class="mdl-grid demo-content">
           <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
             <p>
-              {{lang["404error-description"]}}
+              {%if message is none%}
+                {{lang["404error-description"]}}
+              {%else%}
+                {{message}}
+              {%endif%}
             </p>
             <a href="/">{{lang["return-home"]}}</a>
           </div>

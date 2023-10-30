@@ -367,19 +367,20 @@ def formSetup(formId):
     
         
 
-
 @app.route('/office/<useroffice>')
 def viewOffice(useroffice):
-    offices = user.getOfficeData(useroffice)[0]    
-    officeID = offices["id"]
-    documents = m.Document.query.filter_by(created_by_id=officeID).all()
-    
-    if offices == None:
-        abort(404)
-    if "login" in session.keys() and session['login']:
-        return render_template('office.html', office = offices, documents=documents)
-    else:
-        abort(403)
+    try:
+        offices = user.getOfficeData(useroffice)[0]    
+        officeID = offices["id"]
+        documents = m.Document.query.filter_by(created_by_id=officeID).all()
+        if offices == None:
+            abort(404)
+        if "login" in session.keys() and session['login']:
+            return render_template('office.html', office = offices, documents=documents)
+        else:
+            abort(403)
+    except ValueError as e:
+            return render_template('404error.html', message = lang["non-existend-office"])
 
 @app.route('/download/<int:document_id>')
 def download_document(document_id):

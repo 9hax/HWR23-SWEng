@@ -131,6 +131,6 @@
     "fillUpKeys": "Available placeholders are", 
     "saveFields": "Save fields",
     "till": "till",
-    "opening":"Opening time"
-
+    "opening":"Opening time",
+    "non-existend-office":"The office does not exist. Try another one."
 }
