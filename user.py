@@ -221,7 +221,8 @@ def validateEmail(email):
 
 def validateNumber(number):
     if not number.isdigit():
-        if len([index for index, char in enumerate(number) if not char.isdigit()]) > 1:
+        non_number_idc = [index for index, char in enumerate(number) if not char.isdigit()]
+        if len(non_number_idc) > 1 or non_number_idc[0] != 0:
             return False
         if number[0] != "+":
             return False
