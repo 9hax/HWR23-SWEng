@@ -86,17 +86,6 @@ def home():
     else:
         return render_template('landing.html')
 
-# the page to create a new ticket on.
-@app.route('/create', methods=['GET', 'POST'])
-def createTicket():
-    if "login" in session.keys() and session['login']:
-        if request.method == 'POST':
-            user.create_ticket(request.form["documentName"], request.form["base64TxtDocumentUpload"], g.current_user.id, None)
-            return redirect(url_for('home'))
-        return render_template('ticket-create.html')
-    else:
-        abort(403)
-
 # the page to view and edit tickets.
 @app.route('/view/<ticketid>', methods=['GET', 'POST'])
 def viewTicket(ticketid):
@@ -185,6 +174,22 @@ def createTicketReply(ticketid):
     else:
         abort(403)
 
+@app.route('/view/<ticketid>/delete')
+def deleteTicket(ticketid):
+    if "login" in session.keys() and session['login']:
+        try:
+            ticket = m.Ticket.query.get(ticketid)
+            if ticket:
+                if ticket.created_by_id == g.current_user.id or g.current_user.highPermissionLevel:
+                    m.db.session.delete(ticket)
+                    m.db.session.commit()
+                    return redirect(url_for('home'))
+                else:
+                    abort(403)
+        except Exception as e:
+            m.db.session.rollback()
+            return False, str(e)
+        return redirect(url_for('home'))
 
 # the about page. this shows the current software version and some general information about simpleticket.
 @app.route('/about')
@@ -398,8 +403,17 @@ def fill_form(id):
 
 @app.route('/delete/<int:document_id>')
 def delete_document(document_id):
-    d.delete_document(document_id)
-    documents = m.Document.query.filter_by(created_by_id=g.current_user.id).all()
-    return render_template('index.html', documents=documents)
-     
-            
+    if "login" in session.keys() and session['login']:
+        try:
+            form_to_delete = m.Document.query.get(document_id)
+            if form_to_delete:
+                if form_to_delete.created_by_id == g.current_user.id or g.current_user.highPermissionLevel:
+                    m.db.session.delete(form_to_delete)
+                    m.db.session.commit()
+                    return redirect(url_for('home'))
+                else:
+                    abort(403)
+        except Exception as e:
+            m.db.session.rollback()
+            return False, str(e)
+        return redirect(url_for('home'))

@@ -65,8 +65,12 @@ body %}
     }
   }
 
-  .coordinates-row *:nth-child(-n + 2) {
-    max-width: 4em;
+  .coordinates-row .mdl-textfield {
+    max-width: 3em;
+  }
+
+  .coordinates-row :nth-child(3) {
+    flex-grow: 1;
   }
 </style>
 <div
@@ -164,11 +168,11 @@ body %}
     const dropdownInnerHTML = 
     '{{lang["fillUpKeys"]}}'+
     '<select class="mdl-textfield__input" id="keyOptions" name="keyOptions">'+
-      '<option>{{lang["fullname"]}}</option>'+
-      '<option>{{lang["dateofbirth"]}}</option>'+
-      '<option>{{lang["taxnumber"]}}</option>'+
-      '<option>{{lang["gender"]}}</option>'+
-      '<option>{{lang["employer"]}}</option>'+
+      '<option value="fullname">{{lang["fullname"]}}</option>'+
+      '<option value="dateofbirth">{{lang["dateofbirth"]}}</option>'+
+      '<option value="taxnumber">{{lang["taxnumber"]}}</option>'+
+      '<option value="gender">{{lang["gender"]}}</option>'+
+      '<option value="employer">{{lang["workingPlace"]}}</option>'+
       '</select>'
     container.innerHTML = dropdownInnerHTML;
     return container;
@@ -200,8 +204,8 @@ body %}
     // Loop through each row to extract the data
     rows.forEach((row) => {
       // Get the values from the input fields
-      const x = parseFloat(row.children[0].lastChild.value) || 0; // Parse the value as a number, default to 0 if not a valid number
-      const y = parseFloat(row.children[1].lastChild.value) || 0;
+      const x = parseFloat(row.children[0].firstChild.lastChild.value) || 0; // Parse the value as a number, default to 0 if not a valid number
+      const y = parseFloat(row.children[1].firstChild.lastChild.value) || 0;
       const text = row.children[2].lastChild.value;
 
       // Create a note object

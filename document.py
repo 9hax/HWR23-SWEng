@@ -19,21 +19,6 @@ def create_document(title, filename, created_by, fields):
     m.db.session.refresh(new_document)
     return new_document.id
 
-def delete_document(document_id):
-    try:
-        form_to_delete = m.Document.query.get(document_id)
-
-        if form_to_delete:
-            m.db.session.delete(form_to_delete)
-            m.db.session.commit()
-            return True, "Formular erfolgreich gelöscht"
-        else:
-            return False, "Formular nicht gefunden"
-
-    except Exception as e:
-        m.db.session.rollback()
-        return False, str(e)
-
 def get_field_positions(input_string):
     try:
         positions = json.loads(input_string)

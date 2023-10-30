@@ -1,82 +1,95 @@
-{% set title = lang["account-settings"]%} {% extends "master.html" %} {% block body %}
-<div style="display: flex; align-items: center; width: 100%; margin: auto;max-height:30em;   box-sizing: border-box;">
-    <h3 style="margin-left:5%;">{{office["officeName"]}}</h3>
-    <div class="col" style="width:40%; max-width: 30em;margin:auto;display:{{ 'none' if office['base64Txt'] == ""  else 'block'}}" id="previewContainer">
-        <img class="img" id="avatar" src="{{office['base64Txt']}}"  style="max-width: 50%;height: auto;  border-radius: 100%; aspect-ratio:1/1"/>
+{% set title = lang["account-settings"] %}
+{% extends "master.html" %}
+{% block body %}
+<style>
+  .material-icons {
+    padding-right: 0.3em;
+  }
+</style>
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
+  <div class="mdl-cell mdl-cell--12-col" style="display: flex;">
+    <div style="flex-grow: 1;"> 
+      <h4 style="flex-grow: 1">{{ office["officeName"] }}</h4>
+      <div style="display: flex;">
+        <i class="material-icons">location_on</i>
+        <p><strong>{{ lang['address'] }}: </strong> {{ office["adressOffice"] }}</p>
+      </div>
+      <div style="display: flex;">
+        <i class="material-icons">schedule</i>
+        <p><strong>{{ lang['openingTime'] }}: </strong> {{ office["openingTime"] }}</p>
+      </div>
+      <div style="display: flex;">
+        <i class="material-icons">schedule</i>
+        <p><strong>{{ lang['closingTime'] }}: </strong> {{ office["closingTime"] }}</p>
+      </div>
     </div>
+    <img class="img" id="avatar" src="{{ office['base64Txt'] or url_for("static", filename="no-picture.png") }}"
+      style="max-width: 20%;height: auto; border-radius: 100%; aspect-ratio:1/1; object-fit: contain;" />
+  </div>
+</div>
+
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%; background-color: #bdcdd4 !important;">
+  <div class="mdl-cell mdl-cell--12-col" style="display: flex; background-color: #bdcdd4 !important;">
+    <div style="flex-grow: 1;"> 
+      <h4 style="flex-grow: 1">{{ lang["contactPerson"] }}</h4>
+      <div style="display: flex;">
+        <i class="material-icons">badge</i>
+        <p><strong>{{ lang["name"] }}: </strong> {{ office["contactPersonName"] }}</p>
+      </div>
+      <div style="display: flex;">
+        <i class="material-icons">email</i>
+        <p><strong>{{ lang["email-address"] }}: </strong> {{ office["contactPersonEmail"] }}</p>
+      </div>
+      <div style="display: flex;">
+        <i class="material-icons">call</i>
+        <p><strong>{{ lang["number"] }}: </strong> {{ office["contactPersonNumber"] }}</p>
+      </div>
+    </div>
+    <img class="img" id="avatar" src="{{ office['base64TxtContactPerson'] or url_for("static", filename="no-picture.png") }}"
+      style="max-width: 20%;height: auto; border-radius: 100%; aspect-ratio:1/1; object-fit: contain;" />
+  </div>
 </div>
 
 <div style="display: flex; align-items: center; width: 100%; margin: auto;max-height:30em;box-sizing: border-box;">
-    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width: 50%;">
-        <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-            <div style="display: flex; align-items: center;margin-top: 4%;">
-                <p><strong>{{ lang["address"] }}: </strong></p><p>{{ office["adressOffice"] }}</p>
-                <i class="material-icons location" style:"margin-left: 4%;">location_on</i>
-            </div>
-            <div style="display: flex; align-items: center;margin-top: 4%;">
-                <p><strong>{{ lang["openingTime"] }}: </strong></p><p>{{ office["openingTime"] }}</p>
-                <i class="material-icons schedule" style:"margin-left: 4%;">schedule</i>
-            </div>
-            <div style="display: flex; align-items: center;margin-top: 4%;">
-                <p><strong>{{ lang["closingTime"] }}: </strong></p><p>{{ office["closingTime"] }}</p>
-                <i class="material-icons schedule" style:"margin-left: 4%;">schedule</i>
-            </div>
-        </section>
-    </div>
-    <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="width: 50%; background-color: #6C797F; color: white;">
-        <h5 style="margin-bottom:3%">{{ lang["contactPerson"] }}</h5>
-        <div style="display: flex; align-items: center;">
-            <section style="display: flex; flex-direction: column; justify-content: center; height: 100%;padding-top:1%;">
-                <div style="display: flex; align-items: center;margin-top: 4%;">
-                    <p><strong>{{ lang["name"] }}: </strong></p><p>{{ office["contactPersonName"] }}</p>
-                </div>
-                <div style="display: flex; align-items: center;margin-top: 4%;">
-                    <p><strong>{{ lang["email-address"] }}: </strong></p><p>{{ office["contactPersonEmail"] }}</p>
-                    <i class="material-icons email" style:"margin-left: 4%;">email</i>
-                </div>
-                <div style="display: flex; align-items: center;margin-top: 4%;">
-                    <p><strong>{{ lang["number"] }}: </strong></p><p>{{ office["contactPersonNumber"] }}</p>
-                    <i class="material-icons call" style:"margin-left: 4%;">call</i>
-                </div>
-            </section>
-            <div class="col" style="width:50%; max-width: 30em;margin-left: 10%;display:{{ 'none' if office['base64TxtContactPerson'] == ""  else 'block'}}" id="previewContainer">
-                <img class="img" id="avatar" src="{{office['base64TxtContactPerson']}}"  style="max-width: 100%;height: auto;  border-radius: 100%; aspect-ratio:1/1;"/>
-            </div>
-        </div>
-    </div>
-    {% if "news" in office %}
-        {{lang["important-news"]}}
-        <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="width: 50%; background-color: #6C797F; color: white;">
-            <p>{{ office["news"]}}</p>
-        </div>
-    {% endif%}
+  {% if "news" in office %}
+  {{ lang["important-news"] }}
+  <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--8-col"
+    style="width: 50%; background-color: #6C797F; color: white;">
+    <p>{{ office["news"] }}</p>
+  </div>
+  {% endif %}
 </div>
 
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width:100%;">
-    <div class="mdl-cell mdl-cell--12-col">
-        <h4>Öffentliche Dokumente</h4> 
-        {% if documents|length < 1 %}
-        <p>Es wurden noch keine Formulare eingestellt.</p>
-        {% else %}
-        <ul class="mdl-list mdl-shadow--2dp">
-            {% for document in documents %}
-            <li class="mdl-list__item">
-                <span class="mdl-list__item-primary-content">
-                    {{document.title}}
-                    <a href="{{ url_for('download_document', document_id=document.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="position:relative; bottom: 0; margin-left: 1em" >Original</button></a>
-                    <a href="{{ url_for('fill_form', id=document.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="position:relative; bottom: 0; margin-left: 1em" >Ausgefüllt</button></a>
-                </span>
-                <span class="mdl-list__item-secondary-content">
-                    <span>{{ document.created_by.fullname }}</span>
-                    <a href="{{ url_for('delete_document', document_id=document.id) }}" class="delete-icon">Löschen</a>
-                </span>
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
+  <div class="mdl-cell mdl-cell--12-col">
+    <h4>Öffentliche Dokumente</h4>
+    {% if documents|length < 1 %} <p>Es wurden noch keine Formulare eingestellt.</p>
+      {% else %}
+      <ul class="mdl-list mdl-shadow--2dp">
+        {% for document in documents %}
+        <li class="mdl-list__item">
+          <span class="mdl-list__item-primary-content">
+            {{ document.title }}
+            <a href="{{ url_for('download_document', document_id=document.id) }}">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                style="position:relative; bottom: 0; margin-left: 1em">Original</button>
+            </a>
+            <a href="{{ url_for('fill_form', id=document.id) }}">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                style="position:relative; bottom: 0; margin-left: 1em">Ausgefüllt</button>
+            </a>
+          </span>
+          <span class="mdl-list__item-secondary-content">
+            <span>{{ document.created_by.fullname }}</span>
+            {% if document.created_by.id == g.current_user.id or g.current_user.highPermissionLevel %}
+            <a href="{{ url_for('delete_document', document_id=document.id) }}" class="delete-icon">Löschen</a>
+            {% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+  </div>
 </div>
 
-    
-        
 {% endblock %}
