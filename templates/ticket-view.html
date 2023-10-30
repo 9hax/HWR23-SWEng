@@ -33,7 +33,7 @@
     {% endif %} {% endif %}
     <br>
     <br>
-    {% if g.current_user.highPermissionLevel %} {% if not ticket.hidden %}
+    {% if g.current_user.id == ticket.created_by_id or g.current_user.highPermissionLevel %} {% if not ticket.hidden %}
     <a href="{{ticket.id}}/hide" style="text-decoration: none">
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
         {{lang["hide-ticket"]}}
