@@ -277,7 +277,7 @@ def create_ticket(title, document_data, base_id, created_by_id, assigned_to):
     new_ticket.document = document_data
     new_ticket.time = time.time()
     new_ticket.created_by_id = created_by_id
-    new_ticket.assigned_to = assigned_to
+    new_ticket.concerns_id = assigned_to
     new_ticket.base_document_id = base_id
     new_ticket.hidden = True
     m.db.session.add(new_ticket)
