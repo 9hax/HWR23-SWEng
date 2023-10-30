@@ -129,5 +129,8 @@
     "register":"Register", 
     "lastClick": "Last click at",
     "fillUpKeys": "Available placeholders are", 
-    "saveFields": "Save fields"
+    "saveFields": "Save fields",
+    "till": "till",
+    "opening":"Opening time"
+
 }

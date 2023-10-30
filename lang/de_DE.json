@@ -132,6 +132,8 @@
     "form-title": "Formular-Name",
     "lastClick": "Zuletzt geklickt",
     "fillUpKeys": "Verfügbare Platzhalter sind",
-    "saveFields": "Felder speichern"
+    "saveFields": "Felder speichern", 
+    "till": "bis",
+    "opening":"Öffnungszeiten"
 
 }

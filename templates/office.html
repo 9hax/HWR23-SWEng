@@ -16,12 +16,9 @@
       </div>
       <div style="display: flex;">
         <i class="material-icons">schedule</i>
-        <p><strong>{{ lang['openingTime'] }}: </strong> {{ office["openingTime"] }}</p>
+        <p><strong>{{ lang['opening'] }} </strong> {{ office["openingTime"] }} : {{ office["closingTime"] }}</p>
       </div>
-      <div style="display: flex;">
-        <i class="material-icons">schedule</i>
-        <p><strong>{{ lang['closingTime'] }}: </strong> {{ office["closingTime"] }}</p>
-      </div>
+
     </div>
     <img class="img" id="avatar" src="{{ office['base64Txt'] or url_for("static", filename="no-picture.png") }}"
       style="max-width: 20%;height: auto; border-radius: 100%; aspect-ratio:1/1; object-fit: contain;" />
@@ -72,7 +69,7 @@
             {{ document.title }}
             <a href="{{ url_for('download_document', document_id=document.id) }}">
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                style="position:relative; bottom: 0; margin-left: 1em">Original</button>
+                style="position:relative; bottom: 0; margin-left: 1em;">Original</button>
             </a>
             <a href="{{ url_for('fill_form', id=document.id) }}">
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
