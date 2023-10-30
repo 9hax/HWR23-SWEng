@@ -305,7 +305,7 @@ def updateUserData():
                  return render_template('account-settings.html', message = lang["user-modify-invalid"] + " " + str(e), userData = request.form)
             return redirect(url_for('home'))
         else:
-            return render_template('account-settings.html', message = lang["user-modify-error"], userData = myForm)
+            return render_template('account-settings.html', message = lang["user-modify-error"], userData = request.form)
     else:
         abort(403)
 
