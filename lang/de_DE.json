@@ -48,6 +48,7 @@
     "403error-description": "Sie haben keinen Zugriff auf diese Seite.",
     "500error-title": "500-Fehler",
     "500error-description": "Beim Laden der Seite trat ein unerwarteter interner Fehler auf. Bitte kontaktieren Sie den Helpdesk direkt.",
+    "doc-already-exist": "Folgendes Formular wurde bereits zuvor hochgeladen. Bitte laden sie ein anderes hoch.",
     "reload": "Diese Seite neu laden",
     "return-home": "Zurück zur Startseite",
     "user-signup-text": "Es wird ein neuer Benutzer mit dem folgendem Permission-Level erstellt:",

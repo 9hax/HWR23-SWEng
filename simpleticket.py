@@ -233,7 +233,7 @@ def addAdmin():
         if request.method == 'POST':
             try:
                 user.create_user(str.lower(request.form["username"]), request.form["fullname"], request.form["email"], user.hashPassword(request.form["password"]), highPermissionLevel=True)
-            except sqlalchemy.exc.IntegrityError:
+            except sqlalchemy.exc.ç:
                 return render_template('user-signup.html', perms = lang["high-perms"], message = lang["user-create-error"])
             return redirect(url_for('login'))
         return render_template('user-signup.html', perms = lang["high-perms"])
@@ -321,20 +321,24 @@ def adminUserSettigs():
 def storeformular():
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
-            pdf_file = request.files['pdf_file']
-            if pdf_file.filename == '': 
-                return 'Keine ausgewählte Datei'
-            
-            upload_path = 'static/document_data/' + str(g.current_user.id) + '/'
-            if not os.path.exists(upload_path):
-                os.makedirs(upload_path)
+            try:    
+                pdf_file = request.files['pdf_file']
+                if pdf_file.filename == '': 
+                    return 'Keine ausgewählte Datei'
+                
+                upload_path = 'static/document_data/' + str(g.current_user.id) + '/'
+                if not os.path.exists(upload_path):
+                    os.makedirs(upload_path)
 
-            file_path = os.path.join(upload_path, hashlib.md5(pdf_file.read()).hexdigest()+".pdf")
-            pdf_file.seek(0)
-            pdf_file.save(file_path)
-            
-            formId = d.create_document("Unnamed Form", file_path, g.current_user, None)
-            return redirect(url_for('formSetup', formId = formId))
+                file_path = os.path.join(upload_path, hashlib.md5(pdf_file.read()).hexdigest()+".pdf")
+                pdf_file.seek(0)
+                pdf_file.save(file_path)
+                
+                formId = d.create_document("Unnamed Form", file_path, g.current_user, None)
+                return redirect(url_for('formSetup', formId = formId))
+            except sqlalchemy.exc.IntegrityError:
+                m.db.session.rollback()
+                return render_template('store-pdf.html', message = lang["doc-already-exist"])
         return render_template('store-pdf.html')
     else:
         abort(403)
