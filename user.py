@@ -318,7 +318,9 @@ def sendmail(address, htmlcontent, subject):
 
 def getTime(timestamp):
     try:
-        return datetime.datetime.fromtimestamp(timestamp).strftime(config.TIMEFORMAT)
+        datetime_obj = datetime.fromtimestamp(timestamp)
+        formatted_date = datetime_obj.strftime("%d-%m-%Y %H:%M:%S")
+        return formatted_date
     except:
         return "Invalid time"
 

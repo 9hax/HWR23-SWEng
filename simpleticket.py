@@ -57,7 +57,6 @@ def global_template_vars():
         "hasValidReply": user.hasValidReply, 
         "officeData": user.getAllOfficesData(),
     }
-
 # set a custom 404 error page to make the web app pretty
 @app.errorhandler(404)
 def pageNotFound(e):
@@ -295,8 +294,14 @@ def updateUserData():
             try:
                 if g.current_user.isOffice: 
                     user.set_office_data_validate(g.current_user.id, myForm)
+                    this_user = m.User.query.get(g.current_user.id)
+                    this_user.fullname = myForm["fullname"]
+                    m.db.session.commit()
                 else: 
                     user.set_user_data_validate(g.current_user.id, myForm)
+                    this_user = m.User.query.get(g.current_user.id)
+                    this_user.fullname = myForm["fullname"]
+                    m.db.session.commit()
             except sqlalchemy.exc.IntegrityError:
                 return render_template('account-settings.html', message = lang["user-modify-error"])
             except KeyError as e:
@@ -340,6 +345,7 @@ def storeformular():
                 pdf_file.save(file_path)
                 
                 formId = d.create_document("Unnamed Form", file_path, g.current_user, None)
+                print("created by: ", g.current_user, g.current_user.fullname)
                 return redirect(url_for('formSetup', formId = formId))
             except sqlalchemy.exc.IntegrityError:
                 m.db.session.rollback()
