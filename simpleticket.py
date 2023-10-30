@@ -86,17 +86,6 @@ def home():
     else:
         return render_template('landing.html')
 
-# the page to create a new ticket on.
-@app.route('/create', methods=['GET', 'POST'])
-def createTicket():
-    if "login" in session.keys() and session['login']:
-        if request.method == 'POST':
-            user.create_ticket(request.form["documentName"], request.form["base64TxtDocumentUpload"], g.current_user.id, None)
-            return redirect(url_for('home'))
-        return render_template('ticket-create.html')
-    else:
-        abort(403)
-
 # the page to view and edit tickets.
 @app.route('/view/<ticketid>', methods=['GET', 'POST'])
 def viewTicket(ticketid):
