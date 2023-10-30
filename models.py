@@ -23,7 +23,7 @@ class Ticket(db.Model):
     document = db.Column(db.Text, unique=False, nullable=False) #contains the data that is filled into the document on download.
     time = db.Column(db.Integer, unique = False) # The time the ticket was created in epoch seconds
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    hidden = db.Column(db.Boolean, unique=False, default= False)
+    hidden = db.Column(db.Boolean, unique=False, default= True)
     concerns_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = True)
     base_document_id = db.Column(db.Integer, db.ForeignKey('document.id'), nullable = False)
     sent = db.Column(db.Boolean, default=False)
@@ -36,7 +36,7 @@ class Ticket(db.Model):
 class TicketReply(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     text = db.Column(db.Text, unique=False, nullable=False)
-    document = db.Column(db.Text, unique=False, nullable=False)
+    document = db.Column(db.Text, unique=False, nullable=True)
     isNote = db.Column(db.Boolean, unique=False, nullable = True)
     time = db.Column(db.Integer, unique = False) # The time the ticket reply was created in epoch seconds
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
