@@ -61,12 +61,12 @@
             {% for document in user_documents %}
             <li class="mdl-list__item">
                 <span class="mdl-list__item-primary-content">
-                    {{document.title}}
+                    <span style="width:20%;">{{document.title}}</span>
                     <a href="{{ url_for('download_document', document_id=document.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="position:relative; bottom: 0; margin-left: 1em" >Original</button></a>
                     <a href="{{ url_for('fill_form', id=document.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="position:relative; bottom: 0; margin-left: 1em" >Ausgefüllt</button></a>
                 </span>
                 <span class="mdl-list__item-secondary-content">
-                    <span>{{ document.created_by.fullname }}</span>
+                    <span style="width:50%;">{{ document.created_by.fullname }}</span>
                     <a href="{{ url_for('delete_document', document_id=document.id) }}" class="delete-icon">Löschen</a>
                 </span>
             </li>

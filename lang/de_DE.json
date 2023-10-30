@@ -134,6 +134,6 @@
     "fillUpKeys": "Verfügbare Platzhalter sind",
     "saveFields": "Felder speichern", 
     "till": "bis",
-    "opening":"Öffnungszeiten"
-
+    "opening":"Öffnungszeiten",
+    "non-existend-office":"Die Behörde existiert nicht. Versuch eine andere."
 }
