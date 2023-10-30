@@ -108,8 +108,6 @@ def set_user_data_validate(userid, userData):
     else: 
         raise ValueError("Invalid Base 64 Txt")
     
-
-   
     modified_user = get_user(userid)
     modified_user.userData = json.dumps(newUserData)
     m.db.session.commit()
@@ -125,7 +123,6 @@ def set_office_data_validate(officeid, userData):
         newOfficeData["adressOffice"] =  userData["adressOffice"]
     else: 
         raise ValueError("Invalid address")
-    
     
     opening_time = datetime.strptime(userData["openingTime"], "%H:%M")
     closing_time = datetime.strptime(userData["closingTime"], "%H:%M")
@@ -176,7 +173,6 @@ def set_office_data_validate(officeid, userData):
     else: 
         raise ValueError("Invalid Base 64 Txt")
      
-    print(newOfficeData)
     modified_user = get_user(officeid)
     modified_user.userData = json.dumps(newOfficeData)
     m.db.session.commit()
@@ -204,7 +200,7 @@ def validateImageBase64(base64):
     
 def validateDateofbirth(dateofbirth):
     pattern = "^(19\d{2}|20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
-    return  re.match(pattern,dateofbirth)
+    return re.match(pattern,dateofbirth)
 
 def validateAddress(address):
     if " " not in address:
@@ -225,18 +221,10 @@ def validateEmail(email):
 
 def validateNumber(number):
     if not number.isdigit():
-        print(number)
         return False
-    print(number)
-
     return True
 
 def validateTaxnumber(taxnumber):
-    try: 
-        number = int(taxnumber)
-    except: 
-        return False
-    
     if taxnumber.__len__() != 11:
         return False
     return True
@@ -339,7 +327,6 @@ def hasValidReply(ticketid):
     
 
 def convertToBase64(imagePath):
-    print(base64.b64encode(imagePath.encode()).decode())
     return base64.b64encode(imagePath.encode()).decode()
 
 def getAllOfficesData():
