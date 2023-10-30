@@ -62,7 +62,13 @@ ticketreply.isNote)%}
     {{lang["ticket-reply-by"] + " " + ticketreply.created_by.fullname}} {% endif %}
   </div>
   <hr />
+  {% if ticketreply.document %}
+  <p><a href="/download_reply/{{ticketreply.id}}">Dokument herunterladen</a></p>
+  {% endif %}
+  {% if ticketreply.text %}
+  <br>
   <p>{{ticketreply.text}}</p>
+  {% endif %}
 </div>
 {% endif %} {% endfor %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width: 100%">

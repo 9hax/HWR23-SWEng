@@ -418,6 +418,18 @@ def download_ticket(ticket_id):
     else:
         abort(403)
 
+@app.route('/download_reply/<int:reply_id>')
+def download_ticketReply(reply_id):
+    if "login" in session.keys() and session['login']:
+        ticketReply = m.TicketReply.query.get(reply_id)
+        print(m.TicketReply.query.all())
+        if ticketReply.main_ticket.created_by_id == g.current_user.id or g.current_user.highPermissionLevel:
+            return send_file(ticketReply.document, as_attachment=True, download_name=ticketReply.document.split("/")[-1])
+        else:
+            abort(403)
+    else:
+        abort(403)
+
 @app.route('/fill/<id>')
 def fill_form(id):
     if "login" in session.keys() and session['login']:
