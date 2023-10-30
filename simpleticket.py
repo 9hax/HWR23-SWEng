@@ -384,6 +384,13 @@ def download_document(document_id):
     file_path = document.fileName;  
     return send_file(file_path, as_attachment=True, download_name=filename)
 
+@app.route('/download_ticket/<int:ticket_id>')
+def download_ticket(ticket_id):
+    ticket = m.Ticket.query.get(ticket_id)
+    base_document = m.Document.query.get(ticket.base_document_id)
+    filename = base_document.fileName + base_document.title + "_filled.pdf"
+    return send_file(filename, as_attachment=True, download_name=filename)
+
 @app.route('/fill/<id>')
 def fill_form(id):
     if "login" in session.keys() and session['login']:
