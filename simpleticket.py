@@ -56,17 +56,17 @@ def global_template_vars():
 # set a custom 404 error page to make the web app pretty
 @app.errorhandler(404)
 def pageNotFound(e):
-    return render_template('404error.html')
+    return render_template('404error.html'),404
 
 # set a custom 403 error page to make the web app pretty
 @app.errorhandler(403)
 def accessDenied(e):
-    return render_template('403error.html')
+    return render_template('403error.html'),403
 
 # set a custom 500 error page to make the web app pretty
 @app.errorhandler(500)
 def serverError(e):
-    return render_template('500error.html')
+    return render_template('500error.html'),500
 
 # the index and home landing page. this displays all the active and closed tickets.
 @app.route('/')
