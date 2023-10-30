@@ -281,7 +281,7 @@ def create_ticket(title, document_data, base_id, created_by_id, assigned_to):
     m.db.session.add(new_ticket)
     m.db.session.commit()
 
-def create_ticket_reply(text, media, created_by, main_ticket_id, isNote = False):
+def create_ticket_reply(text, media, created_by, main_ticket_id, isNote = False, document = None):
     new_ticket = m.TicketReply()
     new_ticket.text = text
     new_ticket.media = media
@@ -289,6 +289,7 @@ def create_ticket_reply(text, media, created_by, main_ticket_id, isNote = False)
     new_ticket.time = time.time()
     new_ticket.created_by = created_by
     new_ticket.main_ticket_id = main_ticket_id
+    new_ticket.document = document
     m.db.session.add(new_ticket)
     m.db.session.commit()
 
