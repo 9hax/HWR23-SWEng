@@ -2,7 +2,6 @@ tinydb
 flask
 flask-sqlalchemy
 flask-migrate
-gitpython
 bcrypt
 reportlab
 pypdf
