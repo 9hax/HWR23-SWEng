@@ -132,7 +132,7 @@ def hideTicket(ticketid):
     if ticket == None:
         abort(404)
     if "login" in session.keys() and session['login']:
-        if g.current_user.highPermissionLevel:
+        if g.current_user.id == ticket.created_by_id or g.current_user.highPermissionLevel:
             ticket.hidden = True
             m.db.session.commit()
             return redirect(url_for('viewTicket', ticketid = ticketid))
@@ -147,7 +147,7 @@ def unhideTicket(ticketid):
     if ticket == None:
         abort(404)
     if "login" in session.keys() and session['login']:
-        if g.current_user.highPermissionLevel:
+        if g.current_user.id == ticket.created_by_id or g.current_user.highPermissionLevel:
             ticket.hidden = False
             m.db.session.commit()
             return redirect(url_for('viewTicket', ticketid = ticketid))
