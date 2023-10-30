@@ -19,10 +19,6 @@ py -m flask db migrate
 py -m flask db upgrade
 py -m flask db migrate
 py -m flask db upgrade
-py -m flask db migrate
-py -m flask db upgrade
-py -m flask db migrate
-py -m flask db upgrade
 
 cls
 
