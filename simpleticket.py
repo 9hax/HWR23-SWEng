@@ -160,10 +160,24 @@ def unhideTicket(ticketid):
 def createTicketReply(ticketid):
     if "login" in session.keys() and session['login']:
         if request.method == 'POST':
-            if request.form.get('action') == "SaveNote":
-                user.create_ticket_reply(request.form["reply-text"], None, g.current_user, ticketid, isNote=True)
+            pdf_file = request.files['pdf_file']
+            if pdf_file.filename == '': 
+                if request.form.get('action') == "SaveNote":
+                    user.create_ticket_reply(request.form["reply-text"], None, g.current_user, ticketid, isNote=True)
+                else:
+                    user.create_ticket_reply(request.form["reply-text"], None, g.current_user, ticketid)
             else:
-                user.create_ticket_reply(request.form["reply-text"], None, g.current_user, ticketid)
+                upload_path = 'static/document_data/reply/' + str(g.current_user.id) + '/'
+                if not os.path.exists(upload_path):
+                    os.makedirs(upload_path)
+
+                file_path = os.path.join(upload_path, hashlib.md5(pdf_file.read()).hexdigest()+".pdf")
+                pdf_file.seek(0)
+                pdf_file.save(file_path)
+                if request.form.get('action') == "SaveNote":
+                    user.create_ticket_reply(request.form["reply-text"], None, g.current_user, ticketid, isNote=True, document = file_path)
+                else:
+                    user.create_ticket_reply(request.form["reply-text"], None, g.current_user, ticketid, document = file_path)
             return redirect(url_for('viewTicket', ticketid = ticketid))
         return redirect(url_for('viewTicket', ticketid = ticketid))
     else:
