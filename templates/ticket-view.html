@@ -72,8 +72,14 @@ ticketreply.isNote)%}
 </div>
 {% endif %} {% endfor %}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="width: 100%">
-  <form action="{{url_for( 'createTicketReply', ticketid=ticket.id)}}" method="POST">
+  <form action="{{url_for( 'createTicketReply', ticketid=ticket.id)}}" method="POST" enctype="multipart/form-data">
     {{lang["write-reply"]}}</br>
+    <label for="pdf_file">
+    <div class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+        {{lang["choose-document"]}}
+        <input style="display: none" type="file" name="pdf_file" id="pdf_file" accept=".pdf"/>
+    </div>
+    </label>
     <div class="mdl-textfield mdl-js-textfield ">
       <textarea class="mdl-textfield__input " type="text" rows="3 " id="reply-textbox" name="reply-text"
         style="width: 100% "></textarea>
