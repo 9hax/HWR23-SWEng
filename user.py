@@ -221,7 +221,10 @@ def validateEmail(email):
 
 def validateNumber(number):
     if not number.isdigit():
-        return False
+        if len([index for index, char in enumerate(number) if not char.isdigit()]) > 1:
+            return False
+        if number[0] != "+":
+            return False
     return True
 
 def validateTaxnumber(taxnumber):
